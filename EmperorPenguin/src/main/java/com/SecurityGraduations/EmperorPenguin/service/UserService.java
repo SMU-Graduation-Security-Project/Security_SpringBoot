@@ -9,17 +9,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
-@Service
 @Transactional
 public class UserService {
 
     UserRepository userRepository;
-    PasswordEncoder passwordEncoder;
+    @Autowired PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     // Id를 통해 DB에 있는지 검색을 하고 있다면 존재한다는 error를 발생
@@ -54,6 +54,26 @@ public class UserService {
             throw new PasswordWrongException();
         }
         return user;
+    }
+
+
+    public List<User> findMembers() {
+        /*
+        시간을 찍기위했던 로직들
+        long start = System.currentTimeMillis();
+        try {
+            return memberRepository.findAll();
+        } finally {
+            long finish = System.currentTimeMillis();
+            long timeMs = finish - start;
+            System.out.println("findMembers " + timeMs + "ms");
+        }
+        */
+        return userRepository.findAll();
+    }
+
+    public Optional<User> findOne(String userId) {
+        return userRepository.findByID(userId);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.SecurityGraduations.EmperorPenguin.service;
 
 
+import com.SecurityGraduations.EmperorPenguin.repository.JpaUserRepository;
 import com.SecurityGraduations.EmperorPenguin.repository.UserRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +15,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 
+import javax.persistence.EntityManager;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
 
     private UserRepository userRepository;
+    private EntityManager em;
 
     @Autowired
-    public SecurityJavaConfig(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public SecurityJavaConfig(EntityManager em) {
+        this.em = em;
     }
 
     @Override
@@ -48,5 +52,9 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public UserService userService() {
         return new UserService(userRepository);
+    }
+    @Bean
+    public UserRepository userRepository() {
+        return new JpaUserRepository(em);
     }
 }
