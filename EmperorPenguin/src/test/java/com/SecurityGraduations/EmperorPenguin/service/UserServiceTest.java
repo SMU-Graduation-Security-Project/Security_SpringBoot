@@ -12,8 +12,8 @@ import javax.transaction.Transactional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@SpringBootTest
 @Transactional
+@SpringBootTest
 class UserServiceTest {
 
 	@Autowired UserService userService;
@@ -23,10 +23,10 @@ class UserServiceTest {
 	@Test
 	void 회원가입() {
 		// given
-		String id = "SpringTest";
+		String id = "SpringTest1";
 		String rawPassword = "12345";
 		// when
-		userService.register(id,"Spring@mail.com",rawPassword);
+		userService.register(id,"Spring1@mail.com",rawPassword);
 		// then
 		User finduser = userService.findOne(id).get();
 		assertThat(id).isEqualTo(finduser.getId());
@@ -35,16 +35,12 @@ class UserServiceTest {
 	@Test
 	void 로그인() {
 		// given
-		String Id = "SpringTest";
+		String id = "SpringTest2";
 		String rawPassword = "12345";
 		// when
-
-		String encodedPassword = passwordEncoder.encode(rawPassword);
+		userService.register(id,"Spring2@mail.com",rawPassword);
 		// then
-
-
-
-
+		userService.authenticate(id,rawPassword);
 	}
 
 
