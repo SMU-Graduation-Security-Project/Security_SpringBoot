@@ -8,27 +8,24 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Getter
-@NoArgsConstructor
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long IDentityNum;
+    private Long inum;
 
     @Column(columnDefinition = "text", nullable = false)
-    private String ID;
+    private String id;
 
-    @Column(columnDefinition = "text", nullable = false)
-    private String Email;
+    private String email;
 
-    @Column(columnDefinition = "text", nullable = false)
-    private String Password;
+    private String password;
 
     @Builder
-    public User(String ID, String Email, String Password, String salt)
+    public User(String id, String email, String password)
     {
-        this.ID = ID;
-        this.Email = Email;
-        this.Password = Password;
+        this.id = id;
+        this.email = email;
+        this.password = password;
     }
 }

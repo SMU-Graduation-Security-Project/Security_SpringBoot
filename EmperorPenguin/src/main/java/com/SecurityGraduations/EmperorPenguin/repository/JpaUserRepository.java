@@ -22,9 +22,12 @@ public class JpaUserRepository implements UserRepository{
     }
 
     @Override
-    public Optional<User> findByID(String Id) {
-        User user = em.find(User.class,Id);
-        return Optional.ofNullable(user);
+    public Optional<User> findById(String id) {
+        List<User> result = em.createQuery("select m from User m where m.id = :id", User.class)
+                .setParameter("id",id)
+                .getResultList();
+        return result.stream().findAny();
+
     }
 
     @Override

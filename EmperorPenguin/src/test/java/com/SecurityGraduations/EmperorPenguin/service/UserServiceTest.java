@@ -23,13 +23,13 @@ class UserServiceTest {
 	@Test
 	void 회원가입() {
 		// given
-		String Id = "SpringTest";
+		String id = "SpringTest";
 		String rawPassword = "12345";
 		// when
-		userService.register(Id,"Spring@mail.com",rawPassword);
+		userService.register(id,"Spring@mail.com",rawPassword);
 		// then
-		User finduser = userService.findOne(Id).get();
-		assertThat(Id).isEqualTo(finduser.getID());
+		User finduser = userService.findOne(id).get();
+		assertThat(id).isEqualTo(finduser.getId());
 	}
 
 	@Test
@@ -41,9 +41,8 @@ class UserServiceTest {
 
 		String encodedPassword = passwordEncoder.encode(rawPassword);
 		// then
-		assertThat()
 
-		)
+
 
 
 	}

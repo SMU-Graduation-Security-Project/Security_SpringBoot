@@ -12,20 +12,23 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 @Transactional
 public class UserService {
 
     UserRepository userRepository;
-    @Autowired PasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    @Autowired
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // Id를 통해 DB에 있는지 검색을 하고 있다면 존재한다는 error를 발생
     // 아니라면 등록과정을 진행한다.
     private void ValidateDuplicateMember(String Id) {
-        userRepository.findByID(Id)
+        userRepository.findById(Id)
                 .ifPresent(m -> {
                     throw new IdExistedException(Id);
                 });
@@ -34,21 +37,21 @@ public class UserService {
     /*
         회원 등록을 위한 작업
      */
-    public User register(String Id, String Email, String Password)
+    public User register(String id, String email, String password)
     {
-        ValidateDuplicateMember(Id);
-        String encodedPassword = passwordEncoder.encode(Password);
+        ValidateDuplicateMember(id);
+        String encodedPassword = passwordEncoder.encode(password);
         User user = User.builder()
-                .ID(Id)
-                .Email(Email)
-                .Password(encodedPassword)
+                .id(id)
+                .email(email)
+                .password(encodedPassword)
                 .build();
         return userRepository.save(user);
     }
 
     public User authenticate(String Id, String password)
     {
-        User user  = userRepository.findByID(Id)
+        User user  = userRepository.findById(Id)
                 .orElseThrow(()-> new IdExistedException(Id));
         if(!passwordEncoder.matches(password, user.getPassword())) {
             throw new PasswordWrongException();
@@ -73,7 +76,7 @@ public class UserService {
     }
 
     public Optional<User> findOne(String userId) {
-        return userRepository.findByID(userId);
+        return userRepository.findById(userId);
     }
 
 }
