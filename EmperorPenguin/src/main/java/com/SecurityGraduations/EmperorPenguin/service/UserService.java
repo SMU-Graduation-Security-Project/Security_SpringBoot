@@ -49,6 +49,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    /*
+        회원 로그인을 위한 작업으로 ID, password를 제공하면
+        password가 맞는지 확인 후 user 데이터를 제공
+     */
     public User authenticate(String Id, String password)
     {
         User user  = userRepository.findById(Id)
@@ -61,17 +65,6 @@ public class UserService {
 
 
     public List<User> findMembers() {
-        /*
-        시간을 찍기위했던 로직들
-        long start = System.currentTimeMillis();
-        try {
-            return memberRepository.findAll();
-        } finally {
-            long finish = System.currentTimeMillis();
-            long timeMs = finish - start;
-            System.out.println("findMembers " + timeMs + "ms");
-        }
-        */
         return userRepository.findAll();
     }
 
