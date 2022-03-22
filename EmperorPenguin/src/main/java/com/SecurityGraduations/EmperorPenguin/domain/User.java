@@ -6,8 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class User {
@@ -16,10 +18,11 @@ public class User {
     private Long inum;
 
     @Column(columnDefinition = "text", nullable = false)
+    @NotEmpty
     private String id;
-
+    @NotEmpty
     private String email;
-
+    @NotEmpty
     private String password;
 
     @Builder

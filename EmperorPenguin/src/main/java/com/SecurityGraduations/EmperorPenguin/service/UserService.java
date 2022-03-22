@@ -64,7 +64,7 @@ public class UserService {
     }
 
 
-    public List<User> findMembers() {
+    public List<User> findUsers() {
         return userRepository.findAll();
     }
 

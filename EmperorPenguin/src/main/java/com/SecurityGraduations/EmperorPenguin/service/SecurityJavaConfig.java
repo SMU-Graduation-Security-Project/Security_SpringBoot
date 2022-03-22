@@ -15,6 +15,10 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .authorizeRequests()
+                .mvcMatchers("/","/css/**")
+                .permitAll();
+        httpSecurity
                 // cors 방지
                 .cors().disable()
                 // csrf 방지
