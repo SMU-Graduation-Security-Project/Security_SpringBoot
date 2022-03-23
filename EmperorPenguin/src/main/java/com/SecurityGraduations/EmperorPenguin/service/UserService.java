@@ -1,8 +1,7 @@
 package com.SecurityGraduations.EmperorPenguin.service;
 
 import com.SecurityGraduations.EmperorPenguin.domain.User;
-import com.SecurityGraduations.EmperorPenguin.exception.IdExistedException;
-import com.SecurityGraduations.EmperorPenguin.exception.PasswordWrongException;
+import com.SecurityGraduations.EmperorPenguin.exception.IdNoExistedException;
 import com.SecurityGraduations.EmperorPenguin.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +29,7 @@ public class UserService {
     private void ValidateDuplicateMember(String Id) {
         userRepository.findById(Id)
                 .ifPresent(m -> {
-                    throw new IdExistedException(Id);
+                    throw new IdNoExistedException(Id);
                 });
     }
 
@@ -55,10 +54,12 @@ public class UserService {
      */
     public User authenticate(String Id, String password)
     {
-        User user  = userRepository.findById(Id)
-                .orElseThrow(()-> new IdExistedException(Id));
-        if(!passwordEncoder.matches(password, user.getPassword())) {
-            throw new PasswordWrongException();
+        User user  = userRepository.findById(Id).orElse(null);
+        if(user == null) {
+            return null;
+        }
+        else if(!passwordEncoder.matches(password, user.getPassword())) {
+            return null;
         }
         return user;
     }
