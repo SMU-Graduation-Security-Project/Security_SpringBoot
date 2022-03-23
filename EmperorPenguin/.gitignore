@@ -35,3 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### TlS 1.2 Cert
+.keystore
+
+### Server's Settings
+application-db.properties
+application-ssl.properties
