@@ -30,6 +30,11 @@ public class UserController {
         if (result.hasErrors()) {
             return "users/addUserForm";
         }
+        if (userService.ValidateDuplicateUser(user.getId()))
+        {
+            result.reject("loginFail", "중복된 아이디 입니다. 다른 아이디를 입력해주세요");
+            return "users/addUserForm";
+        }
         userService.register(user.getId(),user.getEmail(), user.getPassword());
         return "redirect:/";
     }

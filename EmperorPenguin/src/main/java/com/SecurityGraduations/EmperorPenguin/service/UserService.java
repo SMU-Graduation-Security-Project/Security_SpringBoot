@@ -1,7 +1,6 @@
 package com.SecurityGraduations.EmperorPenguin.service;
 
 import com.SecurityGraduations.EmperorPenguin.domain.User;
-import com.SecurityGraduations.EmperorPenguin.exception.IdNoExistedException;
 import com.SecurityGraduations.EmperorPenguin.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,11 +25,13 @@ public class UserService {
 
     // Id를 통해 DB에 있는지 검색을 하고 있다면 존재한다는 error를 발생
     // 아니라면 등록과정을 진행한다.
-    private void ValidateDuplicateMember(String Id) {
-        userRepository.findById(Id)
-                .ifPresent(m -> {
-                    throw new IdNoExistedException(Id);
-                });
+    public boolean ValidateDuplicateUser(String Id) {
+        User user = userRepository.findById(Id)
+                .orElse(null);
+        if(user == null)
+            return false;
+        else
+            return true;
     }
 
     /*
@@ -38,7 +39,6 @@ public class UserService {
      */
     public User register(String id, String email, String password)
     {
-        ValidateDuplicateMember(id);
         String encodedPassword = passwordEncoder.encode(password);
         User user = User.builder()
                 .id(id)
