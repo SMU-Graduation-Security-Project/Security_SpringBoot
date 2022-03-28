@@ -36,8 +36,10 @@ out/
 ### VS Code ###
 .vscode/
 
-### TlS 1.2 Cert
+### TlS 1.2 Three Signed Cert
 .keystore
+### 원래 One Sign Cert
+.keystore1
 
 ### Server's Settings
 application-db.properties
