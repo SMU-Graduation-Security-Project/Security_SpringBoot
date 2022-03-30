@@ -7,12 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Base64;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-public class OauthUser {
+public class OauthUser extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
