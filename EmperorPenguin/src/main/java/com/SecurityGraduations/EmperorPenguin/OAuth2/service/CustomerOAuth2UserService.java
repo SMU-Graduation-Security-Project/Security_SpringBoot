@@ -1,9 +1,9 @@
 package com.SecurityGraduations.EmperorPenguin.OAuth2.service;
 
-import com.SecurityGraduations.EmperorPenguin.Login.domain.User;
-import com.SecurityGraduations.EmperorPenguin.Login.repository.UserRepository;
+import com.SecurityGraduations.EmperorPenguin.OAuth2.domain.OauthUser;
 import com.SecurityGraduations.EmperorPenguin.OAuth2.dto.OAuthAttributes;
 import com.SecurityGraduations.EmperorPenguin.OAuth2.dto.SessionUser;
+import com.SecurityGraduations.EmperorPenguin.OAuth2.repository.OauthUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -22,7 +22,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class CustomerOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
-    private final UserRepository userRepository;
+    private final OauthUserRepository oauthUserRepository;
     private final HttpSession httpSession;
 
     @Override
@@ -42,21 +42,20 @@ public class CustomerOAuth2UserService implements OAuth2UserService<OAuth2UserRe
         OAuthAttributes attributes = OAuthAttributes.
                 of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
-        User user = saveOrUpdate(attributes);
+        OauthUser oauthUser = saveOrUpdate(attributes);
 
-        httpSession.setAttribute("user", new SessionUser(user));
+        httpSession.setAttribute("OauthUser", new SessionUser(oauthUser));
 
         return new DefaultOAuth2User(
-                Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
+                Collections.singleton(new SimpleGrantedAuthority(oauthUser.getRoleKey())),
                 attributes.getAttributes(),
                 attributes.getNameAttributeKey());
     }
 
-    private User saveOrUpdate(OAuthAttributes attributes) {
-        User user = userRepository.findByEmail(attributes.getEmail())
+    private OauthUser saveOrUpdate(OAuthAttributes attributes) {
+        OauthUser oauthUser = oauthUserRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getEmail()))
                 .orElse(attributes.toEntity());
-
-        return userRepository.save(user);
+        return oauthUserRepository.save(oauthUser);
     }
 }

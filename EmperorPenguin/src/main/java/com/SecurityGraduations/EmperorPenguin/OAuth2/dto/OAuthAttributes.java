@@ -1,7 +1,7 @@
 package com.SecurityGraduations.EmperorPenguin.OAuth2.dto;
 
-import com.SecurityGraduations.EmperorPenguin.Login.domain.Role;
-import com.SecurityGraduations.EmperorPenguin.Login.domain.User;
+import com.SecurityGraduations.EmperorPenguin.Common.domain.Role;
+import com.SecurityGraduations.EmperorPenguin.OAuth2.domain.OauthUser;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -47,8 +47,8 @@ public class OAuthAttributes {
     }
 
 
-    public User toEntity() {
-        return User.builder()
+    public OauthUser toEntity() {
+        return OauthUser.builder()
                 .name(name)
                 .email(email)
                 .role(Role.GUSET)

@@ -1,4 +1,4 @@
-package com.SecurityGraduations.EmperorPenguin.Login.domain;
+package com.SecurityGraduations.EmperorPenguin.Common.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

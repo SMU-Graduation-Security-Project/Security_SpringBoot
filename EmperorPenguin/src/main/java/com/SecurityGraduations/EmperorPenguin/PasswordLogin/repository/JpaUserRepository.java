@@ -1,6 +1,6 @@
-package com.SecurityGraduations.EmperorPenguin.Login.repository;
+package com.SecurityGraduations.EmperorPenguin.PasswordLogin.repository;
 
-import com.SecurityGraduations.EmperorPenguin.Login.domain.User;
+import com.SecurityGraduations.EmperorPenguin.PasswordLogin.domain.User;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -18,27 +18,8 @@ public class JpaUserRepository implements UserRepository{
 
     @Override
     public User save(User user) {
-        if (InDBUser(user.getEmail())) {
-            em.persist(user);
-        }
-        else{
-            return em.merge(user);
-        }
+        em.persist(user);
         return user;
-    }
-
-    private boolean InDBUser(String email)
-    {
-        List<User> result = em.createQuery("select m from User m where m.email = :email", User.class)
-                .setParameter("email",email)
-                .getResultList();
-        if (result.stream().findAny().isEmpty())
-        {
-            return false;
-        }
-        else{
-            return true;
-        }
     }
 
     @Override

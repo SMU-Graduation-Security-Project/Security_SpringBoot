@@ -1,5 +1,5 @@
-package com.SecurityGraduations.EmperorPenguin.Login.repository;
-import com.SecurityGraduations.EmperorPenguin.Login.domain.User;
+package com.SecurityGraduations.EmperorPenguin.PasswordLogin.repository;
+import com.SecurityGraduations.EmperorPenguin.PasswordLogin.domain.User;
 import java.util.List;
 import java.util.Optional;
 

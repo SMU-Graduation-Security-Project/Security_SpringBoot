@@ -1,4 +1,4 @@
-package com.SecurityGraduations.EmperorPenguin.Login.domain;
+package com.SecurityGraduations.EmperorPenguin.OAuth2.domain;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

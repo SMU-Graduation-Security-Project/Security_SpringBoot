@@ -1,5 +1,5 @@
-package com.SecurityGraduations.EmperorPenguin.Login.service;
-import com.SecurityGraduations.EmperorPenguin.Login.domain.Role;
+package com.SecurityGraduations.EmperorPenguin.Common.service;
+import com.SecurityGraduations.EmperorPenguin.Common.domain.Role;
 import com.SecurityGraduations.EmperorPenguin.OAuth2.service.CustomerOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

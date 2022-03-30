@@ -1,8 +1,7 @@
-package com.SecurityGraduations.EmperorPenguin.Login.service;
+package com.SecurityGraduations.EmperorPenguin.PasswordLogin.service;
 
-import com.SecurityGraduations.EmperorPenguin.Login.repository.JpaUserRepository;
-import com.SecurityGraduations.EmperorPenguin.Login.repository.SpringJpaRepository;
-import com.SecurityGraduations.EmperorPenguin.Login.repository.UserRepository;
+import com.SecurityGraduations.EmperorPenguin.PasswordLogin.repository.JpaUserRepository;
+import com.SecurityGraduations.EmperorPenguin.PasswordLogin.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

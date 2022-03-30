@@ -1,4 +1,4 @@
-package com.SecurityGraduations.EmperorPenguin.Login.controller;
+package com.SecurityGraduations.EmperorPenguin.Common.controller;
 
 
 import org.springframework.stereotype.Controller;
@@ -11,6 +11,5 @@ public class HomeController {
     public String home() {
         return "home";
     }
-
 
 }

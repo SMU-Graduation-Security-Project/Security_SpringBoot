@@ -1,46 +1,45 @@
-package com.SecurityGraduations.EmperorPenguin.Login.domain;
+package com.SecurityGraduations.EmperorPenguin.OAuth2.domain;
 
+import com.SecurityGraduations.EmperorPenguin.Common.domain.Role;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-public class User extends BaseTimeEntity{
+public class OauthUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long inum;
+    private Long id;
 
-    @Column(columnDefinition = "text", nullable = true)
-    private String id;
-    private String password;
+    @Column(columnDefinition = "text", nullable = false)
     private String name;
+
     private String email;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 
+
     @Builder
-    public User(String id, String password, String name, String email, Role role)
+    public OauthUser(String name, String email, Role role)
     {
-        this.id = id;
-        this.password = password;
         this.name = name;
         this.email = email;
         this.role = role;
     }
 
-    public User update(String name){
+    public OauthUser update(String name){
         this.name=name;
         return this;
     }
+
     public String getRoleKey(){
         return this.role.getKey();
     }

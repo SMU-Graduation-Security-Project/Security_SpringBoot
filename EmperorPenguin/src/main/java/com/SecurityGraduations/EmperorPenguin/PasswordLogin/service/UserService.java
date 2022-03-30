@@ -1,8 +1,9 @@
-package com.SecurityGraduations.EmperorPenguin.Login.service;
+package com.SecurityGraduations.EmperorPenguin.PasswordLogin.service;
 
-import com.SecurityGraduations.EmperorPenguin.Login.domain.LoginForm;
-import com.SecurityGraduations.EmperorPenguin.Login.domain.User;
-import com.SecurityGraduations.EmperorPenguin.Login.repository.UserRepository;
+import com.SecurityGraduations.EmperorPenguin.PasswordLogin.domain.LoginForm;
+import com.SecurityGraduations.EmperorPenguin.Common.domain.Role;
+import com.SecurityGraduations.EmperorPenguin.PasswordLogin.domain.User;
+import com.SecurityGraduations.EmperorPenguin.PasswordLogin.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,7 @@ public class UserService {
                 .password(encodedPassword)
                 .name(name)
                 .email(email)
+                .role(Role.USER)
                 .build();
         return userRepository.save(user);
     }

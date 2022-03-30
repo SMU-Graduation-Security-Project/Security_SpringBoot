@@ -1,9 +1,9 @@
 package com.SecurityGraduations.EmperorPenguin.service;
 
-import com.SecurityGraduations.EmperorPenguin.Login.domain.LoginForm;
-import com.SecurityGraduations.EmperorPenguin.Login.domain.User;
-import com.SecurityGraduations.EmperorPenguin.Login.repository.UserRepository;
-import com.SecurityGraduations.EmperorPenguin.Login.service.UserService;
+import com.SecurityGraduations.EmperorPenguin.PasswordLogin.domain.LoginForm;
+import com.SecurityGraduations.EmperorPenguin.PasswordLogin.domain.User;
+import com.SecurityGraduations.EmperorPenguin.PasswordLogin.repository.UserRepository;
+import com.SecurityGraduations.EmperorPenguin.PasswordLogin.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
