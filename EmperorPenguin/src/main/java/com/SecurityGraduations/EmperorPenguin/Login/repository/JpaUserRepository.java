@@ -1,6 +1,6 @@
-package com.SecurityGraduations.EmperorPenguin.repository;
+package com.SecurityGraduations.EmperorPenguin.Login.repository;
 
-import com.SecurityGraduations.EmperorPenguin.domain.User;
+import com.SecurityGraduations.EmperorPenguin.Login.domain.User;
 
 import javax.persistence.EntityManager;
 import java.util.List;

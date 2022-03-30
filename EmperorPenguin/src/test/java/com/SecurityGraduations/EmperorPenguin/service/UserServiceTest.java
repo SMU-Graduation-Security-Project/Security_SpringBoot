@@ -1,7 +1,8 @@
 package com.SecurityGraduations.EmperorPenguin.service;
 
-import com.SecurityGraduations.EmperorPenguin.domain.User;
-import com.SecurityGraduations.EmperorPenguin.repository.UserRepository;
+import com.SecurityGraduations.EmperorPenguin.Login.domain.User;
+import com.SecurityGraduations.EmperorPenguin.Login.repository.UserRepository;
+import com.SecurityGraduations.EmperorPenguin.Login.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,7 +16,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @SpringBootTest
 class UserServiceTest {
 
-	@Autowired UserService userService;
+	@Autowired
+	UserService userService;
 	@Autowired UserRepository userRepository;
 	@Autowired PasswordEncoder passwordEncoder;
 

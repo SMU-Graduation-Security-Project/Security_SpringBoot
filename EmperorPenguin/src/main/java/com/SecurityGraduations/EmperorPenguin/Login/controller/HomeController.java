@@ -1,4 +1,4 @@
-package com.SecurityGraduations.EmperorPenguin.controller;
+package com.SecurityGraduations.EmperorPenguin.Login.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

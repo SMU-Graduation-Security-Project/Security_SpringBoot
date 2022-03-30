@@ -1,7 +1,7 @@
-package com.SecurityGraduations.EmperorPenguin.service;
+package com.SecurityGraduations.EmperorPenguin.Login.service;
 
-import com.SecurityGraduations.EmperorPenguin.domain.User;
-import com.SecurityGraduations.EmperorPenguin.repository.UserRepository;
+import com.SecurityGraduations.EmperorPenguin.Login.domain.User;
+import com.SecurityGraduations.EmperorPenguin.Login.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

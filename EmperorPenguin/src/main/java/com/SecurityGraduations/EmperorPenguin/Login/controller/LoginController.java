@@ -1,8 +1,8 @@
-package com.SecurityGraduations.EmperorPenguin.controller;
+package com.SecurityGraduations.EmperorPenguin.Login.controller;
 
-import com.SecurityGraduations.EmperorPenguin.domain.LoginForm;
-import com.SecurityGraduations.EmperorPenguin.domain.User;
-import com.SecurityGraduations.EmperorPenguin.service.UserService;
+import com.SecurityGraduations.EmperorPenguin.Login.domain.LoginForm;
+import com.SecurityGraduations.EmperorPenguin.Login.domain.User;
+import com.SecurityGraduations.EmperorPenguin.Login.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

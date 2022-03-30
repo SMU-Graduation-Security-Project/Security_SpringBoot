@@ -1,7 +1,7 @@
-package com.SecurityGraduations.EmperorPenguin.service;
+package com.SecurityGraduations.EmperorPenguin.Login.service;
 
-import com.SecurityGraduations.EmperorPenguin.repository.JpaUserRepository;
-import com.SecurityGraduations.EmperorPenguin.repository.UserRepository;
+import com.SecurityGraduations.EmperorPenguin.Login.repository.JpaUserRepository;
+import com.SecurityGraduations.EmperorPenguin.Login.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
