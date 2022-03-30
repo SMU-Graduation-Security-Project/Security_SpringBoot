@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -13,24 +12,36 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 @NoArgsConstructor
 @Entity
-public class User {
+public class User extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long inum;
 
-    @Column(columnDefinition = "text", nullable = false)
-    @NotEmpty
+    @Column(columnDefinition = "text", nullable = true)
     private String id;
-    @NotEmpty
-    private String email;
-    @NotEmpty
     private String password;
+    private String name;
+    private String email;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
     @Builder
-    public User(String id, String email, String password)
+    public User(String id, String password, String name, String email, Role role)
     {
         this.id = id;
-        this.email = email;
         this.password = password;
+        this.name = name;
+        this.email = email;
+        this.role = role;
+    }
+
+    public User update(String name){
+        this.name=name;
+        return this;
+    }
+    public String getRoleKey(){
+        return this.role.getKey();
     }
 }

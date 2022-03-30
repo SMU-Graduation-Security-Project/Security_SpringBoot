@@ -47,3 +47,4 @@ out/
 ### Server's Settings
 application-db.properties
 application-ssl.properties
+application-oauth2.properties

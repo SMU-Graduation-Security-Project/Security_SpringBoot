@@ -25,11 +25,18 @@ dependencies {
 	annotationProcessor('org.projectlombok:lombok')
 	testAnnotationProcessor('org.projectlombok:lombok')
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// Spring Security관련 의존성
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	// Test를 위한 Front 페이지 제작기
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+	// Front에서 넘어는 데이터 검사
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	runtimeOnly 'com.h2database:h2'
+	// test를 위한 임시 데이터 베이스
+	implementation 'com.h2database:h2'
+	// Oauth2관련 의존성 추가
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+
 
 	test {
 		useJUnitPlatform()

@@ -1,5 +1,6 @@
 package com.SecurityGraduations.EmperorPenguin.service;
 
+import com.SecurityGraduations.EmperorPenguin.Login.domain.LoginForm;
 import com.SecurityGraduations.EmperorPenguin.Login.domain.User;
 import com.SecurityGraduations.EmperorPenguin.Login.repository.UserRepository;
 import com.SecurityGraduations.EmperorPenguin.Login.service.UserService;
@@ -27,7 +28,7 @@ class UserServiceTest {
 		String id = "SpringTest1";
 		String rawPassword = "12345";
 		// when
-		userService.register(id,"Spring1@mail.com",rawPassword);
+		userService.register(id,rawPassword,"Spring", "Spring@email.com");
 		// then
 		User finduser = userService.findOne(id).get();
 		assertThat(id).isEqualTo(finduser.getId());
@@ -39,9 +40,12 @@ class UserServiceTest {
 		String id = "SpringTest2";
 		String rawPassword = "12345";
 		// when
-		userService.register(id,"Spring2@mail.com",rawPassword);
+		userService.register(id, rawPassword, "SpringTest", "Spring2@rmail.com");
+		LoginForm loginForm = new LoginForm();
+		loginForm.setLoginID(id);
+		loginForm.setPassword(rawPassword);
 		// then
-		userService.authenticate(id,rawPassword);
+		userService.authenticate(loginForm);
 	}
 
 

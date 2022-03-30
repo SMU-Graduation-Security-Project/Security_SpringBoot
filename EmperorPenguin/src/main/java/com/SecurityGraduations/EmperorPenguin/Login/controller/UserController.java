@@ -34,7 +34,7 @@ public class UserController {
             result.reject("loginFail", "중복된 아이디 입니다. 다른 아이디를 입력해주세요");
             return "users/addUserForm";
         }
-        userService.register(user.getId(),user.getEmail(), user.getPassword());
+        userService.register(user.getId(),user.getPassword(), user.getName(), user.getEmail());
         return "redirect:/";
     }
 

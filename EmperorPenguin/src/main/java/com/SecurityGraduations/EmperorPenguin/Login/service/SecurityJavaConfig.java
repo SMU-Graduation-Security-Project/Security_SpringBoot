@@ -1,6 +1,7 @@
 package com.SecurityGraduations.EmperorPenguin.Login.service;
-
+import com.SecurityGraduations.EmperorPenguin.Login.domain.Role;
 import com.SecurityGraduations.EmperorPenguin.OAuth2.service.CustomerOAuth2UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
@@ -17,11 +20,6 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-//        이 부분은 아직 필요하지 않음.
-//        httpSecurity
-//                .authorizeRequests()
-//                .mvcMatchers("/","/css/**")
-//                .permitAll();
         httpSecurity
                 // cors 방지
                 .cors().disable()
@@ -31,9 +29,14 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().disable()
                 .headers().frameOptions().disable()
                 .and()
+                    .authorizeRequests()
+                    .antMatchers().permitAll()
+                    .antMatchers("/api/v1/**").hasRole(Role.USER.name())
+                    .anyRequest().authenticated()
+                .and()
                     .oauth2Login()
-                        .userInfoEndpoint()
-                            .userService();
+                    .userInfoEndpoint()
+                    .userService(customerOAuth2UserService);
     }
 
     @Bean

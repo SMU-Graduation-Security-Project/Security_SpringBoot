@@ -1,5 +1,6 @@
 package com.SecurityGraduations.EmperorPenguin.Login.service;
 
+import com.SecurityGraduations.EmperorPenguin.Login.domain.LoginForm;
 import com.SecurityGraduations.EmperorPenguin.Login.domain.User;
 import com.SecurityGraduations.EmperorPenguin.Login.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ import java.util.Optional;
 @Transactional
 public class UserService {
 
-    UserRepository userRepository;
-    PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
@@ -37,13 +38,14 @@ public class UserService {
     /*
         회원 등록을 위한 작업
      */
-    public User register(String id, String email, String password)
+    public User register(String id, String password, String name, String email)
     {
         String encodedPassword = passwordEncoder.encode(password);
         User user = User.builder()
                 .id(id)
-                .email(email)
                 .password(encodedPassword)
+                .name(name)
+                .email(email)
                 .build();
         return userRepository.save(user);
     }
@@ -52,13 +54,13 @@ public class UserService {
         회원 로그인을 위한 작업으로 ID, password를 제공하면
         password가 맞는지 확인 후 user 데이터를 제공
      */
-    public User authenticate(String Id, String password)
+    public User authenticate(LoginForm loginForm)
     {
-        User user  = userRepository.findById(Id).orElse(null);
+        User user  = userRepository.findById(loginForm.getLoginID()).orElse(null);
         if(user == null) {
             return null;
         }
-        else if(!passwordEncoder.matches(password, user.getPassword())) {
+        else if(!passwordEncoder.matches(loginForm.getPassword(), user.getPassword())) {
             return null;
         }
         return user;

@@ -31,7 +31,7 @@ public class LoginController {
         if(bindingResult.hasErrors()) {
             return "users/loginForm";
         }
-        User loginUser = userService.authenticate(loginForm.getLoginID(), loginForm.getPassword());
+        User loginUser = userService.authenticate(loginForm);
 
         if(loginUser == null){
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
