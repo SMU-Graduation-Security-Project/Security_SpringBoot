@@ -41,6 +41,9 @@ out/
 ### 원래 One Sign Cert
 .keystore1
 
+### TLS 1.2 Testing Cert
+.keystore2
+
 ### Server's Settings
 application-db.properties
 application-ssl.properties
