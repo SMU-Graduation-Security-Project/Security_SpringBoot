@@ -30,11 +30,15 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                     .authorizeRequests()
+                    // 페이지 접근 권한 설정을 모두 풀어둠 permitall을 통해 하위 주소는 모두 접근 가능.
                     .antMatchers("/**").permitAll()
                     .anyRequest().authenticated()
                 .and()
+                    // oauth2 로그인 설정
                     .oauth2Login()
+                    // Oauth2 로그인이 성공했을 떄 가져올 설정들
                     .userInfoEndpoint()
+                    // SNS 로그인 이후 진행될 userservice 구현체 등록
                     .userService(customerOAuth2UserService);
     }
 
