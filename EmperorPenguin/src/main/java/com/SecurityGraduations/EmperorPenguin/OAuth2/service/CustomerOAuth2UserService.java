@@ -27,35 +27,35 @@ public class CustomerOAuth2UserService implements OAuth2UserService<OAuth2UserRe
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2UserService delegate = new DefaultOAuth2UserService();
+        OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
+        // OAuth2 서비스 id (구글, 카카오, 네이버)
         String registrationId = userRequest
                 .getClientRegistration()
                 .getRegistrationId();
+        // OAuth2 로그인 진행 시 키가 되는 필드 값(PK)
         String userNameAttributeName = userRequest
                 .getClientRegistration()
                 .getProviderDetails()
                 .getUserInfoEndpoint()
                 .getUserNameAttributeName();
 
-        OAuthAttributes attributes = OAuthAttributes.
-                of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
-
+        // OAuth2UserService
+        OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
         OauthUser oauthUser = saveOrUpdate(attributes);
+        httpSession.setAttribute("oAuth2User", new SessionUser(oauthUser)); // SessionUser (직렬화된 dto 클래스 사용)
 
-        httpSession.setAttribute("OauthUser", new SessionUser(oauthUser));
-
-        return new DefaultOAuth2User(
-                Collections.singleton(new SimpleGrantedAuthority(oauthUser.getRoleKey())),
+        return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(oauthUser.getRoleKey())),
                 attributes.getAttributes(),
                 attributes.getNameAttributeKey());
     }
 
-    private OauthUser saveOrUpdate(OAuthAttributes attributes) {
-        OauthUser oauthUser = oauthUserRepository.findByEmail(attributes.getEmail())
-                .map(entity -> entity.update(attributes.getEmail()))
+    // 유저 생성 및 수정 서비스 로직
+    private OauthUser saveOrUpdate(OAuthAttributes attributes){
+        OauthUser user = oauthUserRepository.findByEmail(attributes.getEmail())
+                .map(entity -> entity.update(attributes.getName()))
                 .orElse(attributes.toEntity());
-        return oauthUserRepository.save(oauthUser);
+        return oauthUserRepository.save(user);
     }
 }
