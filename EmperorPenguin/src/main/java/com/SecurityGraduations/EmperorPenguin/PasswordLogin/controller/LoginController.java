@@ -37,13 +37,7 @@ public class LoginController {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             return "users/loginForm";
         }
-        return "redirect:/users/loginSuccess";
-    }
-
-    @GetMapping("/loginSuccess")
-    public String loginSuccess()
-    {
-        return "loginSuccess";
+        return "redirect:/";
     }
 
 }

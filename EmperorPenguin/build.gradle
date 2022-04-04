@@ -35,8 +35,8 @@ dependencies {
 	implementation 'com.h2database:h2'
 	// Oauth2관련 의존성 추가
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-
-
+	//권한에 따라 노출화면을 변경하는데 필요한 라이브러리
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 
 	test {
 		useJUnitPlatform()

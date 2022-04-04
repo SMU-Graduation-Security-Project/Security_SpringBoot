@@ -34,7 +34,7 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/**").permitAll()
                     .anyRequest().authenticated()
                 .and()
-                    .logout()
+                    .logout().permitAll()
                     .logoutSuccessUrl("/")
                 .and()
                     // oauth2 로그인 설정
