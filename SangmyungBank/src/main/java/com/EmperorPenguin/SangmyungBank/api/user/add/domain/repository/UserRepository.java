@@ -1,6 +1,7 @@
-package com.EmperorPenguin.SangmyungBank.api.user.domain.repository;
+package com.EmperorPenguin.SangmyungBank.api.user.add.domain.repository;
 
-import com.EmperorPenguin.SangmyungBank.api.user.domain.User.User;
+import com.EmperorPenguin.SangmyungBank.api.user.add.domain.User.User;
+
 import java.util.List;
 import java.util.Optional;
 

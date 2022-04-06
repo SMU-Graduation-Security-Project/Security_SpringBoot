@@ -1,8 +1,8 @@
-package com.EmperorPenguin.SangmyungBank.api.user.web.User;
+package com.EmperorPenguin.SangmyungBank.api.user.add.web.User;
 
 
-import com.EmperorPenguin.SangmyungBank.api.user.domain.User.User;
-import com.EmperorPenguin.SangmyungBank.api.user.domain.repository.UserRepository;
+import com.EmperorPenguin.SangmyungBank.api.user.add.domain.User.User;
+import com.EmperorPenguin.SangmyungBank.api.user.add.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

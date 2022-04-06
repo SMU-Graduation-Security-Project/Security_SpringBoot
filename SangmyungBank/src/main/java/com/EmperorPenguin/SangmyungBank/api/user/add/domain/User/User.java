@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.api.user.domain.User;
+package com.EmperorPenguin.SangmyungBank.api.user.add.domain.User;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -28,15 +28,15 @@ public class User {
     @NotEmpty
     private String email;
 
-    @Column(columnDefinition = "int", nullable = false)
+    @Column(columnDefinition = "integer", nullable = false)
     @NotEmpty
     private int age;
 
-    @Column(length = 1, nullable = false)
+    @Column(length = 2, nullable = false)
     @NotEmpty
     private char sex;
 
-    @Column(length = 11, unique = true, nullable = false)
+    @Column(length = 15, unique = true, nullable = false)
     @NotEmpty
     private String phoneNumber;
 
@@ -45,7 +45,7 @@ public class User {
     private Role role;
 
     @Builder
-    public User(String loginId, String password, String name, String email, int age, char sex, String phoneNumber ,Role role)
+    public User(String loginId, String password, String name, String email, int age, char sex, String phoneNumber,Role role)
     {
         this.loginId = loginId;
         this.password = password;
