@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-@Builder
 @Getter
 @Entity
 @NoArgsConstructor
@@ -29,11 +29,11 @@ public class User {
     private String email;
 
     @Column(columnDefinition = "integer", nullable = false)
-    @NotEmpty
+    @NotNull
     private int age;
 
     @Column(length = 2, nullable = false)
-    @NotEmpty
+    @NotNull
     private char sex;
 
     @Column(length = 15, unique = true, nullable = false)

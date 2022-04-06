@@ -1,6 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.api.user.add.domain.repository;
 
 import com.EmperorPenguin.SangmyungBank.api.user.add.domain.User.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -24,9 +25,9 @@ public class JpaUserRepository implements UserRepository{
     }
 
     @Override
-    public Optional<User> findByLoginId(String loginid) {
+    public Optional<User> findByLoginId(String loginId) {
         List<User> result = em.createQuery("select m from User m where m.loginId = :loginId", User.class)
-                .setParameter("loginId",loginid)
+                .setParameter("loginId",loginId)
                 .getResultList();
         return result.stream().findAny();
     }
