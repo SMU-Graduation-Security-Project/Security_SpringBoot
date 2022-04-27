@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-
+@Transactional
 @SpringBootTest
 public class addUserTest {
 

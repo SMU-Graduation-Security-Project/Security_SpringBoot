@@ -39,6 +39,7 @@ public class UserService {
         if(ValidateDuplicateUser(savedUser.getLoginId()))
         {
             //        String encodedPassword = passwordEncoder.encode(password);
+            savedUser.setRole(Role.USER);
             return userRepository.save(savedUser);
         }
         else

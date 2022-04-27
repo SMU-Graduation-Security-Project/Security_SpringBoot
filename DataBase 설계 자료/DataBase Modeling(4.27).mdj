@@ -1591,7 +1591,8 @@
 							},
 							"name": "loginId",
 							"type": "TEXT",
-							"length": 0
+							"length": 0,
+							"unique": true
 						},
 						{
 							"_type": "ERDColumn",
