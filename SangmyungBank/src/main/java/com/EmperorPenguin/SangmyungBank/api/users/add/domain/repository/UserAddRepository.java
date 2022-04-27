@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class UserRepository {
+public class UserAddRepository {
 
     private final EntityManager em;
 
-    public UserRepository(EntityManager em) {
+    public UserAddRepository(EntityManager em) {
         this.em = em;
     }
 

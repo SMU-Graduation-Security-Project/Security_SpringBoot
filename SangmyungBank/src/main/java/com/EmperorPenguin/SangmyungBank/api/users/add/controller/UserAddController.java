@@ -1,26 +1,21 @@
-package com.EmperorPenguin.SangmyungBank.api.users.add.web;
+package com.EmperorPenguin.SangmyungBank.api.users.add.controller;
 
 
 import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
-import com.EmperorPenguin.SangmyungBank.api.users.add.domain.repository.UserRepository;
-import com.EmperorPenguin.SangmyungBank.api.users.add.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.NoArgsConstructor;
+import com.EmperorPenguin.SangmyungBank.api.users.add.service.UserAddService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @RequestMapping("/users")
 @RestController
-public class UserController {
+public class UserAddController {
 
-    private final UserService userService;
+    private final UserAddService userService;
 
     @PostMapping(path="/add")
     public ResponseEntity<HttpStatus> addUser(@RequestBody User user)

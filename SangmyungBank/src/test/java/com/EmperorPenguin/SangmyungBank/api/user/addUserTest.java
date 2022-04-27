@@ -2,8 +2,7 @@ package com.EmperorPenguin.SangmyungBank.api.user;
 
 import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.Role;
 import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
-import com.EmperorPenguin.SangmyungBank.api.users.add.domain.repository.UserRepository;
-import com.EmperorPenguin.SangmyungBank.api.users.add.service.UserService;
+import com.EmperorPenguin.SangmyungBank.api.users.add.service.UserAddService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +16,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class addUserTest {
 
     @Autowired
-    UserService userService;
+    UserAddService userAddService;
 
     @Test
     void 회원가입() {
@@ -41,9 +40,9 @@ public class addUserTest {
                 .role(Role.USER)
                 .build();
 
-        userService.register(savedUser);
+        userAddService.register(savedUser);
         // then
-        User findUser = userService.findOne(loginId).get();
+        User findUser = userAddService.findOne(loginId).get();
         assertThat(loginId).isEqualTo(findUser.getLoginId());
     }
 }

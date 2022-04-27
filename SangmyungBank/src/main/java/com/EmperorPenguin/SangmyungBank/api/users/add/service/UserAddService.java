@@ -3,7 +3,7 @@ package com.EmperorPenguin.SangmyungBank.api.users.add.service;
 import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.Role;
 import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
 
-import com.EmperorPenguin.SangmyungBank.api.users.add.domain.repository.UserRepository;
+import com.EmperorPenguin.SangmyungBank.api.users.add.domain.repository.UserAddRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -11,19 +11,19 @@ import javax.transaction.Transactional;
 
 @Transactional
 @Service
-public class UserService {
+public class UserAddService {
 
-    private final UserRepository userRepository;
+    private final UserAddRepository userAddRepository;
 //    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository ) {
-        this.userRepository = userRepository;
+    public UserAddService(UserAddRepository userAddRepository ) {
+        this.userAddRepository = userAddRepository;
     }
 
     // Id를 통해 DB에 있는지 검색을 하고 있다면 존재한다는 error를 발생
     // 아니라면 등록과정을 진행한다.
     public boolean ValidateDuplicateUser(String loginId) {
-        User user = userRepository.findByLoginId(loginId)
+        User user = userAddRepository.findByLoginId(loginId)
                 .orElse(null);
         if(user == null)
             return true;
@@ -40,13 +40,13 @@ public class UserService {
         {
             //        String encodedPassword = passwordEncoder.encode(password);
             savedUser.setRole(Role.USER);
-            return userRepository.save(savedUser);
+            return userAddRepository.save(savedUser);
         }
         else
             return null;
     }
 
     public Optional<User> findOne(String userId) {
-        return userRepository.findByLoginId(userId);
+        return userAddRepository.findByLoginId(userId);
     }
 }
