@@ -15,12 +15,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 
 @RequiredArgsConstructor
+@RequestMapping("/users")
 @RestController
 public class UserController {
 
     private final UserService userService;
 
-    @PostMapping(path="/users/add")
+    @PostMapping(path="/add")
     public ResponseEntity<HttpStatus> addUser(@RequestBody User user)
     {
         User savedUser = userService.register(user);
