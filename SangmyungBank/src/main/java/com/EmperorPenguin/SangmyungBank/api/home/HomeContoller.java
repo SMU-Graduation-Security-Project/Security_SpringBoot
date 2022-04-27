@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.api.user.add.web;
+package com.EmperorPenguin.SangmyungBank.api.home;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

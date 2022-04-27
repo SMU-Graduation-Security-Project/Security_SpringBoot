@@ -1,43 +1,33 @@
-package com.EmperorPenguin.SangmyungBank.api.user.add.domain.User;
+package com.EmperorPenguin.SangmyungBank.api.users.add.domain.User;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Entity
 @NoArgsConstructor
-public class User {
+public class User extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(columnDefinition = "text", nullable = false)
-    @NotEmpty
+    @Column(columnDefinition = "text", unique = true, nullable = false)
     private String loginId;
-    @NotEmpty
-    private String password;
-    @NotEmpty
-    private String name;
-
-    @Column(columnDefinition = "text", unique = true,nullable = false)
-    @NotEmpty
     private String email;
+    @Column(columnDefinition = "text", nullable = false)
+    private String name;
+    private String password;
 
     @Column(columnDefinition = "integer", nullable = false)
-    @NotNull
     private int age;
 
     @Column(length = 2, nullable = false)
-    @NotNull
     private char sex;
 
     @Column(length = 15, unique = true, nullable = false)
-    @NotEmpty
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)

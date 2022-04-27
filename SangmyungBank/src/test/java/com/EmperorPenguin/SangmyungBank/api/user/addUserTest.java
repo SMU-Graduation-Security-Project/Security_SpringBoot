@@ -1,8 +1,8 @@
 package com.EmperorPenguin.SangmyungBank.api.user;
 
-import com.EmperorPenguin.SangmyungBank.api.user.add.domain.User.User;
-import com.EmperorPenguin.SangmyungBank.api.user.add.domain.repository.UserRepository;
-import com.EmperorPenguin.SangmyungBank.api.user.add.service.UserService;
+import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
+import com.EmperorPenguin.SangmyungBank.api.users.add.domain.repository.UserRepository;
+import com.EmperorPenguin.SangmyungBank.api.users.add.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

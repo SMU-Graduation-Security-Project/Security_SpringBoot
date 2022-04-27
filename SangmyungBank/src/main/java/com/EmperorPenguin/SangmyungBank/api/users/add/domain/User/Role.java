@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.api.user.add.domain.User;
+package com.EmperorPenguin.SangmyungBank.api.users.add.domain.User;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
