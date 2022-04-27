@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -24,6 +25,8 @@ public class UserController {
     @PostMapping(path="/add")
     public ResponseEntity<HttpStatus> addUser(@RequestBody User user)
     {
+        user.setCreatedDate(LocalDateTime.now());
+        user.setModifiedDate(LocalDateTime.now());
         User savedUser = userService.register(user);
         if (savedUser != null)
             return ResponseEntity.ok(HttpStatus.OK);
