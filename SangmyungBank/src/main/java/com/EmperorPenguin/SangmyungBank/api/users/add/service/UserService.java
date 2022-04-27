@@ -26,31 +26,20 @@ public class UserService {
         User user = userRepository.findByLoginId(loginId)
                 .orElse(null);
         if(user == null)
-            return false;
-        else
             return true;
+        else
+            return false;
     }
 
     /*
         회원 등록을 위한 작업
      */
-    public User register(String loginId, String password, String name, String email, int age, char sex, String phoneNumber)
+    public User register(User savedUser)
     {
-        if(ValidateDuplicateUser(loginId))
+        if(ValidateDuplicateUser(savedUser.getLoginId()))
         {
             //        String encodedPassword = passwordEncoder.encode(password);
-            User user = User.builder()
-                    .loginId(loginId)
-                    .password(password)
-                    .name(name)
-                    .email(email)
-                    .age(age)
-                    .sex(sex)
-                    .phoneNumber(phoneNumber)
-                    .role(Role.USER)
-                    .build();
-
-            return userRepository.save(user);
+            return userRepository.save(savedUser);
         }
         else
             return null;

@@ -1,5 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.api.user;
 
+import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.Role;
 import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
 import com.EmperorPenguin.SangmyungBank.api.users.add.domain.repository.UserRepository;
 import com.EmperorPenguin.SangmyungBank.api.users.add.service.UserService;
@@ -11,14 +12,12 @@ import javax.transaction.Transactional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@Transactional
+
 @SpringBootTest
 public class addUserTest {
 
     @Autowired
     UserService userService;
-    @Autowired
-    UserRepository userRepository;
 
     @Test
     void 회원가입() {
@@ -31,7 +30,18 @@ public class addUserTest {
         int age = 13;
         String phoneNumber = "010-1111-1111";
         // when
-        userService.register(loginId,password,name,email,age,sex,phoneNumber);
+        User savedUser = User.builder()
+                .loginId(loginId)
+                .password(password)
+                .name(name)
+                .email(email)
+                .age(age)
+                .sex(sex)
+                .phoneNumber(phoneNumber)
+                .role(Role.USER)
+                .build();
+
+        userService.register(savedUser);
         // then
         User findUser = userService.findOne(loginId).get();
         assertThat(loginId).isEqualTo(findUser.getLoginId());

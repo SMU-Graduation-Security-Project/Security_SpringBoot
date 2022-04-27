@@ -3,10 +3,12 @@ package com.EmperorPenguin.SangmyungBank.api.users.add.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Getter
+@Setter
 @Entity
 @NoArgsConstructor
 public class User extends BaseTimeEntity{
@@ -46,6 +48,7 @@ public class User extends BaseTimeEntity{
         this.phoneNumber = phoneNumber;
         this.role = role;
     }
+
 
     public String getRoleKey(){
         return this.role.getKey();
