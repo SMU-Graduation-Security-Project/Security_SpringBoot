@@ -27,4 +27,26 @@ public class UserAddRepository {
                 .getResultList();
         return result.stream().findAny();
     }
+
+    public boolean RepeatEmailCheck(String email)
+    {
+        List<User> result = em.createQuery("select m from User m where m.email = :email", User.class)
+                .setParameter("email",email)
+                .getResultList();
+        if (result.stream().findAny().isEmpty())
+            return true;
+        else
+            return false;
+    }
+
+    public boolean RepeatPhoneNumber(String phoneNumber)
+    {
+        List<User> result = em.createQuery("select m from User m where m.phoneNumber = :phoneNumber", User.class)
+                .setParameter("phoneNumber",phoneNumber)
+                .getResultList();
+        if (result.stream().findAny().isEmpty())
+            return true;
+        else
+            return false;
+    }
 }

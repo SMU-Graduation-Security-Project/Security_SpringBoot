@@ -2,7 +2,6 @@ package com.EmperorPenguin.SangmyungBank.api.users.add.service;
 
 import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.Role;
 import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
-
 import com.EmperorPenguin.SangmyungBank.api.users.add.domain.repository.UserAddRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +21,12 @@ public class UserAddService {
 
     // Id를 통해 DB에 있는지 검색을 하고 있다면 존재한다는 error를 발생
     // 아니라면 등록과정을 진행한다.
-    public boolean ValidateDuplicateUser(String loginId) {
-        User user = userAddRepository.findByLoginId(loginId)
+    public boolean ValidateDuplicateUser(User saveUser) {
+        User user = userAddRepository.findByLoginId(saveUser.getLoginId())
                 .orElse(null);
-        if(user == null)
+
+        if(user == null & userAddRepository.RepeatEmailCheck(saveUser.getEmail())
+                & userAddRepository.RepeatPhoneNumber(saveUser.getPhoneNumber()))
             return true;
         else
             return false;
@@ -36,7 +37,7 @@ public class UserAddService {
      */
     public User register(User savedUser)
     {
-        if(ValidateDuplicateUser(savedUser.getLoginId()))
+        if(ValidateDuplicateUser(savedUser))
         {
             //        String encodedPassword = passwordEncoder.encode(password);
             savedUser.setRole(Role.USER);
