@@ -21,12 +21,26 @@ public class UserAddService {
 
     // Id를 통해 DB에 있는지 검색을 하고 있다면 존재한다는 error를 발생
     // 아니라면 등록과정을 진행한다.
-    public boolean ValidateDuplicateUser(User saveUser) {
-        User user = userAddRepository.findByLoginId(saveUser.getLoginId())
+    public boolean ValidateDuplicateUserId(String saveUser) {
+        User user = userAddRepository.findByLoginId(saveUser)
                 .orElse(null);
+        if(user == null)
+            return true;
+        else
+            return false;
+    }
 
-        if(user == null & userAddRepository.RepeatEmailCheck(saveUser.getEmail())
-                & userAddRepository.RepeatPhoneNumber(saveUser.getPhoneNumber()))
+    // 사용자 이메일에 대한 검증을 진행
+    public boolean ValidateDuplicateEmail(String email){
+        if(userAddRepository.RepeatEmailCheck(email))
+            return true;
+        else
+            return false;
+    }
+
+    // 사용자 전화번호에 대한 검증을 진행
+    public boolean ValidateDuplicatePhoneNumber(String PhoneNumber) {
+        if(userAddRepository.RepeatPhoneNumber(PhoneNumber))
             return true;
         else
             return false;
@@ -37,7 +51,8 @@ public class UserAddService {
      */
     public User register(User savedUser)
     {
-        if(ValidateDuplicateUser(savedUser))
+        // 사용자 아이디, 이메일, 전화번호에 대한 검증이 마무리 되면 회원가입을 진행.
+        if(ValidateDuplicateUserId(savedUser.getLoginId()) & ValidateDuplicateEmail(savedUser.getEmail()) & ValidateDuplicatePhoneNumber(savedUser.getPhoneNumber()))
         {
             //        String encodedPassword = passwordEncoder.encode(password);
             savedUser.setRole(Role.USER);
