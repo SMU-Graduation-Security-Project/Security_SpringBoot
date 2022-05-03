@@ -1,12 +1,10 @@
 package com.EmperorPenguin.SangmyungBank.api.users.login.service;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.net.http.HttpResponse;
 import java.util.Arrays;
 
 import java.util.Map;
