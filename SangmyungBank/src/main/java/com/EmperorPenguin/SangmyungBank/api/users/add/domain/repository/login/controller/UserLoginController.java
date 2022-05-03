@@ -1,17 +1,15 @@
-package com.EmperorPenguin.SangmyungBank.api.users.login.controller;
+package com.EmperorPenguin.SangmyungBank.api.users.add.domain.repository.login.controller;
 
-import com.EmperorPenguin.SangmyungBank.api.users.login.domain.loginForm.LoginForm;
-import com.EmperorPenguin.SangmyungBank.api.users.login.service.UserLoginService;
+import com.EmperorPenguin.SangmyungBank.api.users.add.domain.repository.login.domain.loginForm.LoginForm;
+import com.EmperorPenguin.SangmyungBank.api.users.add.domain.repository.login.service.UserLoginService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.EmperorPenguin.SangmyungBank.api.users.login.service.SessionService;
+import com.EmperorPenguin.SangmyungBank.api.users.add.domain.repository.login.service.SessionService;
 import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
-import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 
 @RequiredArgsConstructor
