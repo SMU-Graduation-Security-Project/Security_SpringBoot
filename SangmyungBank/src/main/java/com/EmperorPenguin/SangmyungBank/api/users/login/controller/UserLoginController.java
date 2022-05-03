@@ -3,15 +3,12 @@ package com.EmperorPenguin.SangmyungBank.api.users.login.controller;
 import com.EmperorPenguin.SangmyungBank.api.users.login.domain.loginForm.LoginForm;
 import com.EmperorPenguin.SangmyungBank.api.users.login.service.UserLoginService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.EmperorPenguin.SangmyungBank.api.users.login.service.SessionService;
 import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 
 @RequiredArgsConstructor
@@ -37,11 +34,7 @@ public class UserLoginController {
         }
 
     }
-//    @PostMapping("/logout")
-//    public String logoutV2(HttpServletRequest request) {
-//        sessionManager.expire(request);
-//        return "redirect:/";
-//    }
+
 
 
 
