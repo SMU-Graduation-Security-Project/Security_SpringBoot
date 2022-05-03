@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.api.users.login.service;
+package com.EmperorPenguin.SangmyungBank.api.users.add.domain.repository.login.service;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;

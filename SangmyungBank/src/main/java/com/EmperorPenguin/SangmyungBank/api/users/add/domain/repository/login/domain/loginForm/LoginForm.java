@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.api.users.login.domain.loginForm;
+package com.EmperorPenguin.SangmyungBank.api.users.add.domain.repository.login.domain.loginForm;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

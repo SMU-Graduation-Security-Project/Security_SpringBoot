@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.api.users.login.domain.repository;
+package com.EmperorPenguin.SangmyungBank.api.users.add.domain.repository.login.domain.repository;
 
 import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
 import org.springframework.stereotype.Repository;
