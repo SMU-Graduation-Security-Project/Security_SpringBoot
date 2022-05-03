@@ -1,28 +1,29 @@
 package com.EmperorPenguin.SangmyungBank.api.users.login.service;
 
+
 import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
 import com.EmperorPenguin.SangmyungBank.api.users.login.domain.loginForm.LoginForm;
-import com.EmperorPenguin.SangmyungBank.api.users.login.domain.repository.UserAuthRepository;
+import com.EmperorPenguin.SangmyungBank.api.users.login.domain.repository.UserLoginRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
 @Transactional
 @Service
-public class UserAuthService {
+public class UserLoginService {
 
-    private final UserAuthRepository userAuthRepository;
+    private final UserLoginRepository userAuthRepository;
 
-    public UserAuthService(UserAuthRepository userAuthRepository ) {
+    public UserLoginService(UserLoginRepository userAuthRepository ) {
         this.userAuthRepository = userAuthRepository;
     }
 
-    public boolean authenticate(LoginForm loginForm)
+    public User authenticate(LoginForm loginForm)
     {
         User DbUser = userAuthRepository.findById(loginForm.getLoginId()).get();
         if(loginForm.getRawPassword().equals(DbUser.getPassword()))
-            return true;
+            return DbUser;
         else
-            return false;
+            return null;
     }
 }
