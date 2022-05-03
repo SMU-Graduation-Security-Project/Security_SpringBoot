@@ -8,42 +8,38 @@ import java.util.List;
 
 @Repository
 public class EventRepository {
-    //db 연동하는 코드 ...!
-    // JPA
+
     static public ArrayList<EventDTO> events;
 
     static {
-        events = new ArrayList<>();
-        events.add(new EventDTO("이벤트제목1","이벤트내용1"));
-        events.add(new EventDTO("이벤트제목2","이벤트내용2"));
-        events.add(new EventDTO("이벤트제목3","이벤트내용3"));
+        events = new ArrayList<>();               // db에 저장하는법?
     }
-
+    //이벤트 추가
     public EventDTO insertEvent(EventDTO event) {
         events.add(event);
         return event;
-    }  //insert
-
+    }
+    //전체 이벤트리스트
     public List<EventDTO> getAllEvents() {
         return events;
     }
-
-    public EventDTO getEventByTitle(String title) {
+    //id로 이벤트찾기
+    public EventDTO getEventById(Long id) {
         return events.stream()
-                .filter(eventDTO -> eventDTO.getTitle().equals(title))
+                .filter(eventDTO -> eventDTO.getId().equals(id))
                 .findAny()
-                .orElse(new EventDTO("",""));
+                .orElse(new EventDTO());
     }
-
-    public void updateContent(String title, EventDTO event) {
+    //이벤트 수정
+    public void updateEvent(Long id, EventDTO event) {
         events.stream()
-                .filter(eventDTO -> eventDTO.getTitle().equals(title))
+                .filter(eventDTO -> eventDTO.getId().equals(id))
                 .findAny()
-                .orElse(new EventDTO("", ""))
-                .setContent(event.getContent());
+                .orElse(new EventDTO())
+                .setContent(event.getContent());     // 제목도 바꾸는법?
     }
-
-    public void deleteEvent(String title) {
-        events.removeIf(eventDTO -> eventDTO.getTitle().equals(title));
+    //이벤트 삭제
+    public void deleteEvent(Long id) {
+        events.removeIf(eventDTO -> eventDTO.getId().equals(id));
     }
 }

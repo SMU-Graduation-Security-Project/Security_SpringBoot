@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class EventService {
     @Autowired
-    EventRepository eventRepository;
+    private EventRepository eventRepository;
 
     public EventDTO insertEvent(EventDTO event) {
         return eventRepository.insertEvent(event);
@@ -20,15 +20,15 @@ public class EventService {
         return eventRepository.getAllEvents();
     }
 
-    public EventDTO getEventByTitle(String title) {
-        return eventRepository.getEventByTitle(title);
+    public EventDTO getEventById(Long id) {
+        return eventRepository.getEventById(id);
     }
 
-    public void updateContent(String title, EventDTO event) {
-        eventRepository.updateContent(title, event);
+    public void updateEvent(Long id, EventDTO event) {
+        eventRepository.updateEvent(id , event);
     }
 
-    public void deleteEvent(String title) {
-        eventRepository.deleteEvent(title);
+    public void deleteEvent(Long id) {
+        eventRepository.deleteEvent(id);
     }
 }
