@@ -1,5 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.api.users.login.controller;
 
+import com.EmperorPenguin.SangmyungBank.api.users.login.domain.frontForm.FrontForm;
 import com.EmperorPenguin.SangmyungBank.api.users.login.domain.loginForm.LoginForm;
 import com.EmperorPenguin.SangmyungBank.api.users.login.service.UserLoginService;
 import lombok.RequiredArgsConstructor;
@@ -21,16 +22,21 @@ public class UserLoginController {
 
 
     @RequestMapping (path="/login",method={RequestMethod.GET,RequestMethod.POST})
-    public ResponseEntity<User> authUser(@RequestBody LoginForm loginForm,HttpServletResponse response)
+    public ResponseEntity<FrontForm> authUser(@RequestBody LoginForm loginForm,HttpServletResponse response)
     {
         User auth = userLoginService.authenticate(loginForm);
         if (auth == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(auth);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(null);
         }
         else {
             sessionService.CreateSession(auth, response);
+            FrontForm frontForm = FrontForm.builder()
+                    .loginId(auth.getLoginId())
+                    .userName(auth.getName())
+                    .build();
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(auth);
+                    .body(frontForm);
         }
 
     }
