@@ -16,11 +16,12 @@ public class UserLoginRepository {
         this.em = em;
     }
 
-    public Optional<User> findById(String loginId)
+    public Optional<User> findByLoginId(String loginId)
     {
         List<User> result = em.createQuery("select m from User m where m.loginId = :loginId", User.class)
                 .setParameter("loginId",loginId)
                 .getResultList();
         return result.stream().findAny();
     }
+
 }

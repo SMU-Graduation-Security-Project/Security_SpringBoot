@@ -62,7 +62,7 @@ public class UserAddService {
             return null;
     }
 
-    public Optional<User> findOne(String userId) {
-        return userAddRepository.findByLoginId(userId);
+    public Optional<User> findOne(String loginId) {
+        return userAddRepository.findByLoginId(loginId);
     }
 }

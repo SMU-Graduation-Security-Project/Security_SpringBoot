@@ -20,7 +20,7 @@ public class UserLoginService {
 
     public User authenticate(LoginForm loginForm)
     {
-        User DbUser = userAuthRepository.findById(loginForm.getLoginId()).get();
+        User DbUser = userAuthRepository.findByLoginId(loginForm.getLoginId()).get();
         if(loginForm.getRawPassword().equals(DbUser.getPassword()))
             return DbUser;
         else
