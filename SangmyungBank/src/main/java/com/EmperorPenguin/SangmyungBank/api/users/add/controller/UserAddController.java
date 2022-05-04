@@ -15,28 +15,17 @@ import java.time.LocalDateTime;
 @RestController
 public class UserAddController {
 
-    private final UserAddService userAddService;
+    private final UserAddService userService;
 
     @PostMapping(path="/add")
     public ResponseEntity<HttpStatus> addUser(@RequestBody User user)
     {
         user.setCreatedDate(LocalDateTime.now());
         user.setModifiedDate(LocalDateTime.now());
-        User savedUser = userAddService.register(user);
+        User savedUser = userService.register(user);
         if (savedUser != null)
             return ResponseEntity.ok(HttpStatus.OK);
         return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
     }
-
-//    @GetMapping(path="/add/userIdCheck")
-//    public ResponseEntity<HttpStatus> checkUserId(@RequestBody String userId)
-//    {
-//        boolean checker = userAddService.ValidateDuplicateUserId(userId);
-//        if (checker == true)
-//            return ResponseEntity.ok(HttpStatus.OK);
-//        else
-//            return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
-//    }
-
 
 }
