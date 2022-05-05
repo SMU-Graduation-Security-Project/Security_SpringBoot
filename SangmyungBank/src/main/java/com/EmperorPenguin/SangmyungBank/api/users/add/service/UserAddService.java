@@ -24,26 +24,17 @@ public class UserAddService {
     public boolean ValidateDuplicateUserId(String saveUser) {
         User user = userAddRepository.findByLoginId(saveUser)
                 .orElse(null);
-        if(user == null)
-            return true;
-        else
-            return false;
+        return user == null;
     }
 
     // 사용자 이메일에 대한 검증을 진행
     public boolean ValidateDuplicateEmail(String email){
-        if(userAddRepository.RepeatEmailCheck(email))
-            return true;
-        else
-            return false;
+        return userAddRepository.RepeatEmailCheck(email);
     }
 
     // 사용자 전화번호에 대한 검증을 진행
     public boolean ValidateDuplicatePhoneNumber(String PhoneNumber) {
-        if(userAddRepository.RepeatPhoneNumber(PhoneNumber))
-            return true;
-        else
-            return false;
+        return userAddRepository.RepeatPhoneNumber(PhoneNumber);
     }
 
     /*
