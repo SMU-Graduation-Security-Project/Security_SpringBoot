@@ -16,17 +16,18 @@ public class AccountTransactionService {
 
     private final AccountTransactionRepository accountTransactionRepository;
 
-
-    public boolean transaction (TransactionForm accountForm)
+    public boolean transaction (TransactionForm transactionForm)
     {
-        Account dbAccount = accountTransactionRepository.findByAccountNumber(accountForm.getMyAccountNumber()).orElse(null);
+        Account dbAccount = accountTransactionRepository.findByAccountNumber(transactionForm.getMyAccountNumber())
+                .orElse(null);
         if(dbAccount == null)
             return false;
         else
-            if (dbAccount.getAccountPassword().equals(accountForm.getAccountPassword()))
-                if ( dbAccount.getBalance() >= accountForm.getBalance())
+            if(transactionForm.getAccountPassword().equals(dbAccount.getAccountPassword()))
+                if ( dbAccount.getBalance() >= transactionForm.getBalance())
                 {
-                    accountTransactionRepository.sendBalance(accountForm);
+                    accountTransactionRepository.updateMyBalance(transactionForm);
+                    accountTransactionRepository.sendBalance(transactionForm);
                     return true;
                 }
                 else

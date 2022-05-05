@@ -25,7 +25,7 @@ public class Account {
     @Column(columnDefinition = "text",nullable = false)
     private String accountPassword;
 
-    @Column(columnDefinition = "Bigint", nullable = true)
+    @Column(nullable = false)
     private Long balance;
 
     @Builder

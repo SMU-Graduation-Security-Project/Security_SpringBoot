@@ -25,11 +25,19 @@ public class AccountTransactionRepository {
         return result.stream().findAny();
     }
 
-    public void sendBalance(TransactionForm accountForm)
+    public void updateMyBalance(TransactionForm transactionForm)
+    {
+        em.createQuery("update Account m set m.balance = m.balance - :balance where m.accountNumber =:accountNumber")
+                .setParameter("balance", transactionForm.getBalance())
+                .setParameter("accountNumber", transactionForm.getMyAccountNumber())
+                .executeUpdate();
+    }
+
+    public void sendBalance(TransactionForm transactionForm)
     {
         em.createQuery("update Account m set m.balance = m.balance + :balance where m.accountNumber =:accountNumber")
-                .setParameter("balance", accountForm.getBalance())
-                .setParameter("accountNumber", accountForm.getSendAccountNumber())
+                .setParameter("balance", transactionForm.getBalance())
+                .setParameter("accountNumber", transactionForm.getSendAccountNumber())
                 .executeUpdate();
     }
 }
