@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.api.users.account.add.domain.account;
+package com.EmperorPenguin.SangmyungBank.api.users.accounts.add.domain.account;
 
 import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
 import lombok.Builder;
