@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.api.user;
+package com.EmperorPenguin.SangmyungBank.api.user.add;
 
 import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.Role;
 import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;

@@ -1,7 +1,7 @@
-package com.EmperorPenguin.SangmyungBank.api.users.account.transaction.controller;
+package com.EmperorPenguin.SangmyungBank.api.users.accounts.transaction.controller;
 
-import com.EmperorPenguin.SangmyungBank.api.users.account.transaction.domain.transactionForm.TransactionForm;
-import com.EmperorPenguin.SangmyungBank.api.users.account.transaction.service.AccountTransactionService;
+import com.EmperorPenguin.SangmyungBank.api.users.accounts.transaction.domain.transactionForm.TransactionForm;
+import com.EmperorPenguin.SangmyungBank.api.users.accounts.transaction.service.AccountTransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

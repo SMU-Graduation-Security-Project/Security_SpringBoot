@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 @RequestMapping("")
 @RestController
-public class HomeContoller {
+public class HomeController {
 
     private final SessionService sessionService;
 
