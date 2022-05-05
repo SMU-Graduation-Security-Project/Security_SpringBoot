@@ -15,8 +15,8 @@ import javax.persistence.*;
 public class Account {
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(name="user_userId")
-    private Long userId;
+    @JoinColumn(name="userId")
+    private User userId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class Account {
     private Long balance;
 
     @Builder
-    public Account(Long userId, String accountPassword, Long balance)
+    public Account(User userId, String accountPassword, Long balance)
     {
         this.userId = userId;
         this.accountPassword = accountPassword;

@@ -28,7 +28,7 @@ public class AccountAddService {
             return null;
         else {
             Account account = Account.builder()
-                    .userId(dbUser.getUserId())
+                    .userId(dbUser)
                     .accountPassword(accountForm.getAccountPassword())
                     .balance(0L)
                     .build();
