@@ -1,8 +1,8 @@
-package com.EmperorPenguin.SangmyungBank.api.users.account.controller;
+package com.EmperorPenguin.SangmyungBank.api.users.account.add.controller;
 
-import com.EmperorPenguin.SangmyungBank.api.users.account.domain.account.Account;
-import com.EmperorPenguin.SangmyungBank.api.users.account.domain.accountForm.AccountForm;
-import com.EmperorPenguin.SangmyungBank.api.users.account.service.AccountAddService;
+import com.EmperorPenguin.SangmyungBank.api.users.account.add.domain.account.Account;
+import com.EmperorPenguin.SangmyungBank.api.users.account.add.domain.accountForm.AccountForm;
+import com.EmperorPenguin.SangmyungBank.api.users.account.add.service.AccountAddService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

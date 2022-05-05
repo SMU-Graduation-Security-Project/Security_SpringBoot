@@ -1,6 +1,6 @@
-package com.EmperorPenguin.SangmyungBank.api.users.account.domain.repository;
+package com.EmperorPenguin.SangmyungBank.api.users.account.add.domain.repository;
 
-import com.EmperorPenguin.SangmyungBank.api.users.account.domain.account.Account;
+import com.EmperorPenguin.SangmyungBank.api.users.account.add.domain.account.Account;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
