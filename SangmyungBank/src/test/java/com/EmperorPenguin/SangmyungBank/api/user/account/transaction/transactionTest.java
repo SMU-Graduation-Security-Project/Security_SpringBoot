@@ -1,6 +1,5 @@
 package com.EmperorPenguin.SangmyungBank.api.user.account.transaction;
 
-import com.EmperorPenguin.SangmyungBank.api.users.accounts.add.domain.account.Account;
 import com.EmperorPenguin.SangmyungBank.api.users.accounts.transaction.domain.transactionForm.TransactionForm;
 import com.EmperorPenguin.SangmyungBank.api.users.accounts.transaction.service.AccountTransactionService;
 import org.junit.jupiter.api.Test;
