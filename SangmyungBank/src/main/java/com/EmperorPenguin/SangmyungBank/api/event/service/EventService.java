@@ -15,12 +15,17 @@ public class EventService {
     @Autowired
     private EventRepository eventRepository;
 
-    public Event createEvent(@RequestBody Event event) {
+    public Event createEvent(@RequestBody Event event)
+    {
         return eventRepository.save(event);
     }
 
     public List<Event> listAllEvents() {
-        return eventRepository.findAll();
+        List<Event> eventList = eventRepository.findAll();
+        if (eventList.isEmpty())
+            return null;
+
+        return eventList;
     }
 
     public Event getEventById(@PathVariable Long id) {
@@ -33,12 +38,16 @@ public class EventService {
     public Event updateEvent(@PathVariable Long id, @RequestBody Event eventDetails){
         Event event = eventRepository.findById(id)
                         .orElse(null);
+        if (event != null) {
+            event.setTitle(eventDetails.getTitle());
+            event.setContent(eventDetails.getContent());
 
-        event.setTitle(eventDetails.getTitle());
-        event.setContent(eventDetails.getContent());
-
-        Event updateEvent = eventRepository.save(event);
-        return updateEvent;
+            Event updateEvent = eventRepository.save(event);
+            return updateEvent;
+        }
+        else {
+            return null;
+        }
     }
 
     public Event deleteEvent(@PathVariable Long id) {

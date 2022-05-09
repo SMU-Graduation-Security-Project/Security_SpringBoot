@@ -23,16 +23,35 @@ public class EventController {
 
     // create event
     @PostMapping("/event")
-    public Event createEvent(@RequestBody Event event)
-    {
+    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
         event.setCreatedDate(LocalDateTime.now());
-        return eventService.createEvent(event);
+        Event resultEvent = eventService.createEvent(event);
+        if(resultEvent == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resultEvent);
+        else
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(resultEvent);
+
+
     }
+//    public Event createEvent(@RequestBody Event event)
+//    {
+//        event.setCreatedDate(LocalDateTime.now());
+//        return eventService.createEvent(event);
+//    }
 
     // list all events
     @GetMapping("/event")
-    public List<Event> listAllEvents() {
-        return eventService.listAllEvents();
+    public ResponseEntity<List<Event>> listAllEvents() {
+        List<Event> eventList = eventService.listAllEvents();
+        if (eventList == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(null);
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(eventList);
+        }
     }
 
     // get event by id
@@ -53,6 +72,10 @@ public class EventController {
     @PutMapping("/event/{id}")
     public ResponseEntity<Event> updateEvent(@PathVariable Long id, @RequestBody Event eventDetails) {
         Event event = eventService.updateEvent(id, eventDetails);
+        if (event == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(null);
+        }
         return ResponseEntity.status(HttpStatus.OK)
                 .body(event);
     }
