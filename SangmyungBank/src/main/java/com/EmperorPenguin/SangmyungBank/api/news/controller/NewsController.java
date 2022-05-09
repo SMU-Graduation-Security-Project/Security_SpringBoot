@@ -22,15 +22,15 @@ public class NewsController {
 
     // create news
     @PostMapping("/news")
-    public ResponseEntity<News> createNews(@RequestBody News news) {
+    public ResponseEntity<HttpStatus> createNews(@RequestBody News news) {
         news.setCreatedDate(LocalDateTime.now());
         News resultNews = newsService.createNews(news);
-        if (resultNews == null)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(resultNews);
-        else
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(resultNews);
+        if(resultNews == null) {
+            return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
+        }
+        else {
+            return ResponseEntity.ok(HttpStatus.OK);
+        }
     }
 //    public News createNews(@RequestBody News news) {
 //        news.setCreatedDate(LocalDateTime.now());
@@ -66,26 +66,25 @@ public class NewsController {
 
     // update news
     @PutMapping("/news/{id}")
-    public ResponseEntity<News> updateNews(@PathVariable Long id, @RequestBody News newsDetails) {
+    public ResponseEntity<HttpStatus> updateNews(@PathVariable Long id, @RequestBody News newsDetails) {
         News news = newsService.updateNews(id, newsDetails);
         if (news == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(null);
+            return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(news);
+        else {
+            return ResponseEntity.ok(HttpStatus.OK);
+        }
     }
 
     // delete news
     @DeleteMapping("/news/{id}")
-    public ResponseEntity<News> deleteNews(@PathVariable Long id) {
+    public ResponseEntity<HttpStatus> deleteNews(@PathVariable Long id) {
         News news = newsService.deleteNews(id);
         if (news == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(null);
-        } else {
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(null);
+            return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
+        }
+        else {
+            return ResponseEntity.ok(HttpStatus.OK);
         }
     }
 }
