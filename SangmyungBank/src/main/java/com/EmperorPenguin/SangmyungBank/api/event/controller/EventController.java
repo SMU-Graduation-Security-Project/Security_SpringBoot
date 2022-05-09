@@ -23,17 +23,15 @@ public class EventController {
 
     // create event
     @PostMapping("/event")
-    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
+    public ResponseEntity<HttpStatus> createEvent(@RequestBody Event event) {
         event.setCreatedDate(LocalDateTime.now());
         Event resultEvent = eventService.createEvent(event);
-        if(resultEvent == null)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(resultEvent);
-        else
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(resultEvent);
-
-
+        if(resultEvent == null) {
+            return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
+        }
+        else {
+            return ResponseEntity.ok(HttpStatus.OK);
+        }
     }
 //    public Event createEvent(@RequestBody Event event)
 //    {
@@ -71,27 +69,25 @@ public class EventController {
 
     // update event
     @PutMapping("/event/{id}")
-    public ResponseEntity<Event> updateEvent(@PathVariable Long id, @RequestBody Event eventDetails) {
+    public ResponseEntity<HttpStatus> updateEvent(@PathVariable Long id, @RequestBody Event eventDetails) {
         Event event = eventService.updateEvent(id, eventDetails);
         if (event == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(null);
+            return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(event);
+        else {
+            return ResponseEntity.ok(HttpStatus.OK);
+        }
     }
 
     // delete event
     @DeleteMapping("/event/{id}")
-    public ResponseEntity<Event> deleteEvent(@PathVariable Long id) {
+    public ResponseEntity<HttpStatus> deleteEvent(@PathVariable Long id) {
         Event event = eventService.deleteEvent(id);
         if (event == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(null);
+            return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
         }
         else {
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(null);
+            return ResponseEntity.ok(HttpStatus.OK);
         }
     }
 //    @DeleteMapping("/event/{id}")
