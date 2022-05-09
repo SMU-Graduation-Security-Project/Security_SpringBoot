@@ -19,11 +19,17 @@ public class NewsService {
     private NewsRepository newsRepository;
 
     public News createNews(@RequestBody News news) {
+
         return newsRepository.save(news);
     }
 
-    public List<News> listAllNews() {
-        return newsRepository.findAll();
+    public List<News> listAllNews()
+    {
+        List<News> newsList = newsRepository.findAll();
+        if(newsList.isEmpty())
+            return null;
+
+        return newsList;
     }
 
     public News getNewsById(@PathVariable Long id) {
@@ -36,12 +42,16 @@ public class NewsService {
     public News updateNews(@PathVariable Long id, @RequestBody News newsDetails) {
         News news = newsRepository.findById(id)
                 .orElse(null);
+        if (news != null) {
+            news.setTitle(newsDetails.getTitle());
+            news.setContent(newsDetails.getContent());
 
-        news.setTitle(newsDetails.getTitle());
-        news.setContent(newsDetails.getContent());
-
-        News updateNews = newsRepository.save(news);
-        return updateNews;
+            News updateNews = newsRepository.save(news);
+            return updateNews;
+        }
+        else {
+            return null;
+        }
     }
 
     public News deleteNews(@PathVariable Long id) {

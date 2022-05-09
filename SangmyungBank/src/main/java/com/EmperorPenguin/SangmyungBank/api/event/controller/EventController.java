@@ -27,7 +27,8 @@ public class EventController {
         event.setCreatedDate(LocalDateTime.now());
         Event resultEvent = eventService.createEvent(event);
         if(resultEvent == null)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resultEvent);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(resultEvent);
         else
             return ResponseEntity.status(HttpStatus.OK)
                     .body(resultEvent);

@@ -22,15 +22,33 @@ public class NewsController {
 
     // create news
     @PostMapping("/news")
-    public News createNews(@RequestBody News news) {
+    public ResponseEntity<News> createNews(@RequestBody News news) {
         news.setCreatedDate(LocalDateTime.now());
-        return newsService.createNews(news);
+        News resultNews = newsService.createNews(news);
+        if (resultNews == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(resultNews);
+        else
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(resultNews);
     }
+//    public News createNews(@RequestBody News news) {
+//        news.setCreatedDate(LocalDateTime.now());
+//        return newsService.createNews(news);
+//    }
 
     // list all news
     @GetMapping("/news")
-    public List<News> listAllNews() {
-        return newsService.listAllNews();
+    public ResponseEntity<List<News>> listAllNews() {
+        List<News> newsList = newsService.listAllNews();
+        if (newsList == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(null);
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(newsList);
+        }
     }
 
     // get news by id
@@ -50,6 +68,10 @@ public class NewsController {
     @PutMapping("/news/{id}")
     public ResponseEntity<News> updateNews(@PathVariable Long id, @RequestBody News newsDetails) {
         News news = newsService.updateNews(id, newsDetails);
+        if (news == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(null);
+        }
         return ResponseEntity.status(HttpStatus.OK)
                 .body(news);
     }
