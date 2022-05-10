@@ -1,6 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.api.securitynotices.controller;
 
-import com.EmperorPenguin.SangmyungBank.api.securitynotices.model.SecurityNotices;
+import com.EmperorPenguin.SangmyungBank.api.securitynotices.domain.securitynotices.SecurityNotices;
 import com.EmperorPenguin.SangmyungBank.api.securitynotices.service.SecurityNoticesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

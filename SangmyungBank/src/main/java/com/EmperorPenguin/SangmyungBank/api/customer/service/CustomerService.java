@@ -1,7 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.api.customer.service;
 
-import com.EmperorPenguin.SangmyungBank.api.customer.model.Customer;
-import com.EmperorPenguin.SangmyungBank.api.customer.repository.CustomerRepository;
+import com.EmperorPenguin.SangmyungBank.api.customer.domain.customer.Customer;
+import com.EmperorPenguin.SangmyungBank.api.customer.domain.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;

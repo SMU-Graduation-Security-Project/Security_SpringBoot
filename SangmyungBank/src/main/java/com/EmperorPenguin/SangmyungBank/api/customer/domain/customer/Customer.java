@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.api.news.model;
+package com.EmperorPenguin.SangmyungBank.api.customer.domain.customer;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
@@ -10,11 +10,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "News")
+@Table(name = "Customer")
 @Getter
 @Setter
 @NoArgsConstructor
-public class News {
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,6 +22,7 @@ public class News {
     @Column(columnDefinition = "text", nullable = false)
     private String title;
     private String content;
+    private String user;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @CreatedDate

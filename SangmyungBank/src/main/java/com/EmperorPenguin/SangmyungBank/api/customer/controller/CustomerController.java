@@ -1,6 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.api.customer.controller;
 
-import com.EmperorPenguin.SangmyungBank.api.customer.model.Customer;
+import com.EmperorPenguin.SangmyungBank.api.customer.domain.customer.Customer;
 import com.EmperorPenguin.SangmyungBank.api.customer.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

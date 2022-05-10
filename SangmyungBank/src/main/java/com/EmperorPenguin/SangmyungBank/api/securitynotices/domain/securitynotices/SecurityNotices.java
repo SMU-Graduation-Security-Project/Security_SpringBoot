@@ -1,5 +1,6 @@
-package com.EmperorPenguin.SangmyungBank.api.securitynotices.model;
+package com.EmperorPenguin.SangmyungBank.api.securitynotices.domain.securitynotices;
 
+import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,9 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class SecurityNotices {
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(name="loginId")
+    private User loginId;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

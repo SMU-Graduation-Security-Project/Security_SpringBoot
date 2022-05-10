@@ -1,17 +1,14 @@
 package com.EmperorPenguin.SangmyungBank.api.event.controller;
 
-import com.EmperorPenguin.SangmyungBank.api.event.model.Event;
+import com.EmperorPenguin.SangmyungBank.api.event.domain.event.Event;
 import com.EmperorPenguin.SangmyungBank.api.event.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController

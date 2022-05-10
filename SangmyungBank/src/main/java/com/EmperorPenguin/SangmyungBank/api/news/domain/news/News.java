@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.api.event.model;
+package com.EmperorPenguin.SangmyungBank.api.news.domain.news;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
@@ -10,11 +10,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Event")
+@Table(name = "News")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Event {
+public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

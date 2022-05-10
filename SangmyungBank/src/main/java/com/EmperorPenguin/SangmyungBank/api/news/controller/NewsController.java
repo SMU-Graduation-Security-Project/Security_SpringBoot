@@ -1,17 +1,14 @@
 package com.EmperorPenguin.SangmyungBank.api.news.controller;
 
-import com.EmperorPenguin.SangmyungBank.api.event.model.Event;
-import com.EmperorPenguin.SangmyungBank.api.news.model.News;
+import com.EmperorPenguin.SangmyungBank.api.news.domain.news.News;
 import com.EmperorPenguin.SangmyungBank.api.news.service.NewsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
