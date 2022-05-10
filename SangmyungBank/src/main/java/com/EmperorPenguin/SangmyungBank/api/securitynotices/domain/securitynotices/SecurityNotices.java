@@ -16,9 +16,6 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class SecurityNotices {
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(name="loginId")
-    private User loginId;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

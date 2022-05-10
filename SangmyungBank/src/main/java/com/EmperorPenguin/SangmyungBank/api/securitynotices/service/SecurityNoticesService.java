@@ -2,6 +2,7 @@ package com.EmperorPenguin.SangmyungBank.api.securitynotices.service;
 
 import com.EmperorPenguin.SangmyungBank.api.securitynotices.domain.securitynotices.SecurityNotices;
 import com.EmperorPenguin.SangmyungBank.api.securitynotices.domain.repository.SecurityNoticesRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
