@@ -21,13 +21,8 @@ public class SecurityNoticesController {
     @PostMapping("/securitynotices")
     public ResponseEntity<HttpStatus> createSecurityNotice(@RequestBody SecurityNotices securityNotices) {
         securityNotices.setCreatedDate(LocalDateTime.now());
-        SecurityNotices resultSecurityNotice = securityNoticesService.createSecurityNotice(securityNotices);
-        if(resultSecurityNotice == null) {
-            return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
-        }
-        else {
-            return ResponseEntity.ok(HttpStatus.OK);
-        }
+        securityNoticesService.createSecurityNotice(securityNotices);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     // list all events
