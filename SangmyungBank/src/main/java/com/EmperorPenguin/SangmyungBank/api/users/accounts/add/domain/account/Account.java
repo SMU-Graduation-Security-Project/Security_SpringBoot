@@ -1,6 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.api.users.accounts.add.domain.account;
 
-import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
+import com.EmperorPenguin.SangmyungBank.api.users.register.domain.User.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

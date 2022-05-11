@@ -1,6 +1,6 @@
-package com.EmperorPenguin.SangmyungBank.api.users.add.domain.repository;
+package com.EmperorPenguin.SangmyungBank.api.users.register.domain.repository;
 
-import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
+import com.EmperorPenguin.SangmyungBank.api.users.register.domain.User.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class UserAddRepository {
+public class UserRegisterRepository {
 
     private final EntityManager em;
 
-    public UserAddRepository(EntityManager em) {
+    public UserRegisterRepository(EntityManager em) {
         this.em = em;
     }
 

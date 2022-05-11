@@ -1,7 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.api.users.login.service;
 
 
-import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
+import com.EmperorPenguin.SangmyungBank.api.users.register.domain.User.User;
 import com.EmperorPenguin.SangmyungBank.api.users.login.domain.loginForm.LoginForm;
 import com.EmperorPenguin.SangmyungBank.api.users.login.domain.repository.UserLoginRepository;
 import org.springframework.stereotype.Service;
