@@ -1,5 +1,6 @@
-package com.EmperorPenguin.SangmyungBank.api.event.model;
+package com.EmperorPenguin.SangmyungBank.api.customer.domain.customer;
 
+import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,11 +11,14 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Event")
+@Table(name = "Customer")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Event {
+public class Customer {
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(name="loginId")
+    private User loginId;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,6 +26,7 @@ public class Event {
     @Column(columnDefinition = "text", nullable = false)
     private String title;
     private String content;
+    private String user;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @CreatedDate
