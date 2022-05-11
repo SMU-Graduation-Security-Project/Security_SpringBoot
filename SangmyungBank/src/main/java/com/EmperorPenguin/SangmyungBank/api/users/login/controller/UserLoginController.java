@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.EmperorPenguin.SangmyungBank.api.users.login.service.SessionService;
-import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
+import com.EmperorPenguin.SangmyungBank.api.users.register.domain.User.User;
 import javax.servlet.http.HttpServletResponse;
 
 

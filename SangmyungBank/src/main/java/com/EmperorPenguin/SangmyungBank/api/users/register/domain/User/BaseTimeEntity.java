@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.api.users.add.domain.User;
+package com.EmperorPenguin.SangmyungBank.api.users.register.domain.User;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

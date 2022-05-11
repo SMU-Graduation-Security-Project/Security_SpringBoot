@@ -1,6 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.api.users.login.domain.repository;
 
-import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
+import com.EmperorPenguin.SangmyungBank.api.users.register.domain.User.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

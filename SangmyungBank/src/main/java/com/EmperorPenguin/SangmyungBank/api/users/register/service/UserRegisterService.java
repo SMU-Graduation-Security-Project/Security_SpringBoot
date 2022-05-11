@@ -1,8 +1,8 @@
-package com.EmperorPenguin.SangmyungBank.api.users.add.service;
+package com.EmperorPenguin.SangmyungBank.api.users.register.service;
 
-import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.Role;
-import com.EmperorPenguin.SangmyungBank.api.users.add.domain.User.User;
-import com.EmperorPenguin.SangmyungBank.api.users.add.domain.repository.UserAddRepository;
+import com.EmperorPenguin.SangmyungBank.api.users.register.domain.User.Role;
+import com.EmperorPenguin.SangmyungBank.api.users.register.domain.User.User;
+import com.EmperorPenguin.SangmyungBank.api.users.register.domain.repository.UserRegisterRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -10,31 +10,31 @@ import javax.transaction.Transactional;
 
 @Transactional
 @Service
-public class UserAddService {
+public class UserRegisterService {
 
-    private final UserAddRepository userAddRepository;
+    private final UserRegisterRepository userRegisterRepository;
 //    private final PasswordEncoder passwordEncoder;
 
-    public UserAddService(UserAddRepository userAddRepository ) {
-        this.userAddRepository = userAddRepository;
+    public UserRegisterService(UserRegisterRepository userRegisterRepository) {
+        this.userRegisterRepository = userRegisterRepository;
     }
 
     // Id를 통해 DB에 있는지 검색을 하고 있다면 존재한다는 error를 발생
     // 아니라면 등록과정을 진행한다.
     public boolean ValidateDuplicateUserId(String saveUser) {
-        User user = userAddRepository.findByLoginId(saveUser)
+        User user = userRegisterRepository.findByLoginId(saveUser)
                 .orElse(null);
         return user == null;
     }
 
     // 사용자 이메일에 대한 검증을 진행
     public boolean ValidateDuplicateEmail(String email){
-        return userAddRepository.RepeatEmailCheck(email);
+        return userRegisterRepository.RepeatEmailCheck(email);
     }
 
     // 사용자 전화번호에 대한 검증을 진행
     public boolean ValidateDuplicatePhoneNumber(String PhoneNumber) {
-        return userAddRepository.RepeatPhoneNumber(PhoneNumber);
+        return userRegisterRepository.RepeatPhoneNumber(PhoneNumber);
     }
 
     /*
@@ -47,13 +47,13 @@ public class UserAddService {
         {
             //        String encodedPassword = passwordEncoder.encode(password);
             savedUser.setRole(Role.USER);
-            return userAddRepository.save(savedUser);
+            return userRegisterRepository.save(savedUser);
         }
         else
             return null;
     }
 
     public Optional<User> findOne(String loginId) {
-        return userAddRepository.findByLoginId(loginId);
+        return userRegisterRepository.findByLoginId(loginId);
     }
 }
