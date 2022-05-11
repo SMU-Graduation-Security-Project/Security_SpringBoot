@@ -21,13 +21,8 @@ public class NewsController {
     @PostMapping("/news")
     public ResponseEntity<HttpStatus> createNews(@RequestBody News news) {
         news.setCreatedDate(LocalDateTime.now());
-        News resultNews = newsService.createNews(news);
-        if(resultNews == null) {
-            return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
-        }
-        else {
-            return ResponseEntity.ok(HttpStatus.OK);
-        }
+        newsService.createNews(news);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 //    public News createNews(@RequestBody News news) {
 //        news.setCreatedDate(LocalDateTime.now());

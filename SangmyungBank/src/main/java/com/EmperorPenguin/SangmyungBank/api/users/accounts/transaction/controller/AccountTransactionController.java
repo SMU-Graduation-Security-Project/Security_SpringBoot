@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/users/accounts")
 @RestController
-public class TransactionController {
+public class AccountTransactionController {
 
     private final AccountTransactionService accountTransactionService;
 

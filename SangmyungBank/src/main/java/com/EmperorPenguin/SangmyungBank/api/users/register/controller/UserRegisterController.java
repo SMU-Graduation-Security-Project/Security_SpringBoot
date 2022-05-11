@@ -17,8 +17,8 @@ public class UserRegisterController {
 
     private final UserRegisterService userRegisterService;
 
-    @PostMapping(path="/add")
-    public ResponseEntity<HttpStatus> addUser(@RequestBody User user)
+    @PostMapping(path="/register")
+    public ResponseEntity<HttpStatus> RegisterUser(@RequestBody User user)
     {
         user.setCreatedDate(LocalDateTime.now());
         user.setModifiedDate(LocalDateTime.now());

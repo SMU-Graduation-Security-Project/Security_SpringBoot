@@ -22,13 +22,8 @@ public class EventController {
     @PostMapping("/event")
     public ResponseEntity<HttpStatus> createEvent(@RequestBody Event event) {
         event.setCreatedDate(LocalDateTime.now());
-        Event resultEvent = eventService.createEvent(event);
-        if(resultEvent == null) {
-            return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
-        }
-        else {
-            return ResponseEntity.ok(HttpStatus.OK);
-        }
+        eventService.createEvent(event);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 //    public Event createEvent(@RequestBody Event event)
 //    {
