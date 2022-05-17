@@ -1,10 +1,9 @@
 package com.EmperorPenguin.SangmyungBank.baseUtil.dto;
 
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 
 @Data
 public class BaseResult {
-    boolean success;
-    int code;
     String message;
 }
