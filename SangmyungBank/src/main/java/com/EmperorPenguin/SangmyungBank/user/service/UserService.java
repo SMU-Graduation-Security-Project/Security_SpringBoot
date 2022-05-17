@@ -1,5 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.user.service;
 
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.UserException;
 import com.EmperorPenguin.SangmyungBank.user.dto.UserLoginReq;
@@ -64,7 +65,7 @@ public class UserService {
         if (!passwordEncoder.matches(userLoginReq.getPassword(), user.getPassword())){
             throw new UserException(ExceptionMessages.ERROR_USER_PASSWORD);
         }
-
+        userRepository.updateLoginDate(new DateConfig().getDateTime(), userLoginReq.getLoginId());
         // HttpSession Or JWT 도입예정.
     }
 
