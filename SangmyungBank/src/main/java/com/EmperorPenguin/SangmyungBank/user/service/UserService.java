@@ -69,7 +69,7 @@ public class UserService {
     }
 
     private void checkUserPassword(String password1, String password2) {
-        // Password의 규칙은 영문자, 특수문자를 포함 8~20이하이다.
+        // Password 규칙은 영문자, 특수문자를 포함 8~20이하이다.
         Pattern passwordExpression = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$");
         if (!passwordExpression.matcher(password1).matches()) {
             throw new UserException(ExceptionMessages.ERROR_USER_PASSWORD_FORMAT);

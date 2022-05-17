@@ -25,10 +25,10 @@ public class ResponseService {
         return singleResult;
     }
 
-    public <T> ListResult<T> listResult(T data){
+    public <T> ListResult<T> listResult(List<T> data){
         ListResult<T> listResult = new ListResult<>();
         setOk(listResult);
-        listResult.getData(data);
+        listResult.setData(data);
         return listResult;
     }
 
