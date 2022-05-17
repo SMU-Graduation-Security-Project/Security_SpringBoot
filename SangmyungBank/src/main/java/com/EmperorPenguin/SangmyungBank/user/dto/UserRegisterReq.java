@@ -1,5 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.user.dto;
 
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.user.entity.Role;
 import com.EmperorPenguin.SangmyungBank.user.entity.User;
 import io.swagger.annotations.ApiModelProperty;
@@ -12,16 +13,18 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class UserReq {
+public class UserRegisterReq {
 
     @ApiModelProperty(required = true)
     private String loginId;
     @ApiModelProperty(required = true)
-    private String email;
+    private String password1;
+    @ApiModelProperty(required = true)
+    private String password2;
     @ApiModelProperty(required = true)
     private String name;
     @ApiModelProperty(required = true)
-    private String password;
+    private String email;
     @ApiModelProperty(required = true)
     private int age;
     @ApiModelProperty(required = true)
@@ -39,6 +42,8 @@ public class UserReq {
                 .age(age)
                 .sex(sex)
                 .phoneNumber(phoneNumber)
+                .registerDate(new DateConfig().getDateTime())
+                .modifyDate(new DateConfig().getDateTime())
                 .role(defaultRole)
                 .build();
     }

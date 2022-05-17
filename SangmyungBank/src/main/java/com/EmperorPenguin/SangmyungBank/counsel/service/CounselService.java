@@ -3,14 +3,11 @@ package com.EmperorPenguin.SangmyungBank.counsel.service;
 import com.EmperorPenguin.SangmyungBank.counsel.domain.counsel.Counsel;
 import com.EmperorPenguin.SangmyungBank.api.counsel.domain.counselForm.CounselForm;
 import com.EmperorPenguin.SangmyungBank.counsel.domain.repository.CounselRepository;
-import com.EmperorPenguin.SangmyungBank.users.login.domain.repository.UserLoginRepository;
-import com.EmperorPenguin.SangmyungBank.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -18,21 +15,6 @@ public class CounselService {
 
     @Autowired
     private CounselRepository counselRepository;
-    @Autowired
-    private UserLoginRepository userLoginRepository;
-
-    public Counsel createCounsel(CounselForm counselForm)
-    {
-        User saveUser = userLoginRepository.findByLoginId(counselForm.getLoginId()).get();
-        Counsel saveCounsel = Counsel.builder()
-                .loginId(saveUser)
-                .title(counselForm.getTitle())
-                .content(counselForm.getContent())
-                .build();
-        saveCounsel.setCreatedDate(LocalDateTime.now());
-        saveCounsel.setUser(saveUser.getName());
-        return counselRepository.save(saveCounsel);
-    }
 
     public List<Counsel> listAllCounsel() {
         List<Counsel> counselList = counselRepository.findAll();

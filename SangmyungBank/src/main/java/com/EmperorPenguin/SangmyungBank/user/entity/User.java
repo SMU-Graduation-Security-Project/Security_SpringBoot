@@ -1,6 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.user.entity;
 
-import com.EmperorPenguin.SangmyungBank.user.dto.UserRes;
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
+import com.EmperorPenguin.SangmyungBank.user.dto.UserRegisterReq;
 import lombok.*;
 
 import javax.persistence.*;
@@ -44,17 +45,16 @@ public class User{
     @Column
     private String modifyDate;
 
-    public UserRes toDto(){
-        return UserRes.builder()
-                .userId(userId)
-                .loginId(loginId)
-                .name(name)
-                .phoneNumber(phoneNumber)
-                .loginDate(loginDate)
-                .modifyDate(modifyDate)
-                .role(role)
-                .build();
-    }
+//    public UserRegisterReq toDto(){
+//        return UserRegisterReq.builder()
+//                .loginId(loginId)
+//                .email(email)
+//                .name(name)
+//                .age(age)
+//                .sex(sex)
+//                .phoneNumber(phoneNumber)
+//                .build();
+//    }
 
     public String getRoleKey(){
         return this.role.getKey();
