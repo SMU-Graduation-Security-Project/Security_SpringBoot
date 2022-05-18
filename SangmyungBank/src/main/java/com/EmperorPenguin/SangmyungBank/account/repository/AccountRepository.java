@@ -5,7 +5,6 @@ import com.EmperorPenguin.SangmyungBank.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,5 +22,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Modifying()
     @Query("update Account a set a.balance = a.balance + ?1 where a.accountNumber = ?2")
-    void updateBalance(Long transactionAmount,  Long sendAccountNumber);
+    void updateBalance(Long balance,  Long sendAccountNumber);
 }
