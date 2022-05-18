@@ -46,8 +46,7 @@ public class UserController {
         // refactoring 이후 Exception 통한 예외처리로 로직 변경
         // 없는 아이디, 잘못된 비밀번호에서 오류 발생.
         try{
-            userService.login(userLoginReq);
-            return responseService.successResult();
+            return responseService.singleResult(userService.login(userLoginReq).toDto());
         }catch (Exception e){
             return responseService.failResult(
                     e.getMessage()

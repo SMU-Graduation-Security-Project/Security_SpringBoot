@@ -1,6 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.user.entity;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
+import com.EmperorPenguin.SangmyungBank.user.dto.UserLoginRes;
 import com.EmperorPenguin.SangmyungBank.user.dto.UserRegisterReq;
 import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -46,16 +47,13 @@ public class User{
     @Column
     private String modifyDate;
 
-//    public UserRegisterReq toDto(){
-//        return UserRegisterReq.builder()
-//                .loginId(loginId)
-//                .email(email)
-//                .name(name)
-//                .age(age)
-//                .sex(sex)
-//                .phoneNumber(phoneNumber)
-//                .build();
-//    }
+    public UserLoginRes toDto(){
+        return UserLoginRes.builder()
+                .loginId(loginId)
+                .name(name)
+                .loginDate(loginDate)
+                .build();
+    }
 
     public String getRoleKey(){
         return this.role.getKey();

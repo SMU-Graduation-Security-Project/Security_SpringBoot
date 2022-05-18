@@ -57,7 +57,7 @@ public class UserService {
 
     }
     @Transactional
-    public void login(UserLoginReq userLoginReq)
+    public User login(UserLoginReq userLoginReq)
     {
         User user = userRepository
                 .findByLoginId(userLoginReq.getLoginId())
@@ -67,6 +67,10 @@ public class UserService {
         }
         userRepository.updateLoginDate(new DateConfig().getDateTime(), userLoginReq.getLoginId());
         // HttpSession Or JWT 도입예정.
+
+        return userRepository
+                .findByLoginId(userLoginReq.getLoginId())
+                .orElseThrow(() -> new UserException(ExceptionMessages.ERROR_UNDEFINED));
     }
 
     private void checkUserPassword(String password1, String password2) {
