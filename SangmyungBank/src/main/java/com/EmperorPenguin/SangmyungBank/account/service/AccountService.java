@@ -1,6 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.account.service;
 
 import com.EmperorPenguin.SangmyungBank.account.dto.AccountCreateReq;
+import com.EmperorPenguin.SangmyungBank.account.dto.AccountInquiryRes;
 import com.EmperorPenguin.SangmyungBank.account.dto.TransactionReq;
 import com.EmperorPenguin.SangmyungBank.account.entity.Account;
 import com.EmperorPenguin.SangmyungBank.account.repository.AccountRepository;
@@ -13,7 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -79,6 +82,19 @@ public class AccountService {
             e.printStackTrace();
             throw new AccountException("계좌이체에 실패했습니다.");
         }
+    }
+
+    @Transactional
+    public List<AccountInquiryRes> inquiry(String loginId) {
+        // 정확한 사용자를 넘겨줬는지 확인
+        if (userRepository.findByLoginId(loginId).isEmpty()) {
+            throw new AccountException(ExceptionMessages.ERROR_USER_NOT_FOUND);
+        }
+        return accountRepository
+                .findAllByUserId(userRepository.findByLoginId(loginId).get())
+                .stream()
+                .map(Account::toDto)
+                .collect(Collectors.toList());
     }
 
     private void checkPassword(String password)

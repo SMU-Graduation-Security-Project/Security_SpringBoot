@@ -10,13 +10,11 @@ import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@Api(tags = "계좌 생성, 계좌이체")
+@Api(tags = "계좌 생성, 계좌이체, 전계좌 조회")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users/accounts")
@@ -43,6 +41,18 @@ public class AccountController {
         try {
             accountService.transaction(transactionReq);
             return responseService.successResult();
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
+        }
+    }
+
+    @GetMapping(path = "/inquiry")
+    @ApiOperation(value = "전계좌 조회")
+    public BaseResult inquiry(@ApiParam @RequestParam String userId) {
+        try {
+            return responseService.listResult(accountService.inquiry(userId));
         }catch (Exception e){
             return responseService.failResult(
                     e.getMessage()
