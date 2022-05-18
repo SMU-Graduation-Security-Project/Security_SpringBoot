@@ -1,7 +1,7 @@
-package com.EmperorPenguin.SangmyungBank.api.news.controller;
+package com.EmperorPenguin.SangmyungBank.news.controller;
 
-import com.EmperorPenguin.SangmyungBank.api.news.domain.news.News;
-import com.EmperorPenguin.SangmyungBank.api.news.service.NewsService;
+import com.EmperorPenguin.SangmyungBank.news.domain.news.News;
+import com.EmperorPenguin.SangmyungBank.news.service.NewsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

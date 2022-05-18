@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.api.securitynotices.domain.securitynotices;
+package com.EmperorPenguin.SangmyungBank.securitynotices.domain.securitynotices;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

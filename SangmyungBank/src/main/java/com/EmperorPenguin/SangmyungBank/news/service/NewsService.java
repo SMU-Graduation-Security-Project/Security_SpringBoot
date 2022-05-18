@@ -1,7 +1,7 @@
-package com.EmperorPenguin.SangmyungBank.api.news.service;
+package com.EmperorPenguin.SangmyungBank.news.service;
 
-import com.EmperorPenguin.SangmyungBank.api.news.domain.news.News;
-import com.EmperorPenguin.SangmyungBank.api.news.domain.repository.NewsRepository;
+import com.EmperorPenguin.SangmyungBank.news.domain.news.News;
+import com.EmperorPenguin.SangmyungBank.news.domain.repository.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.api.event.domain.event;
+package com.EmperorPenguin.SangmyungBank.event.domain.event;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

@@ -1,7 +1,7 @@
-package com.EmperorPenguin.SangmyungBank.api.event.service;
+package com.EmperorPenguin.SangmyungBank.event.service;
 
-import com.EmperorPenguin.SangmyungBank.api.event.domain.event.Event;
-import com.EmperorPenguin.SangmyungBank.api.event.domain.repository.EventRepository;
+import com.EmperorPenguin.SangmyungBank.event.domain.event.Event;
+import com.EmperorPenguin.SangmyungBank.event.domain.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;

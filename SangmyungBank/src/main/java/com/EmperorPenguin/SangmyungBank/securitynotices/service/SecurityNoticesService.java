@@ -1,7 +1,7 @@
-package com.EmperorPenguin.SangmyungBank.api.securitynotices.service;
+package com.EmperorPenguin.SangmyungBank.securitynotices.service;
 
-import com.EmperorPenguin.SangmyungBank.api.securitynotices.domain.securitynotices.SecurityNotices;
-import com.EmperorPenguin.SangmyungBank.api.securitynotices.domain.repository.SecurityNoticesRepository;
+import com.EmperorPenguin.SangmyungBank.securitynotices.domain.securitynotices.SecurityNotices;
+import com.EmperorPenguin.SangmyungBank.securitynotices.domain.repository.SecurityNoticesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

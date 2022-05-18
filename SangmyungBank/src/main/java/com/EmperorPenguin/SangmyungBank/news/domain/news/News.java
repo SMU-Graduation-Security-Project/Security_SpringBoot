@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.api.news.domain.news;
+package com.EmperorPenguin.SangmyungBank.news.domain.news;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

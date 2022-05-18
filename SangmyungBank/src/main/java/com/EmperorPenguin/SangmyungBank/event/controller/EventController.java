@@ -1,7 +1,7 @@
-package com.EmperorPenguin.SangmyungBank.api.event.controller;
+package com.EmperorPenguin.SangmyungBank.event.controller;
 
-import com.EmperorPenguin.SangmyungBank.api.event.domain.event.Event;
-import com.EmperorPenguin.SangmyungBank.api.event.service.EventService;
+import com.EmperorPenguin.SangmyungBank.event.domain.event.Event;
+import com.EmperorPenguin.SangmyungBank.event.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
