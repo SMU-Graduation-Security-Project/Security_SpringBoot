@@ -9,6 +9,6 @@ import java.time.format.DateTimeFormatter;
 @Configuration
 public class DateConfig {
     public String getDateTime(){
-        return LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd- HH:mm:ss"));
+        return LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm:ss"));
     }
 }

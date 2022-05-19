@@ -1,82 +1,84 @@
 package com.EmperorPenguin.SangmyungBank.news.controller;
 
-import com.EmperorPenguin.SangmyungBank.news.domain.news.News;
+import com.EmperorPenguin.SangmyungBank.baseUtil.dto.BaseResult;
+import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
+import com.EmperorPenguin.SangmyungBank.news.dto.NewsCreateReq;
+import com.EmperorPenguin.SangmyungBank.news.dto.NewsUpdateReq;
 import com.EmperorPenguin.SangmyungBank.news.service.NewsService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
+@Api(tags="새소식 생성, 모든 새소식 가저오기, 특정 새소식 가져오기, 새소식 업데이트, 새소식 삭제")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cont")
 public class NewsController {
 
     private final NewsService newsService;
+    private final ResponseService responseService;
 
-    // create news
     @PostMapping("/news")
-    public ResponseEntity<HttpStatus> createNews(@RequestBody News news) {
-        news.setCreatedDate(LocalDateTime.now());
-        newsService.createNews(news);
-        return ResponseEntity.ok(HttpStatus.OK);
+    @ApiOperation(value="새소식 생성")
+    public BaseResult createNews(@RequestBody NewsCreateReq newsCreateReq) {
+        try {
+            newsService.createNews(newsCreateReq);
+            return responseService.successResult();
+        } catch (Exception e) {
+            return responseService.failResult(
+                    e.getMessage()
+            );
+        }
     }
-//    public News createNews(@RequestBody News news) {
-//        news.setCreatedDate(LocalDateTime.now());
-//        return newsService.createNews(news);
-//    }
 
-    // list all news
     @GetMapping("/news")
-    public ResponseEntity<List<News>> listAllNews() {
-        List<News> newsList = newsService.listAllNews();
-        if (newsList == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(null);
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(newsList);
+    @ApiOperation(value="새소식 모두 가져오기")
+    public BaseResult listAllNews() {
+        try {
+            return responseService.listResult(newsService.allNewsRequest());
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
         }
     }
 
-    // get news by id
     @GetMapping("/news/{id}")
-    public ResponseEntity<News> getNewsById(@PathVariable Long id) {
-        News news = newsService.getNewsById(id);
-        if (news == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(null);
-        } else {
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(news);
+    @ApiOperation(value="특정 새소식 가져오기")
+    public BaseResult getNewsById(@PathVariable Long id) {
+        try {
+            return responseService.singleResult(newsService.getNewRequest(id));
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
         }
     }
 
-    // update news
     @PutMapping("/news/{id}")
-    public ResponseEntity<HttpStatus> updateNews(@PathVariable Long id, @RequestBody News newsDetails) {
-        News news = newsService.updateNews(id, newsDetails);
-        if (news == null) {
-            return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
-        }
-        else {
-            return ResponseEntity.ok(HttpStatus.OK);
+    @ApiOperation(value="새소식 업데이트")
+    public BaseResult updateNews(@RequestBody NewsUpdateReq newsUpdateReq) {
+        try {
+            newsService.updateNews(newsUpdateReq);
+            return responseService.successResult();
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
         }
     }
 
-    // delete news
     @DeleteMapping("/news/{id}")
-    public ResponseEntity<HttpStatus> deleteNews(@PathVariable Long id) {
-        News news = newsService.deleteNews(id);
-        if (news == null) {
-            return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
-        }
-        else {
-            return ResponseEntity.ok(HttpStatus.OK);
+    @ApiOperation(value="새소식 삭제")
+    public BaseResult deleteNews(@PathVariable Long id) {
+        try {
+            newsService.deleteNews(id);
+            return responseService.successResult();
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
         }
     }
 }

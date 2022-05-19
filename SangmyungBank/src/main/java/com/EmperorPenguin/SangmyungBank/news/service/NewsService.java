@@ -1,65 +1,80 @@
 package com.EmperorPenguin.SangmyungBank.news.service;
 
-import com.EmperorPenguin.SangmyungBank.news.domain.news.News;
-import com.EmperorPenguin.SangmyungBank.news.domain.repository.NewsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.NewsException;
+import com.EmperorPenguin.SangmyungBank.news.dto.NewsCreateReq;
+import com.EmperorPenguin.SangmyungBank.news.dto.NewsRequestRes;
+import com.EmperorPenguin.SangmyungBank.news.dto.NewsUpdateReq;
+import com.EmperorPenguin.SangmyungBank.news.entity.News;
+import com.EmperorPenguin.SangmyungBank.news.repository.NewsRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class NewsService {
 
-    @Autowired
-    private NewsRepository newsRepository;
+    private final NewsRepository newsRepository;
 
-    public News createNews(@RequestBody News news) {
-
-        return newsRepository.save(news);
-    }
-
-    public List<News> listAllNews()
-    {
-        List<News> newsList = newsRepository.findAll();
-        if(newsList.isEmpty())
-            return null;
-
-        return newsList;
-    }
-
-    public News getNewsById(@PathVariable Long id) {
-        News news = newsRepository.findById(id)
-                .orElse(null);
-
-        return news;
-    }
-
-    public News updateNews(@PathVariable Long id, @RequestBody News newsDetails) {
-        News news = newsRepository.findById(id)
-                .orElse(null);
-        if (news != null) {
-            news.setTitle(newsDetails.getTitle());
-            news.setContent(newsDetails.getContent());
-
-            News updateNews = newsRepository.save(news);
-            return updateNews;
+    @Transactional
+    public void createNews(NewsCreateReq newsCreateReq) {
+        if(newsRepository.findByTitle(newsCreateReq.getTitle()).isPresent()){
+            throw new NewsException(ExceptionMessages.ERROR_NEWS_EXIST);
         }
-        else {
-            return null;
+        try{
+            newsRepository.save(newsCreateReq.toEntity());
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new NewsException("새소식 생성에 실패했습니다.");
         }
     }
 
-    public News deleteNews(@PathVariable Long id) {
-        News news = newsRepository.findById(id)
-                .orElse(null);
+    @Transactional
+    public List<NewsRequestRes> allNewsRequest() {
+        return newsRepository.findAll()
+                .stream()
+                .map(News::toDto)
+                .collect(Collectors.toList());
+    }
 
-        if (news != null) {
-            newsRepository.delete(news);
-            return news;
-        } else {
-            return null;
+    @Transactional
+    public News getNewRequest(Long id) {
+        if(!newsRepository.existsById(id)){
+            throw new NewsException(ExceptionMessages.ERROR_NEWS_NOT_EXIST);
+        }
+        return newsRepository
+                .findById(id)
+                .orElseThrow(() -> new NewsException(ExceptionMessages.ERROR_UNDEFINED));
+    }
+
+    @Transactional
+    public void updateNews(NewsUpdateReq newsUpdateReq) {
+        if(!newsRepository.existsById(newsUpdateReq.getId())){
+            throw new NewsException(ExceptionMessages.ERROR_NEWS_NOT_EXIST);
+        }
+        try {
+            newsRepository.updateNews(newsUpdateReq.getId(),newsUpdateReq.getTitle(),newsUpdateReq.getContext());
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new NewsException("새소식 업데이트에 실패했습니다.");
+        }
+
+    }
+
+    @Transactional
+    public void deleteNews(Long id) {
+        if(!newsRepository.existsById(id)){
+            throw new NewsException(ExceptionMessages.ERROR_NEWS_NOT_EXIST);
+        }
+        try{
+            newsRepository.deleteById(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new NewsException("새소식 삭제에 실패했습니다.");
         }
     }
 }
