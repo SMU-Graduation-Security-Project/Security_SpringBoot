@@ -14,4 +14,5 @@ public class UserLoginRes {
     private String loginId;
     private String name;
     private String loginDate;
+    private boolean usingTempPassword;
 }

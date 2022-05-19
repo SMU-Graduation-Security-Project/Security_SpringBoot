@@ -47,11 +47,15 @@ public class User{
     @Column
     private String modifyDate;
 
+    @Column
+    private boolean usingTempPassword;
+
     public UserLoginRes toDto(){
         return UserLoginRes.builder()
                 .loginId(loginId)
                 .name(name)
                 .loginDate(loginDate)
+                .usingTempPassword(usingTempPassword)
                 .build();
     }
 

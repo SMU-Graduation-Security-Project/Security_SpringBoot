@@ -44,6 +44,7 @@ public class UserRegisterReq {
                 .phoneNumber(phoneNumber)
                 .registerDate(new DateConfig().getDateTime())
                 .modifyDate(new DateConfig().getDateTime())
+                .usingTempPassword(false)
                 .role(defaultRole)
                 .build();
     }

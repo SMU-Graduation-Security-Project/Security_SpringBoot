@@ -73,6 +73,11 @@ public class UserService {
                 .orElseThrow(() -> new UserException(ExceptionMessages.ERROR_UNDEFINED));
     }
 
+    @Transactional
+    public void updatePassword(){
+        ;
+    }
+
     private void checkUserPassword(String password1, String password2) {
         // Password 규칙은 영문자, 특수문자를 포함 8~20이하이다.
         Pattern passwordExpression = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$");
