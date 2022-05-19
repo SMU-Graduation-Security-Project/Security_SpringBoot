@@ -2,15 +2,12 @@ package com.EmperorPenguin.SangmyungBank.account.controller;
 
 import com.EmperorPenguin.SangmyungBank.account.dto.AccountCreateReq;
 import com.EmperorPenguin.SangmyungBank.account.dto.TransactionReq;
-import com.EmperorPenguin.SangmyungBank.account.entity.Account;
-import com.EmperorPenguin.SangmyungBank.account.repository.AccountRepository;
 import com.EmperorPenguin.SangmyungBank.account.service.AccountService;
 import com.EmperorPenguin.SangmyungBank.baseUtil.dto.BaseResult;
 import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
