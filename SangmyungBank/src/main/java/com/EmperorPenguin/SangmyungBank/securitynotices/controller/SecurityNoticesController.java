@@ -1,80 +1,86 @@
 package com.EmperorPenguin.SangmyungBank.securitynotices.controller;
 
-import com.EmperorPenguin.SangmyungBank.securitynotices.domain.securitynotices.SecurityNotices;
+import com.EmperorPenguin.SangmyungBank.baseUtil.dto.BaseResult;
+import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
+import com.EmperorPenguin.SangmyungBank.securitynotices.dto.SecurityNoticeCreateReq;
+import com.EmperorPenguin.SangmyungBank.securitynotices.dto.SecurityNoticeUpdateReq;
 import com.EmperorPenguin.SangmyungBank.securitynotices.service.SecurityNoticesService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.List;
 
+@Api(tags="보안공지 생성, 보안공지 모두 가져오기, 특정 보안공지 가져오기, 보안공지 업데이트, 보안공지 삭제")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cont")
 public class SecurityNoticesController {
 
     private final SecurityNoticesService securityNoticesService;
+    private final ResponseService responseService;
 
-    // create security notice
-    @PostMapping("/securitynotices")
-    public ResponseEntity<HttpStatus> createSecurityNotice(@RequestBody SecurityNotices securityNotices) {
-        securityNotices.setCreatedDate(LocalDateTime.now());
-        securityNoticesService.createSecurityNotice(securityNotices);
-        return ResponseEntity.ok(HttpStatus.OK);
-    }
-
-    // list all events
-    @GetMapping("/securitynotices")
-    public ResponseEntity<List<SecurityNotices>> listAllSecurityNotices() {
-        List<SecurityNotices> securityNoticesList = securityNoticesService.listAllSecurityNotices();
-        if (securityNoticesList == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(null);
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(securityNoticesList);
+    @PostMapping("/security-notices")
+    @ApiOperation(value="보안공지 생성")
+    public BaseResult createNews(@RequestBody SecurityNoticeCreateReq securityNoticeCreateReq) {
+        try {
+            securityNoticesService.createSecurityNotice(securityNoticeCreateReq);
+            return responseService.successResult();
+        } catch (Exception e) {
+            return responseService.failResult(
+                    e.getMessage()
+            );
         }
     }
 
-    // get security notice by id
-    @GetMapping("/securitynotices/{id}")
-    public ResponseEntity<SecurityNotices> getSecurityNoticeById(@PathVariable Long id) {
-        SecurityNotices securityNotices = securityNoticesService.getSecurityNoticeById(id);
-        if (securityNotices == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(null);
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(securityNotices);
+    @GetMapping("/security-notices")
+    @ApiOperation(value="보안공지 모두 가져오기")
+    public BaseResult listAllSecurityNotices() {
+        try {
+            return responseService.listResult(securityNoticesService.allSecurityNotices());
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
         }
     }
 
-    // update security notice
-    @PutMapping("/securitynotices/{id}")
-    public ResponseEntity<HttpStatus> updateSecurityNotice(@PathVariable Long id, @RequestBody SecurityNotices securityNoticeDetails) {
-        SecurityNotices securityNotices = securityNoticesService.updateSecurityNotice(id, securityNoticeDetails);
-        if (securityNotices == null) {
-            return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
-        }
-        else {
-            return ResponseEntity.ok(HttpStatus.OK);
+    @GetMapping("/security-notices/{id}")
+    @ApiOperation(value="특정 보안공지 가져오기")
+    public BaseResult getNewsById(@PathVariable Long id) {
+        try {
+            return responseService.singleResult(securityNoticesService.getSecurityNotice(id).toDto());
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
         }
     }
 
-    // delete security notice
-    @DeleteMapping("/securitynotices/{id}")
-    public ResponseEntity<HttpStatus> deleteSecurityNotice(@PathVariable Long id) {
-        SecurityNotices securityNotices = securityNoticesService.deleteNotice(id);
-        if (securityNotices == null) {
-            return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
-        }
-        else {
-            return ResponseEntity.ok(HttpStatus.OK);
+    @PutMapping("/security-notices/{id}")
+    @ApiOperation(value="보안공지 업데이트")
+    public BaseResult updateNews(@RequestBody SecurityNoticeUpdateReq securityNoticeUpdateReq) {
+        try {
+            securityNoticesService.updateSecurityNotice(securityNoticeUpdateReq);
+            return responseService.successResult();
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
         }
     }
+
+    @DeleteMapping("/security-notices/{id}")
+    @ApiOperation(value="보안공지 삭제")
+    public BaseResult deleteNews(@PathVariable Long id) {
+        try {
+            securityNoticesService.deleteSecurityNotice(id);
+            return responseService.successResult();
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
+        }
+    }
+
 }
-

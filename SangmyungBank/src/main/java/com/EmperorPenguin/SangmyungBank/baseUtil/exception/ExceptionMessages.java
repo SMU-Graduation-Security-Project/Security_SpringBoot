@@ -21,6 +21,10 @@ public enum ExceptionMessages {
     ERROR_ACCOUNT_BALANCE("이체하기 충분한 잔액을 가지고 있지않습니다."),
 
     ERROR_NEWS_EXIST("해당 제목을 가진 새소식이 이미 있습니다."),
-    ERROR_NEWS_NOT_EXIST("해당 아이디를 가진 새소식이 없습니다");
+    ERROR_NEWS_NOT_EXIST("해당 아이디를 가진 새소식이 없습니다"),
+
+    ERROR_SECURITYNOTICE_EXIST("해당 제목을 가진 보안공지가 이미 있습니다."),
+    ERROR_SECURITYNOTICE_NOT_EXIST("해당 아이디를 가진 보안공지가 없습니다");
+
     private final String message;
 }
