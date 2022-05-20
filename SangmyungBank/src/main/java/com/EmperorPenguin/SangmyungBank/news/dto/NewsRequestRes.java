@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class NewsRequestRes {
 
     private String title;
-    private String context;
+    private String content;
     private String createdDate;
 
 }

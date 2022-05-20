@@ -34,7 +34,7 @@ public class NewsService {
     }
 
     @Transactional
-    public List<NewsRequestRes> allNewsRequest() {
+    public List<NewsRequestRes> getAllNews() {
         return newsRepository.findAll()
                 .stream()
                 .map(News::toDto)
@@ -42,7 +42,7 @@ public class NewsService {
     }
 
     @Transactional
-    public News getSingleNew(Long id) {
+    public News getSingleNews(Long id) {
         if(!newsRepository.existsById(id)){
             throw new NewsException(ExceptionMessages.ERROR_NEWS_NOT_EXIST);
         }
@@ -57,7 +57,7 @@ public class NewsService {
             throw new NewsException(ExceptionMessages.ERROR_NEWS_NOT_EXIST);
         }
         try {
-            newsRepository.updateNews(newsUpdateReq.getId(),newsUpdateReq.getTitle(),newsUpdateReq.getContext());
+            newsRepository.updateNews(newsUpdateReq.getId(),newsUpdateReq.getTitle(),newsUpdateReq.getContent());
         }catch (Exception e){
             e.printStackTrace();
             throw new NewsException("새소식 업데이트에 실패했습니다.");

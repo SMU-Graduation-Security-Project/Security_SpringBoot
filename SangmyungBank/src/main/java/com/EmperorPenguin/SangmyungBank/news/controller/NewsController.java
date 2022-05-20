@@ -36,7 +36,7 @@ public class NewsController {
     @ApiOperation(value="새소식 모두 가져오기")
     public BaseResult listAllNews() {
         try {
-            return responseService.listResult(newsService.allNewsRequest());
+            return responseService.listResult(newsService.getAllNews());
         }catch (Exception e){
             return responseService.failResult(
                     e.getMessage()
@@ -48,7 +48,7 @@ public class NewsController {
     @ApiOperation(value="특정 새소식 가져오기")
     public BaseResult getNewsDetail(@PathVariable Long id) {
         try {
-            return responseService.singleResult(newsService.getSingleNew(id).toDto());
+            return responseService.singleResult(newsService.getSingleNews(id).toDto());
         }catch (Exception e){
             return responseService.failResult(
                     e.getMessage()

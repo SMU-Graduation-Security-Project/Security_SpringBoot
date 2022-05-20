@@ -26,7 +26,7 @@ public class News {
     public NewsRequestRes toDto(){
         return NewsRequestRes.builder()
                 .title(title)
-                .context(content)
+                .content(content)
                 .createdDate(createdDate)
                 .build();
     }
