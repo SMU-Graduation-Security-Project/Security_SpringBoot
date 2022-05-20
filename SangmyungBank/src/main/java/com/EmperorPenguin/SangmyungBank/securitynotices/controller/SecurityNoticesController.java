@@ -49,7 +49,7 @@ public class SecurityNoticesController {
     @ApiOperation(value="특정 보안공지 가져오기")
     public BaseResult getNewsById(@PathVariable Long id) {
         try {
-            return responseService.singleResult(securityNoticesService.getSecurityNotice(id).toDto());
+            return responseService.singleResult(securityNoticesService.getSingleSecurityNotice(id).toDto());
         }catch (Exception e){
             return responseService.failResult(
                     e.getMessage()

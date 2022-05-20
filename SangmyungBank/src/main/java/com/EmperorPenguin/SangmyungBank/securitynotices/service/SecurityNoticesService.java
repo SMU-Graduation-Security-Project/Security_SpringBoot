@@ -42,7 +42,7 @@ public class SecurityNoticesService {
     }
 
     @Transactional
-    public SecurityNotices getSecurityNotice(Long id) {
+    public SecurityNotices getSingleSecurityNotice(Long id) {
         if(!securityNoticesRepository.existsById(id)){
             throw new SecurityNoticeException(ExceptionMessages.ERROR_SECURITYNOTICE_NOT_EXIST);
         }

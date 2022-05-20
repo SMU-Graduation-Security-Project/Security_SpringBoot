@@ -42,7 +42,7 @@ public class NewsService {
     }
 
     @Transactional
-    public News getNewRequest(Long id) {
+    public News getSingleNew(Long id) {
         if(!newsRepository.existsById(id)){
             throw new NewsException(ExceptionMessages.ERROR_NEWS_NOT_EXIST);
         }
