@@ -20,6 +20,9 @@ public enum ExceptionMessages {
     ERROR_ACCOUNT_PASSWORD_NOT_MATCH("계좌비밀번호가 동일하지 않습니다."),
     ERROR_ACCOUNT_BALANCE("이체하기 충분한 잔액을 가지고 있지않습니다."),
 
+    ERROR_EVENT_EXIST("해당 제목을 가진 이벤트가 이미 있습니다."),
+    ERROR_EVENT_NOT_EXIST("해당 아이디를 가진 이벤트가 없습니다"),
+
     ERROR_NEWS_EXIST("해당 제목을 가진 새소식이 이미 있습니다."),
     ERROR_NEWS_NOT_EXIST("해당 아이디를 가진 새소식이 없습니다"),
 

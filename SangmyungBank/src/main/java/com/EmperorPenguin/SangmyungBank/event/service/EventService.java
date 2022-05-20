@@ -1,75 +1,88 @@
 package com.EmperorPenguin.SangmyungBank.event.service;
 
-import com.EmperorPenguin.SangmyungBank.event.domain.event.Event;
-import com.EmperorPenguin.SangmyungBank.event.domain.repository.EventRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.EventException;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.NewsException;
+import com.EmperorPenguin.SangmyungBank.event.dto.EventCreateReq;
+import com.EmperorPenguin.SangmyungBank.event.dto.EventRequestRes;
+import com.EmperorPenguin.SangmyungBank.event.dto.EventUpdateReq;
+import com.EmperorPenguin.SangmyungBank.event.entity.Event;
+import com.EmperorPenguin.SangmyungBank.event.repository.EventRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class EventService {
 
-    @Autowired
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
 
-    public Event createEvent(@RequestBody Event event)
-    {
-        return eventRepository.save(event);
-    }
-
-    public List<Event> listAllEvents() {
-        List<Event> eventList = eventRepository.findAll();
-        if (eventList.isEmpty())
-            return null;
-
-        return eventList;
-    }
-
-    public Event getEventById(@PathVariable Long id) {
-        Event event = eventRepository.findById(id)
-                .orElse(null);
-
-        return event;
-    }
-
-    public Event updateEvent(@PathVariable Long id, @RequestBody Event eventDetails){
-        Event event = eventRepository.findById(id)
-                        .orElse(null);
-        if (event != null) {
-            event.setTitle(eventDetails.getTitle());
-            event.setContent(eventDetails.getContent());
-
-            Event updateEvent = eventRepository.save(event);
-            return updateEvent;
+    @Transactional
+    public void createEvent(EventCreateReq eventCreateReq) {
+        if (eventRepository.findByTitle(eventCreateReq.getTitle()).isPresent()) {
+            throw new EventException(ExceptionMessages.ERROR_EVENT_EXIST);
         }
-        else {
-            return null;
+        try {
+            eventRepository.save(eventCreateReq.toEntity());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new EventException("이벤트 생성에 실패했습니다.");
         }
     }
 
-    public Event deleteEvent(@PathVariable Long id) {
-        Event event = eventRepository.findById(id)
-                .orElse(null);
-        if (event != null) {
-            eventRepository.delete(event);
-            return event;
+    @Transactional
+    public List<EventRequestRes> listAllDoingEvents() {
+        return eventRepository.findRun()
+                .stream()
+                .map(Event::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<EventRequestRes> listAllDoneEvents() {
+        return eventRepository.findDone()
+                .stream()
+                .map(Event::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public Event getSingleEvent (Long id) {
+        if(!eventRepository.existsById(id)){
+            throw new EventException(ExceptionMessages.ERROR_EVENT_NOT_EXIST);
         }
-        else {
-            return null;
+        return eventRepository
+                .findById(id)
+                .orElseThrow(() -> new EventException(ExceptionMessages.ERROR_UNDEFINED));
+    }
+
+    @Transactional
+    public void updateEvent(EventUpdateReq eventUpdateReq) {
+        if(!eventRepository.existsById(eventUpdateReq.getId())){
+            throw new EventException(ExceptionMessages.ERROR_EVENT_NOT_EXIST);
+        }
+        try {
+            eventRepository.updateEvent(eventUpdateReq.getId(),eventUpdateReq.getTitle(),eventUpdateReq.getContent());
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new NewsException("이벤트 업데이트에 실패했습니다.");
         }
     }
 
-//    public ResponseEntity<Map<String, Boolean>> deleteEvent(@PathVariable Long id) {
-//        Event event = eventRepository.findById(id)
-//                .orElse(null);
-//
-//        eventRepository.delete(event);
-//        Map <String, Boolean> response = new HashMap<>();
-//        response.put("deleted", Boolean.TRUE);
-//        return ResponseEntity.ok(response);
-//    }
-
+    @Transactional
+    public void deleteEvent(Long id) {
+        if(!eventRepository.existsById(id)){
+            throw new EventException(ExceptionMessages.ERROR_NEWS_NOT_EXIST);
+        }
+        try {
+            eventRepository.deleteById(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new EventException("이벤트 삭제에 실패했습니다.");
+        }
+    }
 }

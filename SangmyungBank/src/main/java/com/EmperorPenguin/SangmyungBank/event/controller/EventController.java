@@ -1,89 +1,107 @@
 package com.EmperorPenguin.SangmyungBank.event.controller;
 
-import com.EmperorPenguin.SangmyungBank.event.domain.event.Event;
+import com.EmperorPenguin.SangmyungBank.baseUtil.dto.BaseResult;
+import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
+import com.EmperorPenguin.SangmyungBank.event.dto.EventCreateReq;
+import com.EmperorPenguin.SangmyungBank.event.dto.EventUpdateReq;
+import com.EmperorPenguin.SangmyungBank.event.entity.Event;
 import com.EmperorPenguin.SangmyungBank.event.service.EventService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.List;
 
+@Api(tags="이벤트 생성, 진행중인 이벤트 가저오기, 종료된 이벤트 가져오기 ,특정 이벤트 가져오기, 이벤트 업데이트, 이벤트 삭제")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cont")
 public class EventController {
 
-
     private final EventService eventService;
+    private final ResponseService responseService;
 
-    // create event
     @PostMapping("/event")
-    public ResponseEntity<HttpStatus> createEvent(@RequestBody Event event) {
-        event.setCreatedDate(LocalDateTime.now());
-        eventService.createEvent(event);
-        return ResponseEntity.ok(HttpStatus.OK);
+    @ApiOperation(value="이벤트 생성")
+    public BaseResult createEvent(@RequestBody EventCreateReq eventCreateReq) {
+        try {
+            eventService.createEvent(eventCreateReq);
+            return responseService.successResult();
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
+        }
     }
-//    public Event createEvent(@RequestBody Event event)
-//    {
-//        event.setCreatedDate(LocalDateTime.now());
-//        return eventService.createEvent(event);
-//    }
 
-    // list all events
     @GetMapping("/event")
-    public ResponseEntity<List<Event>> listAllEvents() {
-        List<Event> eventList = eventService.listAllEvents();
-        if (eventList == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(null);
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(eventList);
-        }
-    }
-
-    // get event by id
-    @GetMapping("/event/{id}")
-    public ResponseEntity<Event> getEventById(@PathVariable Long id) {
-        Event event = eventService.getEventById(id);
-        if (event == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(null);
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(event);
+    @ApiOperation(value="진행중인 이벤트 가져오기")
+    public BaseResult listAllDoingEvents() {
+        try {
+            return responseService
+                    .listResult(eventService.listAllDoingEvents());
+        }catch (Exception e) {
+            return responseService.failResult(
+                    e.getMessage()
+            );
         }
     }
 
-    // update event
+    @GetMapping("/event")
+    @ApiOperation(value="완료된 이벤트 가져오기")
+    public BaseResult listAllDoneEvents() {
+        try {
+            return responseService
+                    .listResult(eventService.listAllDoneEvents());
+        }catch (Exception e) {
+            return responseService.failResult(
+                    e.getMessage()
+            );
+        }
+
+    }
+
+    @GetMapping("/event")
+    @ApiOperation(value="특정 이벤트 가져오기")
+    public BaseResult getEventsDetail(@PathVariable Long id) {
+        try {
+            return responseService.singleResult(
+                    eventService.getSingleEvent(id).toDto()
+            );
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
+        }
+    }
+
+
     @PutMapping("/event/{id}")
-    public ResponseEntity<HttpStatus> updateEvent(@PathVariable Long id, @RequestBody Event eventDetails) {
-        Event event = eventService.updateEvent(id, eventDetails);
-        if (event == null) {
-            return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
+    @ApiOperation(value="이벤트 업데이트")
+    public BaseResult updateEvent(@RequestBody EventUpdateReq eventUpdateReq) {
+        try {
+            eventService.updateEvent(eventUpdateReq);
+            return responseService.successResult();
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
         }
-        else {
-            return ResponseEntity.ok(HttpStatus.OK);
-        }
+
     }
 
-    // delete event
     @DeleteMapping("/event/{id}")
-    public ResponseEntity<HttpStatus> deleteEvent(@PathVariable Long id) {
-        Event event = eventService.deleteEvent(id);
-        if (event == null) {
-            return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
+    @ApiOperation(value="이벤트 삭제")
+    public BaseResult deleteEvent(@PathVariable Long id) {
+        try {
+            eventService.deleteEvent(id);
+            return responseService.successResult();
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
         }
-        else {
-            return ResponseEntity.ok(HttpStatus.OK);
-        }
+
     }
-//    @DeleteMapping("/event/{id}")
-//    public ResponseEntity<Map<String, Boolean>> deleteEvent(@PathVariable Long id) {
-//        return eventService.deleteEvent(id);
-//    }
+
 }
