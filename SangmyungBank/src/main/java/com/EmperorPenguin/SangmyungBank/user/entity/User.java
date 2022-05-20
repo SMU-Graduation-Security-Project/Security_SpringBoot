@@ -1,10 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.user.entity;
 
-import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.user.dto.UserLoginRes;
-import com.EmperorPenguin.SangmyungBank.user.dto.UserRegisterReq;
 import lombok.*;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 
