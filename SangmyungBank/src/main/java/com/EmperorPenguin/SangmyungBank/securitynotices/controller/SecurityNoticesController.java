@@ -47,7 +47,7 @@ public class SecurityNoticesController {
 
     @GetMapping("/security-notices/{id}")
     @ApiOperation(value="특정 보안공지 가져오기")
-    public BaseResult getNewsById(@PathVariable Long id) {
+    public BaseResult getNewsDetail(@PathVariable Long id) {
         try {
             return responseService.singleResult(securityNoticesService.getSingleSecurityNotice(id).toDto());
         }catch (Exception e){

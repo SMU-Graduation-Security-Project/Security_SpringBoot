@@ -46,7 +46,7 @@ public class NewsController {
 
     @GetMapping("/news/{id}")
     @ApiOperation(value="특정 새소식 가져오기")
-    public BaseResult getNewsById(@PathVariable Long id) {
+    public BaseResult getNewsDetail(@PathVariable Long id) {
         try {
             return responseService.singleResult(newsService.getSingleNew(id).toDto());
         }catch (Exception e){
