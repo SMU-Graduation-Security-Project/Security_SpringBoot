@@ -1,7 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.securitynotices.entity;
 
 import com.EmperorPenguin.SangmyungBank.securitynotices.dto.SecurityNoticeRequestRes;
-import com.EmperorPenguin.SangmyungBank.securitynotices.dto.SecurityNoticeUpdateReq;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,7 +27,7 @@ public class SecurityNotices {
     public SecurityNoticeRequestRes toDto(){
         return SecurityNoticeRequestRes.builder()
                 .title(title)
-                .context(content)
+                .content(content)
                 .createdDate(createdDate)
                 .build();
     }

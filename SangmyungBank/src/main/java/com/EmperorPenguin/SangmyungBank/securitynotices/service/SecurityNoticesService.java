@@ -34,7 +34,7 @@ public class SecurityNoticesService {
     }
 
     @Transactional
-    public List<SecurityNoticeRequestRes> allSecurityNotices() {
+    public List<SecurityNoticeRequestRes> getAllSecurityNotices() {
         return securityNoticesRepository.findAll()
                 .stream()
                 .map(SecurityNotices::toDto)
@@ -60,7 +60,7 @@ public class SecurityNoticesService {
             securityNoticesRepository.updateSecurityNotice(
                     securityNoticeUpdateReq.getId(),
                     securityNoticeUpdateReq.getTitle(),
-                    securityNoticeUpdateReq.getContext()
+                    securityNoticeUpdateReq.getContent()
             );
         }catch (Exception e){
             e.printStackTrace();

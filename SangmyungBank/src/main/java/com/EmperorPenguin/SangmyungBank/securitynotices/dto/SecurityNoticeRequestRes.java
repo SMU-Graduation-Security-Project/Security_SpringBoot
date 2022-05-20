@@ -12,6 +12,6 @@ import lombok.RequiredArgsConstructor;
 public class SecurityNoticeRequestRes {
 
     private String title;
-    private String context;
+    private String content;
     private String createdDate;
 }

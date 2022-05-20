@@ -17,5 +17,5 @@ public class SecurityNoticeUpdateReq {
     @ApiModelProperty(required = true)
     private String title;
     @ApiModelProperty(required = true)
-    private String context;
+    private String content;
 }

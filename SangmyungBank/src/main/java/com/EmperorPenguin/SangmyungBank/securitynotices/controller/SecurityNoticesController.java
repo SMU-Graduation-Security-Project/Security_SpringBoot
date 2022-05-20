@@ -37,7 +37,7 @@ public class SecurityNoticesController {
     @ApiOperation(value="보안공지 모두 가져오기")
     public BaseResult listAllSecurityNotices() {
         try {
-            return responseService.listResult(securityNoticesService.allSecurityNotices());
+            return responseService.listResult(securityNoticesService.getAllSecurityNotices());
         }catch (Exception e){
             return responseService.failResult(
                     e.getMessage()
