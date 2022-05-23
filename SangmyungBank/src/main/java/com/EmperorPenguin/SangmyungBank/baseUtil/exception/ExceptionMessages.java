@@ -14,6 +14,8 @@ public enum ExceptionMessages {
     ERROR_USER_ID_FORMAT("아이디는 영문자로 시작하고 영문자,숫자로 5~12자 이하로 구성되어야합니다."),
     ERROR_USER_PASSWORD_FORMAT("비밀번호는 영문자, 특수문자를 포함한 8~20자로 구성되어야 합니다."),
     ERROR_USER_PASSWORD("사용자의 비밀번호가 일치하지 않습니다."),
+    ERROR_USER_QUESTION_NOT_MATCH("사용자의 질문이 맞지 않습니다."),
+    ERROR_USER_ANSWORD_NOT_MATCH("사용자의 질문에 대한 대답이 맞지 않습니다."),
 
     ERROR_ACCOUNT_NOT_FOUND("사용자의 계좌를 찾을 수 없습니다."),
     ERROR_ACCOUNT_PASSWORD_FORMAT("계좌비밀번호는 숫자로 6자리로 구성되어야 합니다."),

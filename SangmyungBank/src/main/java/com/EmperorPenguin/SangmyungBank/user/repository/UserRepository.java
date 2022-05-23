@@ -17,9 +17,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByPhoneNumber(String PhoneNumber);
 
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query("update User u set u.loginDate = :loginTime where u.loginId =:loginId")
     void updateLoginDate(@Param("loginTime")String loginTime, @Param("loginId")String LoginId);
+
+    @Modifying(clearAutomatically = true)
+    @Query("update User u set u.password = ?1 where u.userId = ?2")
+    void updateUserPassword(@Param("newPassword")String newPassword, @Param("userId")Long userId);
+
+    @Modifying(clearAutomatically = true)
+    @Query("update User u set u.password = ?1, u.usingTempPassword = true where u.userId = ?2")
+    void updateUserTemplatePassword(@Param("templatePassword")String templatePassword, @Param("userId")Long userId);
 
     boolean existsByLoginId(String loginId);
 

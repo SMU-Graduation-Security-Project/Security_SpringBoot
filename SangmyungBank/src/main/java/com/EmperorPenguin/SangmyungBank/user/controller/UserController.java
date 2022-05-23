@@ -1,7 +1,9 @@
 package com.EmperorPenguin.SangmyungBank.user.controller;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.dto.BaseResult;
+import com.EmperorPenguin.SangmyungBank.user.dto.UserFindPasswordReq;
 import com.EmperorPenguin.SangmyungBank.user.dto.UserLoginReq;
+import com.EmperorPenguin.SangmyungBank.user.dto.UserPasswordUpdateReq;
 import com.EmperorPenguin.SangmyungBank.user.dto.UserRegisterReq;
 import com.EmperorPenguin.SangmyungBank.user.service.UserService;
 import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags = "회원가입,로그인")
+@Api(tags = "회원가입,로그인, 비밀번호 찾기, 비밀번호 수정")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -46,6 +48,33 @@ public class UserController {
         // 없는 아이디, 잘못된 비밀번호에서 오류 발생.
         try{
             return responseService.singleResult(userService.login(userLoginReq).toDto());
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
+        }
+    }
+
+    @PostMapping(path = "/find_Password")
+    @ApiOperation(value = "비밀번호 찾기")
+    public BaseResult findPassword(@ApiParam @RequestBody UserFindPasswordReq userFindPasswordReq){
+        try {
+            return responseService.singleResult(
+                    userService.setTemplatePassword(userFindPasswordReq));
+        }catch (Exception e){
+            return  responseService.failResult(
+                    e.getMessage()
+            );
+        }
+    }
+
+
+    @PostMapping(path = "/updatePassword")
+    @ApiOperation(value = "임시 비밀번호를 가진 사용자의 비밀번호 변경")
+    public BaseResult updateUserPassword(@ApiParam @RequestBody UserPasswordUpdateReq userPasswordUpdateReq){
+        try {
+            userService.updateNewPassword(userPasswordUpdateReq);
+            return responseService.successResult();
         }catch (Exception e){
             return responseService.failResult(
                     e.getMessage()

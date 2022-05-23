@@ -31,10 +31,6 @@ public class User{
     @Column(length = 15, unique = true, nullable = false)
     private String phoneNumber;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Role role;
-
     @Column
     private String loginDate;
 
@@ -45,7 +41,17 @@ public class User{
     private String modifyDate;
 
     @Column
+    private String question;
+
+    @Column(nullable = false)
+    private String ansWord;
+
+    @Column(nullable = false)
     private boolean usingTempPassword;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
     public UserLoginRes toDto(){
         return UserLoginRes.builder()

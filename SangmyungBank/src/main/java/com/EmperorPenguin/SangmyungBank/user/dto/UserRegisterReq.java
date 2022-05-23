@@ -31,6 +31,10 @@ public class UserRegisterReq {
     private char sex;
     @ApiModelProperty(required = true)
     private String phoneNumber;
+    @ApiModelProperty(required = true)
+    private String question;
+    @ApiModelProperty(required = true)
+    private String ansWord;
 
     public User toEntity(String encryptedPassword, Role defaultRole)
     {
@@ -44,6 +48,8 @@ public class UserRegisterReq {
                 .phoneNumber(phoneNumber)
                 .registerDate(new DateConfig().getDateTime())
                 .modifyDate(new DateConfig().getDateTime())
+                .question(question)
+                .ansWord(ansWord)
                 .usingTempPassword(false)
                 .role(defaultRole)
                 .build();
