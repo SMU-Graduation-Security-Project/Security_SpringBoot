@@ -16,11 +16,11 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     boolean existsAccountByAccountNumber(Long accountNumber);
 
-    @Modifying()
+    @Modifying(clearAutomatically = true)
     @Query("update Account a set a.balance = a.balance - ?1 where a.accountNumber = ?2")
     void updateMyBalance(Long balance, Long accountNumber);
 
-    @Modifying()
+    @Modifying(clearAutomatically = true)
     @Query("update Account a set a.balance = a.balance + ?1 where a.accountNumber = ?2")
     void updateBalance(Long balance,  Long sendAccountNumber);
 }
