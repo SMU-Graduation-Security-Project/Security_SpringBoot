@@ -12,7 +12,7 @@ public interface SecurityNoticesRepository extends JpaRepository<SecurityNotices
 
     Optional<SecurityNotices> findByTitle(String title);
 
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query("update SecurityNotices s set s.title = ?2, s.content = ?3 where s.id = ?1")
     void updateSecurityNotice(@Param("id")Long id, @Param("title") String title, @Param("content") String content);
 }
