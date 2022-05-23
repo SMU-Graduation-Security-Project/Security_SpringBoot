@@ -1,6 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.event.entity;
 
 import com.EmperorPenguin.SangmyungBank.event.dto.EventRequestRes;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,6 +24,9 @@ public class Event {
     private String content;
 
     @Column
+    private String writeDate;
+
+    @Column
     private String startDate;
 
     @Column
@@ -32,6 +36,7 @@ public class Event {
         return EventRequestRes.builder()
                 .title(title)
                 .content(content)
+                .writeDate(writeDate)
                 .startDate(startDate)
                 .endDate(endDate)
                 .build();

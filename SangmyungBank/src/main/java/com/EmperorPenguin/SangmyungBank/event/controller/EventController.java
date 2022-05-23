@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 
 @Api(tags="이벤트 생성, 진행중인 이벤트 가저오기, 종료된 이벤트 가져오기 ,특정 이벤트 가져오기, 이벤트 업데이트, 이벤트 삭제")
 @RequiredArgsConstructor
@@ -34,7 +36,7 @@ public class EventController {
         }
     }
 
-    @GetMapping("/events")
+    @GetMapping("/events/doing")
     @ApiOperation(value="진행중인 이벤트 가져오기")
     public BaseResult listAllDoingEvents() {
         try {
@@ -61,7 +63,7 @@ public class EventController {
 
     }
 
-    @GetMapping("/events/doing")
+    @GetMapping("/events/{id}")
     @ApiOperation(value="특정 이벤트 가져오기")
     public BaseResult getEventsDetail(@PathVariable Long id) {
         try {

@@ -1,6 +1,5 @@
 package com.EmperorPenguin.SangmyungBank.event.repository;
 
-
 import com.EmperorPenguin.SangmyungBank.event.entity.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -14,14 +13,13 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     Optional<Event> findByTitle(String title);
 
+    @Query("select e from Event  e where e.endDate > ?1")
+    List<Event> findRun(@Param("dateTime")String dateTime);
 
-    @Query(value = "select * from event where timestampdiff(day, now(), end_Date)>=0", nativeQuery = true)
-    List<Event> findRun();
-
-    @Query(value = "select * from event where timestampdiff(day, now(), end_Date)<0", nativeQuery = true)
-    List<Event> findDone();
+    @Query("select e from Event  e where e.endDate < ?1")
+    List<Event> findDone(@Param("dateTime")String dateTime);
 
     @Modifying(clearAutomatically = true)
-    @Query("update News n set n.title = ?2, n.content = ?3 where n.id = ?1")
+    @Query("update Event e set e.title = ?2, e.content = ?3 where e.id = ?1")
     void updateEvent(@Param("id")Long id, @Param("title") String title, @Param("content") String content);
 }

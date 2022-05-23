@@ -13,6 +13,7 @@ public class EventRequestRes {
 
     private String title;
     private String content;
+    private String writeDate;
     private String startDate;
     private String endDate;
 }

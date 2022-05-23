@@ -1,5 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.event.dto;
 
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.event.entity.Event;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,7 @@ public class EventCreateReq {
         return Event.builder()
                 .title(title)
                 .content(content)
+                .writeDate(new DateConfig().getDateTime())
                 .startDate(startDate)
                 .endDate(endDate)
                 .build();
