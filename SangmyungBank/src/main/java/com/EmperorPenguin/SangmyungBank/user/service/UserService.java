@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 @Service
 @RequiredArgsConstructor
 public class UserService {
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final HttpSession httpSession;
@@ -54,7 +55,6 @@ public class UserService {
                 throw new UserException("회원가입에 실패했습니다.");
             }
         }
-
     }
 
     @Transactional
@@ -70,6 +70,7 @@ public class UserService {
         userRepository.updateLoginDate(new DateConfig().getDateTime(), userLoginReq.getLoginId());
         // HttpSession Or JWT 도입예정.
 
+        // 임시적으로 세션을 등록
         httpSession.setAttribute("user", new UserSessionDto(user));
 
         return userRepository
@@ -129,7 +130,6 @@ public class UserService {
             e.printStackTrace();
             throw new UserException("비밀번호 변경 실패");
         }
-
     }
 
     private void checkUserPassword(String password1, String password2) {
