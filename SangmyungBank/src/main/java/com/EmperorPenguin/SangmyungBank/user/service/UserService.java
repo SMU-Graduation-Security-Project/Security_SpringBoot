@@ -85,11 +85,11 @@ public class UserService {
                 .orElseThrow(() -> new UserException(ExceptionMessages.ERROR_USER_NOT_FOUND));
 
         // 사용자 질문에 대한 검증
-        if (user.getQuestion().equals(userFindPasswordReq.getQuestion())){
+        if (!user.getQuestion().equals(userFindPasswordReq.getQuestion())){
             throw new UserException(ExceptionMessages.ERROR_USER_QUESTION_NOT_MATCH);
         }
         // 사용자 질문에 대한 답을 검증
-        if(user.getAnsWord().equals(userFindPasswordReq.getAnsWord())){
+        if(!user.getAnsWord().equals(userFindPasswordReq.getAnsWord())){
             throw new UserException(ExceptionMessages.ERROR_USER_ANSWORD_NOT_MATCH);
         }
         try {
