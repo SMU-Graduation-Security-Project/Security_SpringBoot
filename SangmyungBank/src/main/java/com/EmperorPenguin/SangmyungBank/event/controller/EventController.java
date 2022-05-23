@@ -21,7 +21,7 @@ public class EventController {
     private final EventService eventService;
     private final ResponseService responseService;
 
-    @PostMapping("/event")
+    @PostMapping("/events")
     @ApiOperation(value="이벤트 생성")
     public BaseResult createEvent(@RequestBody EventCreateReq eventCreateReq) {
         try {
@@ -34,7 +34,7 @@ public class EventController {
         }
     }
 
-    @GetMapping("/event")
+    @GetMapping("/events")
     @ApiOperation(value="진행중인 이벤트 가져오기")
     public BaseResult listAllDoingEvents() {
         try {
@@ -47,7 +47,7 @@ public class EventController {
         }
     }
 
-    @GetMapping("/event")
+    @GetMapping("/events/done")
     @ApiOperation(value="완료된 이벤트 가져오기")
     public BaseResult listAllDoneEvents() {
         try {
@@ -61,7 +61,7 @@ public class EventController {
 
     }
 
-    @GetMapping("/event")
+    @GetMapping("/events/doing")
     @ApiOperation(value="특정 이벤트 가져오기")
     public BaseResult getEventsDetail(@PathVariable Long id) {
         try {
@@ -76,7 +76,7 @@ public class EventController {
     }
 
 
-    @PutMapping("/event/{id}")
+    @PutMapping("/events/{id}")
     @ApiOperation(value="이벤트 업데이트")
     public BaseResult updateEvent(@RequestBody EventUpdateReq eventUpdateReq) {
         try {
@@ -90,7 +90,7 @@ public class EventController {
 
     }
 
-    @DeleteMapping("/event/{id}")
+    @DeleteMapping("/events/{id}")
     @ApiOperation(value="이벤트 삭제")
     public BaseResult deleteEvent(@PathVariable Long id) {
         try {
