@@ -21,7 +21,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query(value = "select * from event where timestampdiff(day, now(), end_Date)<0", nativeQuery = true)
     List<Event> findDone();
 
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query("update News n set n.title = ?2, n.content = ?3 where n.id = ?1")
     void updateEvent(@Param("id")Long id, @Param("title") String title, @Param("content") String content);
 }
