@@ -7,6 +7,8 @@ import com.EmperorPenguin.SangmyungBank.account.entity.Account;
 import com.EmperorPenguin.SangmyungBank.account.repository.AccountRepository;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.AccountException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
+import com.EmperorPenguin.SangmyungBank.transaction.entity.Transaction;
+import com.EmperorPenguin.SangmyungBank.transaction.repository.TransactionRepository;
 import com.EmperorPenguin.SangmyungBank.user.entity.User;
 import com.EmperorPenguin.SangmyungBank.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final TransactionRepository transactionRepository;
 
     @Transactional
     public void createAccount(AccountCreateReq accountCreateReq) {
@@ -78,6 +81,18 @@ public class AccountService {
                     myAccount.getAccountNumber());
             accountRepository.updateBalance(transactionReq.getBalance(),
                     transactionReq.getSendAccountNumber());
+            // 전달자의 거래내역을 저장
+            transactionRepository.save(Transaction.builder()
+                    .sendAccount(transactionReq.getMyAccountNumber())
+                    .receiveAccount(transactionReq.getSendAccountNumber())
+                    .balance(-transactionReq.getBalance())
+                    .build());
+            // 받는이의 거래내역을 저장
+            transactionRepository.save(Transaction.builder()
+                    .sendAccount(transactionReq.getSendAccountNumber())
+                    .receiveAccount(transactionReq.getMyAccountNumber())
+                    .balance(transactionReq.getBalance())
+                    .build());
         }catch (Exception e){
             e.printStackTrace();
             throw new AccountException("계좌이체에 실패했습니다.");
