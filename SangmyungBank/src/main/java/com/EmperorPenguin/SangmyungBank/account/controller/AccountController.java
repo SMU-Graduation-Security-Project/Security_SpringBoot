@@ -1,7 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.account.controller;
 
 import com.EmperorPenguin.SangmyungBank.account.dto.AccountCreateReq;
-import com.EmperorPenguin.SangmyungBank.account.dto.TransactionReq;
+import com.EmperorPenguin.SangmyungBank.account.dto.TransferReq;
 import com.EmperorPenguin.SangmyungBank.account.service.AccountService;
 import com.EmperorPenguin.SangmyungBank.baseUtil.dto.BaseResult;
 import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
@@ -34,9 +34,9 @@ public class AccountController {
 
     @PostMapping(path = "/transaction")
     @ApiOperation(value="계좌 이체")
-    public BaseResult transaction(@ApiParam @RequestBody TransactionReq transactionReq){
+    public BaseResult transaction(@ApiParam @RequestBody TransferReq transferReq){
         try {
-            accountService.transaction(transactionReq);
+            accountService.transaction(transferReq);
             return responseService.successResult();
         }catch (Exception e){
             return responseService.failResult(

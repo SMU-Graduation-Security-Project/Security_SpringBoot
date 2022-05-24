@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class TransactionReq {
+public class TransferReq {
     @ApiModelProperty(required = true)
     private String loginId;
 

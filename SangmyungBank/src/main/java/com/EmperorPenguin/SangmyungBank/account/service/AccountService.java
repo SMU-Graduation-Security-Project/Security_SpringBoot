@@ -2,7 +2,7 @@ package com.EmperorPenguin.SangmyungBank.account.service;
 
 import com.EmperorPenguin.SangmyungBank.account.dto.AccountCreateReq;
 import com.EmperorPenguin.SangmyungBank.account.dto.AccountInquiryRes;
-import com.EmperorPenguin.SangmyungBank.account.dto.TransactionReq;
+import com.EmperorPenguin.SangmyungBank.account.dto.TransferReq;
 import com.EmperorPenguin.SangmyungBank.account.entity.Account;
 import com.EmperorPenguin.SangmyungBank.account.repository.AccountRepository;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.AccountException;
@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class AccountService {
+
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -51,14 +52,14 @@ public class AccountService {
     }
 
     @Transactional
-    public void transaction(TransactionReq transactionReq)
+    public void transaction(TransferReq transferReq)
     {
-        String loginId = transactionReq.getLoginId();
-        Long sendAccount = transactionReq.getSendAccountNumber();
-        String password = transactionReq.getAccountPassword();
+        String loginId = transferReq.getLoginId();
+        Long sendAccount = transferReq.getSendAccountNumber();
+        String password = transferReq.getAccountPassword();
 
         Account myAccount = accountRepository
-            .findAccountByAccountNumber(transactionReq.getMyAccountNumber())
+            .findAccountByAccountNumber(transferReq.getMyAccountNumber())
             .orElseThrow(() -> new AccountException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND));
 
         // 사용자의 아이디로부터 자신의 계좌가 맞는지 확인.
@@ -73,25 +74,25 @@ public class AccountService {
             throw new AccountException(ExceptionMessages.ERROR_ACCOUNT_PASSWORD_NOT_MATCH);
         }
         // 사용자의 계좌에 충분한 잔액이 있는지 확인.
-        if(myAccount.getBalance() < transactionReq.getBalance()) {
+        if(myAccount.getBalance() < transferReq.getBalance()) {
             throw new AccountException(ExceptionMessages.ERROR_ACCOUNT_BALANCE);
         }
         try {
-            accountRepository.updateMyBalance(transactionReq.getBalance(),
+            accountRepository.updateMyBalance(transferReq.getBalance(),
                     myAccount.getAccountNumber());
-            accountRepository.updateBalance(transactionReq.getBalance(),
-                    transactionReq.getSendAccountNumber());
+            accountRepository.updateBalance(transferReq.getBalance(),
+                    transferReq.getSendAccountNumber());
             // 전달자의 거래내역을 저장
             transactionRepository.save(Transaction.builder()
-                    .sendAccount(transactionReq.getMyAccountNumber())
-                    .receiveAccount(transactionReq.getSendAccountNumber())
-                    .balance(-transactionReq.getBalance())
+                    .sendAccount(transferReq.getMyAccountNumber())
+                    .receiveAccount(transferReq.getSendAccountNumber())
+                    .balance(-transferReq.getBalance())
                     .build());
             // 받는이의 거래내역을 저장
             transactionRepository.save(Transaction.builder()
-                    .sendAccount(transactionReq.getSendAccountNumber())
-                    .receiveAccount(transactionReq.getMyAccountNumber())
-                    .balance(transactionReq.getBalance())
+                    .sendAccount(transferReq.getSendAccountNumber())
+                    .receiveAccount(transferReq.getMyAccountNumber())
+                    .balance(transferReq.getBalance())
                     .build());
         }catch (Exception e){
             e.printStackTrace();
