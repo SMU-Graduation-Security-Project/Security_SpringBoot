@@ -1,6 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.transaction.entity;
 
 import com.EmperorPenguin.SangmyungBank.account.entity.Account;
+import com.EmperorPenguin.SangmyungBank.transaction.dto.TransactionInquiryRes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,15 +20,28 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long transactionId;
 
-    @OneToOne
-    @JoinColumn(name = "Account")
-    private Account send;
+    @Column
+    private Long sendAccount;
 
-
-    @OneToOne
-    @JoinColumn(name = "Account")
-    private Account to;
+    @Column
+    private Long receiveAccount;
 
     @Column(nullable = false)
     private Long balance;
+
+    public TransactionInquiryRes toDto() {
+        if (balance > 0) {
+            return TransactionInquiryRes.builder()
+                    .senderAccount(receiveAccount)
+                    .receiverAccount(sendAccount)
+                    .sendMoney(balance)
+                    .build();
+        } else {
+            return TransactionInquiryRes.builder()
+                    .senderAccount(sendAccount)
+                    .receiverAccount(receiveAccount)
+                    .sendMoney(balance)
+                    .build();
+        }
+    }
 }
