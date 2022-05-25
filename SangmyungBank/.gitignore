@@ -37,5 +37,4 @@ out/
 .vscode/
 
 ### application Properties
-application-db.properties
 application-Jwt.properties
