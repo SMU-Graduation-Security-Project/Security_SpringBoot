@@ -30,7 +30,7 @@ public class EventCreateReq {
         return Event.builder()
                 .title(title)
                 .content(content)
-                .writeDate(new DateConfig().getDateTime())
+                .createDate(new DateConfig().getDateTime())
                 .startDate(startDate)
                 .endDate(endDate)
                 .build();

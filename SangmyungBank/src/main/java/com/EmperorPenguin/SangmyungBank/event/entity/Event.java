@@ -24,7 +24,7 @@ public class Event {
     private String content;
 
     @Column
-    private String writeDate;
+    private String createDate;
 
     @Column
     private String startDate;
@@ -36,7 +36,7 @@ public class Event {
         return EventRequestRes.builder()
                 .title(title)
                 .content(content)
-                .writeDate(writeDate)
+                .createDate(createDate)
                 .startDate(startDate)
                 .endDate(endDate)
                 .build();
