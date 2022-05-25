@@ -22,7 +22,7 @@ public class CounselCreateReq {
         return Counsel.builder()
                 .title(title)
                 .content(content)
-                .writeDate(new DateConfig().getDateTime())
+                .createDate(new DateConfig().getDateTime())
                 .build();
     }
 }

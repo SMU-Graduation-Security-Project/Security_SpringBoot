@@ -18,7 +18,7 @@ public class CounselController {
     private final CounselService counselService;
     private final ResponseService responseService;
 
-    @PostMapping("/counsel")
+    @PostMapping("/counsels")
     @ApiOperation(value="상담글 생성")
     public BaseResult createCounsel(@RequestBody CounselCreateReq counselCreateReq) {
         try {
@@ -31,7 +31,7 @@ public class CounselController {
         }
     }
 
-    @GetMapping("/counsel")
+    @GetMapping("/counsels")
     @ApiOperation(value="상담글 모두 가져오기")
     public BaseResult listAllCounsel() {
         try {
@@ -44,7 +44,7 @@ public class CounselController {
         }
     }
 
-    @GetMapping("/counsel/{id}")
+    @GetMapping("/counsels/{id}")
     @ApiOperation(value="특정 상담글 가져오기")
     public BaseResult getCounselDetail(@PathVariable Long id) {
         try {
@@ -58,7 +58,7 @@ public class CounselController {
         }
     }
 
-    @PutMapping("/counsel/{id}")
+    @PutMapping("/counsels/{id}")
     @ApiOperation(value="상담글 업데이트")
     public BaseResult updateCounsel(@RequestBody CounselUpdateReq counselUpdateReq) {
         try {
@@ -71,7 +71,7 @@ public class CounselController {
         }
     }
 
-    @DeleteMapping("/counsel/{id}")
+    @DeleteMapping("/counsels/{id}")
     @ApiOperation(value="상담글 삭제")
     public BaseResult deleteCounsel(@PathVariable Long id) {
         try {

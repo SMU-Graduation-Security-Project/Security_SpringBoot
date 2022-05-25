@@ -1,7 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.counsel.service;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.CounselException;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.EventException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.counsel.dto.CounselCreateReq;
 import com.EmperorPenguin.SangmyungBank.counsel.dto.CounselRequestRes;
@@ -23,15 +22,14 @@ public class CounselService {
     @Transactional
     public void createCounsel(CounselCreateReq counselCreateReq) {
         if (counselRepository.findByTitle(counselCreateReq.getTitle()).isPresent()) {
-            throw new EventException(ExceptionMessages.ERROR_EVENT_EXIST);
+            throw new CounselException(ExceptionMessages.ERROR_EVENT_EXIST);
         }
         try {
             counselRepository.save(counselCreateReq.toEntity());
         } catch (Exception e) {
             e.printStackTrace();
-            throw new EventException("이벤트 생성에 실패했습니다.");
+            throw new CounselException("이벤트 생성에 실패했습니다.");
         }
-//        return counselRepository.save(CounselCreateReq.toEntity());
     }
 
     @Transactional
@@ -55,7 +53,7 @@ public class CounselService {
     @Transactional
     public void updateCounsel(CounselUpdateReq counselUpdateReq) {
         if(!counselRepository.existsById(counselUpdateReq.getId())){
-            throw new EventException(ExceptionMessages.ERROR_EVENT_NOT_EXIST);
+            throw new CounselException(ExceptionMessages.ERROR_EVENT_NOT_EXIST);
         }
         try {
             counselRepository.updateCounsel(counselUpdateReq.getId(),counselUpdateReq.getTitle(),counselUpdateReq.getContent());

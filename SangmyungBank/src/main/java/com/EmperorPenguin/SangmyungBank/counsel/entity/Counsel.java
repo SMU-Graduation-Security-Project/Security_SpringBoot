@@ -29,13 +29,13 @@ public class Counsel {
     private String content;
 
     @Column
-    private String writeDate;
+    private String createDate;
 
     public CounselRequestRes toDto(){
         return CounselRequestRes.builder()
                 .title(title)
                 .content(content)
-                .writeDate(writeDate)
+                .createDate(createDate)
                 .build();
     }
 }

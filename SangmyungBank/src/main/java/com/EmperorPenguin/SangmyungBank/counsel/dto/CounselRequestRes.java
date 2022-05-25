@@ -12,5 +12,5 @@ import lombok.RequiredArgsConstructor;
 public class CounselRequestRes {
     private String title;
     private String content;
-    private String writeDate;
+    private String createDate;
 }
