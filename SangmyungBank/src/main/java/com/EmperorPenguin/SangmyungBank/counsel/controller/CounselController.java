@@ -73,9 +73,9 @@ public class CounselController {
 
     @DeleteMapping("/counsels/{id}")
     @ApiOperation(value="상담글 삭제")
-    public BaseResult deleteCounsel(@PathVariable Long id) {
+    public BaseResult deleteCounsel(@PathVariable Long id, @RequestParam String loginId) {
         try {
-            counselService.deleteCounsel(id);
+            counselService.deleteCounsel(id, loginId);
             return responseService.successResult();
         }catch (Exception e){
             return responseService.failResult(

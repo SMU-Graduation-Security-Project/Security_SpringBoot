@@ -10,7 +10,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class CounselRequestRes {
+
+    private String loginId;
     private String title;
     private String content;
     private String createDate;
+    private String modifyDate;
 }

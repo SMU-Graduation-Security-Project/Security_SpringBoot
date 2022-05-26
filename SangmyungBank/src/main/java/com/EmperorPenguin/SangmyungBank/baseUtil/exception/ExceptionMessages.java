@@ -23,6 +23,7 @@ public enum ExceptionMessages {
     ERROR_ACCOUNT_BALANCE("이체하기 충분한 잔액을 가지고 있지않습니다."),
 
     ERROR_COUNSEL_NOT_EXIST("해당 아이디를 가진 상담글이 없습니다"),
+    ERROR_COUNSEL_UNAUTHORIZED_ACCESS("상담글에 접근할 권한이 없습니다."),
 
     ERROR_EVENT_EXIST("해당 제목을 가진 이벤트가 이미 있습니다."),
     ERROR_EVENT_NOT_EXIST("해당 아이디를 가진 이벤트가 없습니다"),
