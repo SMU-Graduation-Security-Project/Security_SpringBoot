@@ -98,6 +98,10 @@ public class UserService {
                     passwordEncoder.encode(templatePassword),
                     user.getUserId()
             );
+            userRepository.updateUserModifyDate(
+                    new DateConfig().getDateTime(),
+                    user.getUserId()
+            );
             return templatePassword;
         }catch (Exception e){
             e.printStackTrace();
@@ -126,6 +130,10 @@ public class UserService {
             userRepository.updateUserPassword(
                     passwordEncoder.encode(userPasswordUpdateReq.getNewPassword1()),
                     user.getUserId());
+            userRepository.updateUserModifyDate(
+                    new DateConfig().getDateTime(),
+                    user.getUserId()
+            );
         }catch (Exception e){
             e.printStackTrace();
             throw new UserException("비밀번호 변경 실패");

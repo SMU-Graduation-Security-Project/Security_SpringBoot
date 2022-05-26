@@ -22,12 +22,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
     void updateLoginDate(@Param("loginTime")String loginTime, @Param("loginId")String LoginId);
 
     @Modifying(clearAutomatically = true)
-    @Query("update User u set u.password = ?1 where u.userId = ?2")
+    @Query("update User u set u.password = ?1, u.usingTempPassword = false where u.userId = ?2")
     void updateUserPassword(@Param("newPassword")String newPassword, @Param("userId")Long userId);
 
     @Modifying(clearAutomatically = true)
     @Query("update User u set u.password = ?1, u.usingTempPassword = true where u.userId = ?2")
     void updateUserTemplatePassword(@Param("templatePassword")String templatePassword, @Param("userId")Long userId);
+
+    @Modifying(clearAutomatically = true)
+    @Query("update User u set u.modifyDate = ?1 where u.userId = ?2")
+    void updateUserModifyDate(@Param("modifyDate")String modifyDate, @Param("userid")Long userid);
 
     boolean existsByLoginId(String loginId);
 
