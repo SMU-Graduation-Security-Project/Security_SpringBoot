@@ -12,17 +12,18 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class User{
     @Id
+    @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(columnDefinition = "text", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String loginId;
     private String email;
-    @Column(columnDefinition = "text", nullable = false)
+    @Column(nullable = false)
     private String name;
     private String password;
 
-    @Column(columnDefinition = "integer", nullable = false)
+    @Column(nullable = false)
     private int age;
 
     @Column(length = 2, nullable = false)
@@ -40,7 +41,7 @@ public class User{
     @Column
     private String modifyDate;
 
-    @Column
+    @Column(nullable = false)
     private String question;
 
     @Column(nullable = false)

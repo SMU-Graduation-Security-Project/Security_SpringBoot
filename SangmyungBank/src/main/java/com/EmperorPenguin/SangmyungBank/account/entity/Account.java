@@ -16,7 +16,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Account {
 
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name="userId")
     private User userId;
 

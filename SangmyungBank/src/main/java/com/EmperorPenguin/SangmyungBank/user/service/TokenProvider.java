@@ -2,9 +2,6 @@ package com.EmperorPenguin.SangmyungBank.user.service;
 
 
 import com.EmperorPenguin.SangmyungBank.user.entity.User;
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.InitializingBean;

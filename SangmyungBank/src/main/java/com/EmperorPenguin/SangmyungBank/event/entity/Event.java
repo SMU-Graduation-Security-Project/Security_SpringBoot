@@ -14,13 +14,14 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Event {
     @Id
+    @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "text", unique = true ,nullable = false)
+    @Column(unique = true ,nullable = false)
     private String title;
 
-    @Column(columnDefinition = "text", nullable = false)
+    @Column(nullable = false)
     private String content;
 
     @Column
