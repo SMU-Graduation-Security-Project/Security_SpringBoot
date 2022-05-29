@@ -6,9 +6,7 @@ import com.EmperorPenguin.SangmyungBank.baseUtil.exception.TransactionException;
 import com.EmperorPenguin.SangmyungBank.transaction.dto.TransactionInquiryRes;
 import com.EmperorPenguin.SangmyungBank.transaction.entity.Transaction;
 import com.EmperorPenguin.SangmyungBank.transaction.repository.TransactionRepository;
-import com.EmperorPenguin.SangmyungBank.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

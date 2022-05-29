@@ -2,7 +2,7 @@ package com.EmperorPenguin.SangmyungBank.account.dto;
 
 import com.EmperorPenguin.SangmyungBank.account.entity.Account;
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
-import com.EmperorPenguin.SangmyungBank.user.entity.User;
+import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,9 +21,9 @@ public class AccountCreateReq {
     @ApiModelProperty(required = true)
     private String accountPassword;
 
-    public Account toEntity(User User, String encodedPassword, Long balance){
+    public Account toEntity(Member Member, String encodedPassword, Long balance){
         return Account.builder()
-                .userId(User)
+                .memberId(Member)
                 .accountPassword(encodedPassword)
                 .balance(balance)
                 .CreateDate(new DateConfig().getDateTime())

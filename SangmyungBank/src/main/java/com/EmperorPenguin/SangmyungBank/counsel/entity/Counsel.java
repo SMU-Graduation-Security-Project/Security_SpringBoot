@@ -1,7 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.counsel.entity;
 
 import com.EmperorPenguin.SangmyungBank.counsel.dto.CounselRequestRes;
-import com.EmperorPenguin.SangmyungBank.user.entity.User;
+import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class Counsel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userId")
-    private User userId;
+    private Member memberId;
 
     @Id
     @Column(unique = true, nullable = false)
@@ -39,7 +39,7 @@ public class Counsel {
 
     public CounselRequestRes toDto(){
         return CounselRequestRes.builder()
-                .loginId(userId.getLoginId())
+                .loginId(memberId.getLoginId())
                 .title(title)
                 .content(content)
                 .createDate(createDate)

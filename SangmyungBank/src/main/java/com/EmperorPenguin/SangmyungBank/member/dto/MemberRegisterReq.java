@@ -1,8 +1,8 @@
-package com.EmperorPenguin.SangmyungBank.user.dto;
+package com.EmperorPenguin.SangmyungBank.member.dto;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
-import com.EmperorPenguin.SangmyungBank.user.entity.Role;
-import com.EmperorPenguin.SangmyungBank.user.entity.User;
+import com.EmperorPenguin.SangmyungBank.member.entity.Role;
+import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class UserRegisterReq {
+public class MemberRegisterReq {
 
     @ApiModelProperty(required = true)
     private String loginId;
@@ -36,9 +36,9 @@ public class UserRegisterReq {
     @ApiModelProperty(required = true)
     private String ansWord;
 
-    public User toEntity(String encryptedPassword, Role defaultRole)
+    public Member toEntity(String encryptedPassword, Role defaultRole)
     {
-        return User.builder()
+        return Member.builder()
                 .loginId(loginId)
                 .password(encryptedPassword)
                 .email(email)

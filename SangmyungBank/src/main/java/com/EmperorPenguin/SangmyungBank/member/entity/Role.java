@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.user.entity;
+package com.EmperorPenguin.SangmyungBank.member.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

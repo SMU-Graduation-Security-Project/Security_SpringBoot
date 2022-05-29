@@ -1,6 +1,6 @@
-package com.EmperorPenguin.SangmyungBank.user.entity;
+package com.EmperorPenguin.SangmyungBank.member.entity;
 
-import com.EmperorPenguin.SangmyungBank.user.dto.UserLoginRes;
+import com.EmperorPenguin.SangmyungBank.member.dto.MemberLoginRes;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class User{
+public class Member {
     @Id
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,8 +54,8 @@ public class User{
     @Column(nullable = false)
     private Role role;
 
-    public UserLoginRes toDto(){
-        return UserLoginRes.builder()
+    public MemberLoginRes toDto(){
+        return MemberLoginRes.builder()
                 .loginId(loginId)
                 .name(name)
                 .loginDate(loginDate)

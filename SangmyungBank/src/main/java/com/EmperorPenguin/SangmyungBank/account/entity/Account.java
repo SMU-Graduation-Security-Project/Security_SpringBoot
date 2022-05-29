@@ -1,7 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.account.entity;
 
 import com.EmperorPenguin.SangmyungBank.account.dto.AccountInquiryRes;
-import com.EmperorPenguin.SangmyungBank.user.entity.User;
+import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,9 +16,9 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Account {
 
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
     @JoinColumn(name="userId")
-    private User userId;
+    private Member memberId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

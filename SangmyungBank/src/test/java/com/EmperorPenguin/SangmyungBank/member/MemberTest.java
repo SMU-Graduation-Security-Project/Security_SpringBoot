@@ -1,12 +1,12 @@
-package com.EmperorPenguin.SangmyungBank.user;
-import com.EmperorPenguin.SangmyungBank.user.dto.UserFindPasswordReq;
-import com.EmperorPenguin.SangmyungBank.user.dto.UserLoginReq;
-import com.EmperorPenguin.SangmyungBank.user.dto.UserPasswordUpdateReq;
-import com.EmperorPenguin.SangmyungBank.user.dto.UserRegisterReq;
+package com.EmperorPenguin.SangmyungBank.member;
+import com.EmperorPenguin.SangmyungBank.member.dto.MemberFindPasswordReq;
+import com.EmperorPenguin.SangmyungBank.member.dto.MemberLoginReq;
+import com.EmperorPenguin.SangmyungBank.member.dto.MemberPasswordUpdateReq;
+import com.EmperorPenguin.SangmyungBank.member.dto.MemberRegisterReq;
 
-import com.EmperorPenguin.SangmyungBank.user.entity.User;
-import com.EmperorPenguin.SangmyungBank.user.repository.UserRepository;
-import com.EmperorPenguin.SangmyungBank.user.service.UserService;
+import com.EmperorPenguin.SangmyungBank.member.entity.Member;
+import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
+import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,12 +18,12 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @Transactional
 @SpringBootTest
-public class UserTest {
+public class MemberTest {
 
     @Autowired
-    UserService userService;
+    MemberService memberService;
     @Autowired
-    UserRepository userRepository;
+    MemberRepository memberRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -42,7 +42,7 @@ public class UserTest {
         int age = 13;
         String phoneNumber = "010-1111-1111";
 
-        UserRegisterReq userRegisterReq = UserRegisterReq.builder()
+        MemberRegisterReq memberRegisterReq = MemberRegisterReq.builder()
                 .loginId(loginId)
                 .password1(password1)
                 .password2(password2)
@@ -56,24 +56,24 @@ public class UserTest {
                 .build();
 
         // when
-        userService.register(userRegisterReq);
-        User findUser = userRepository.findByLoginId(loginId).get();
+        memberService.register(memberRegisterReq);
+        Member findMember = memberRepository.findByLoginId(loginId).get();
 
         // then
-        assertThat(findUser.getLoginId()).isEqualTo(loginId);
-        passwordEncoder.matches(findUser.getPassword(),password1);
-        assertThat(findUser.getName()).isEqualTo(name);
-        assertThat(findUser.getEmail()).isEqualTo(email);
-        assertThat(findUser.getPhoneNumber()).isEqualTo(phoneNumber);
-        assertThat(findUser.getSex()).isEqualTo(sex);
-        assertThat(findUser.getQuestion()).isEqualTo(question);
-        assertThat(findUser.getAnsWord()).isEqualTo(ansWord);
+        assertThat(findMember.getLoginId()).isEqualTo(loginId);
+        passwordEncoder.matches(findMember.getPassword(),password1);
+        assertThat(findMember.getName()).isEqualTo(name);
+        assertThat(findMember.getEmail()).isEqualTo(email);
+        assertThat(findMember.getPhoneNumber()).isEqualTo(phoneNumber);
+        assertThat(findMember.getSex()).isEqualTo(sex);
+        assertThat(findMember.getQuestion()).isEqualTo(question);
+        assertThat(findMember.getAnsWord()).isEqualTo(ansWord);
 
     }
 
     @Test
     void 사용자로그인() {
-        UserRegisterReq userRegisterReq = UserRegisterReq.builder()
+        MemberRegisterReq memberRegisterReq = MemberRegisterReq.builder()
                 .loginId("SpringTest1")
                 .password1("11111111a!")
                 .password2("11111111a!")
@@ -85,29 +85,29 @@ public class UserTest {
                 .question("테스트입니까?")
                 .ansWord("네 테스트입니다.")
                 .build();
-        userService.register(userRegisterReq);
+        memberService.register(memberRegisterReq);
 
         // given
         String loginId = "SpringTest1";
         String password ="11111111a!";
-        UserLoginReq userLoginReq = UserLoginReq.builder()
+        MemberLoginReq memberLoginReq = MemberLoginReq.builder()
                 .loginId(loginId)
                 .password(password)
                 .build();
 
         // when
-        User loginUser = userService.login(userLoginReq);
-        User dbUser = userRepository.findByLoginId(loginId).get();
+        Member loginMember = memberService.login(memberLoginReq);
+        Member dbMember = memberRepository.findByLoginId(loginId).get();
 
         // then
-        assertThat(loginUser).isEqualTo(dbUser);
+        assertThat(loginMember).isEqualTo(dbMember);
 
     }
 
     @Test
     void 사용자비밀번호찾기() {
 
-        UserRegisterReq userRegisterReq = UserRegisterReq.builder()
+        MemberRegisterReq memberRegisterReq = MemberRegisterReq.builder()
                 .loginId("SpringTest1")
                 .password1("11111111a!")
                 .password2("11111111a!")
@@ -119,30 +119,30 @@ public class UserTest {
                 .question("테스트입니까?")
                 .ansWord("네 테스트입니다.")
                 .build();
-        userService.register(userRegisterReq);
+        memberService.register(memberRegisterReq);
 
         // given
         String loginId = "SpringTest1";
         String question = "테스트입니까?";
         String ansWord = "네 테스트입니다.";
-        UserFindPasswordReq userFindPasswordReq = UserFindPasswordReq.builder()
+        MemberFindPasswordReq memberFindPasswordReq = MemberFindPasswordReq.builder()
                 .loginId(loginId)
                 .question(question)
                 .ansWord(ansWord)
                 .build();
 
         // when
-        String templatePassword = userService.setTemplatePassword(userFindPasswordReq);
-        User dbUser = userRepository.findByLoginId(loginId).get();
+        String templatePassword = memberService.setTemplatePassword(memberFindPasswordReq);
+        Member dbMember = memberRepository.findByLoginId(loginId).get();
 
         // then
-        passwordEncoder.matches(templatePassword, dbUser.getPassword());
+        passwordEncoder.matches(templatePassword, dbMember.getPassword());
     }
 
     @Test
     void 사용자비밀번호변경(){
 
-        UserRegisterReq userRegisterReq = UserRegisterReq.builder()
+        MemberRegisterReq memberRegisterReq = MemberRegisterReq.builder()
                 .loginId("SpringTest1")
                 .password1("11111111a!")
                 .password2("11111111a!")
@@ -154,23 +154,23 @@ public class UserTest {
                 .question("테스트입니까?")
                 .ansWord("네 테스트입니다.")
                 .build();
-        userService.register(userRegisterReq);
+        memberService.register(memberRegisterReq);
 
         String loginId = "SpringTest1";
         String question = "테스트입니까?";
         String ansWord = "네 테스트입니다.";
-        UserFindPasswordReq userFindPasswordReq = UserFindPasswordReq.builder()
+        MemberFindPasswordReq memberFindPasswordReq = MemberFindPasswordReq.builder()
                 .loginId(loginId)
                 .question(question)
                 .ansWord(ansWord)
                 .build();
 
         // given
-        String oldPassword = userService.setTemplatePassword(userFindPasswordReq);
+        String oldPassword = memberService.setTemplatePassword(memberFindPasswordReq);
         String newPassword1 = "11111111a!";
         String newPassword2 = "11111111a!";
 
-        UserPasswordUpdateReq userPasswordUpdateReq = UserPasswordUpdateReq.builder()
+        MemberPasswordUpdateReq memberPasswordUpdateReq = MemberPasswordUpdateReq.builder()
                 .loginId(loginId)
                 .oldPassword(oldPassword)
                 .newPassword1(newPassword1)
@@ -178,11 +178,11 @@ public class UserTest {
                 .build();
 
         // when
-        userService.updateNewPassword(userPasswordUpdateReq);
-        User dbUser = userRepository.findByLoginId(loginId).get();
+        memberService.updateNewPassword(memberPasswordUpdateReq);
+        Member dbMember = memberRepository.findByLoginId(loginId).get();
 
         // then
-        passwordEncoder.matches(newPassword1, dbUser.getPassword());
+        passwordEncoder.matches(newPassword1, dbMember.getPassword());
     }
 }
 

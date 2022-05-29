@@ -1,11 +1,11 @@
-package com.EmperorPenguin.SangmyungBank.user.controller;
+package com.EmperorPenguin.SangmyungBank.member.controller;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.dto.BaseResult;
-import com.EmperorPenguin.SangmyungBank.user.dto.UserFindPasswordReq;
-import com.EmperorPenguin.SangmyungBank.user.dto.UserLoginReq;
-import com.EmperorPenguin.SangmyungBank.user.dto.UserPasswordUpdateReq;
-import com.EmperorPenguin.SangmyungBank.user.dto.UserRegisterReq;
-import com.EmperorPenguin.SangmyungBank.user.service.UserService;
+import com.EmperorPenguin.SangmyungBank.member.dto.MemberFindPasswordReq;
+import com.EmperorPenguin.SangmyungBank.member.dto.MemberLoginReq;
+import com.EmperorPenguin.SangmyungBank.member.dto.MemberPasswordUpdateReq;
+import com.EmperorPenguin.SangmyungBank.member.dto.MemberRegisterReq;
+import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
 import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,18 +20,18 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
-public class UserController {
-    private final UserService userService;
+public class MemberController {
+    private final MemberService memberService;
     private final ResponseService responseService;
 
     @PostMapping(path = "/register")
     @ApiOperation(value="회원가입")
-    public BaseResult addUser(@ApiParam @RequestBody UserRegisterReq userRegisterReq) {
+    public BaseResult addUser(@ApiParam @RequestBody MemberRegisterReq memberRegisterReq) {
         // 이전 boolean 통해 오류를 검출하는 방식으로 작동
         // refactoring 이후 Exception 통한 예외처리로 로직 변경
         // 아이디 중복, 이메일 중복, 전화번호 중복, 비밀번호 규칙 검증, 올바르게 비밀번호를 2번 입력했는지 확인
         try {
-            userService.register(userRegisterReq);
+            memberService.register(memberRegisterReq);
             return responseService.successResult();
         } catch (Exception e) {
             return responseService.failResult(
@@ -42,12 +42,12 @@ public class UserController {
 
     @PostMapping(path = "/login")
     @ApiOperation(value="로그인")
-    public BaseResult authUser(@ApiParam @RequestBody UserLoginReq userLoginReq){
+    public BaseResult authUser(@ApiParam @RequestBody MemberLoginReq memberLoginReq){
         // 이전 boolean 통해 오류를 검출하는 방식으로 작동
         // refactoring 이후 Exception 통한 예외처리로 로직 변경
         // 없는 아이디, 잘못된 비밀번호에서 오류 발생.
         try{
-            return responseService.singleResult(userService.login(userLoginReq).toDto());
+            return responseService.singleResult(memberService.login(memberLoginReq).toDto());
         }catch (Exception e){
             return responseService.failResult(
                     e.getMessage()
@@ -57,10 +57,10 @@ public class UserController {
 
     @PostMapping(path = "/find_Password")
     @ApiOperation(value = "비밀번호 찾기")
-    public BaseResult findPassword(@ApiParam @RequestBody UserFindPasswordReq userFindPasswordReq){
+    public BaseResult findPassword(@ApiParam @RequestBody MemberFindPasswordReq memberFindPasswordReq){
         try {
             return responseService.singleResult(
-                    userService.setTemplatePassword(userFindPasswordReq));
+                    memberService.setTemplatePassword(memberFindPasswordReq));
         }catch (Exception e){
             return  responseService.failResult(
                     e.getMessage()
@@ -71,9 +71,9 @@ public class UserController {
 
     @PostMapping(path = "/updatePassword")
     @ApiOperation(value = "임시 비밀번호를 가진 사용자의 비밀번호 변경")
-    public BaseResult updateUserPassword(@ApiParam @RequestBody UserPasswordUpdateReq userPasswordUpdateReq){
+    public BaseResult updateUserPassword(@ApiParam @RequestBody MemberPasswordUpdateReq memberPasswordUpdateReq){
         try {
-            userService.updateNewPassword(userPasswordUpdateReq);
+            memberService.updateNewPassword(memberPasswordUpdateReq);
             return responseService.successResult();
         }catch (Exception e){
             return responseService.failResult(

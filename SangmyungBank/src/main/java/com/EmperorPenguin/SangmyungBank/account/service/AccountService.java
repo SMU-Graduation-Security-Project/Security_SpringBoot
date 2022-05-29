@@ -9,8 +9,8 @@ import com.EmperorPenguin.SangmyungBank.baseUtil.exception.AccountException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.transaction.entity.Transaction;
 import com.EmperorPenguin.SangmyungBank.transaction.repository.TransactionRepository;
-import com.EmperorPenguin.SangmyungBank.user.entity.User;
-import com.EmperorPenguin.SangmyungBank.user.repository.UserRepository;
+import com.EmperorPenguin.SangmyungBank.member.entity.Member;
+import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class AccountService {
 
     private final AccountRepository accountRepository;
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final TransactionRepository transactionRepository;
 
@@ -36,12 +36,12 @@ public class AccountService {
 
         checkPassword(password);
         // 전달 받은 아이디를 통해 사용자가 있는지 확인 없다면 사용자가 없다는 예외를 발생.
-        if(userRepository.findByLoginId(loginId).isEmpty()){
-            throw new AccountException(ExceptionMessages.ERROR_USER_NOT_FOUND);
+        if(memberRepository.findByLoginId(loginId).isEmpty()){
+            throw new AccountException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND);
         }
         try{
             accountRepository.save(accountCreateReq.toEntity(
-                    userRepository.findByLoginId(loginId).get(),
+                    memberRepository.findByLoginId(loginId).get(),
                     passwordEncoder.encode(password),
                     0L));
         }catch (Exception e)
@@ -63,7 +63,7 @@ public class AccountService {
             .orElseThrow(() -> new AccountException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND));
 
         // 사용자의 아이디로부터 자신의 계좌가 맞는지 확인.
-        checkAccount(myAccount, userRepository.findByLoginId(loginId).get());
+        checkAccount(myAccount, memberRepository.findByLoginId(loginId).get());
 
         // 보내는 계좌 번호가 존재하는지 확인.
         if(!accountRepository.existsAccountByAccountNumber(sendAccount)){
@@ -103,11 +103,11 @@ public class AccountService {
     @Transactional
     public List<AccountInquiryRes> inquiry(String loginId) {
         // 정확한 사용자를 넘겨줬는지 확인
-        if (userRepository.findByLoginId(loginId).isEmpty()) {
-            throw new AccountException(ExceptionMessages.ERROR_USER_NOT_FOUND);
+        if (memberRepository.findByLoginId(loginId).isEmpty()) {
+            throw new AccountException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND);
         }
         return accountRepository
-                .findAllByUserId(userRepository.findByLoginId(loginId).get())
+                .findAllByUserId(memberRepository.findByLoginId(loginId).get())
                 .stream()
                 .map(Account::toDto)
                 .collect(Collectors.toList());
@@ -122,8 +122,8 @@ public class AccountService {
         }
     }
 
-    private void checkAccount(Account account, User user){
-        if(!accountRepository.findAllByUserId(user).contains(account)){
+    private void checkAccount(Account account, Member member){
+        if(!accountRepository.findAllByUserId(member).contains(account)){
             throw new AccountException("전달받은 계좌는 사용자의 계좌가 아닙니다.");
         }
     }

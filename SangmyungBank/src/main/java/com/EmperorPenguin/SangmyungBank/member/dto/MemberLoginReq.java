@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.user.dto;
+package com.EmperorPenguin.SangmyungBank.member.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class UserLoginReq {
+public class MemberLoginReq {
 
     @ApiModelProperty(required = true)
     private String loginId;

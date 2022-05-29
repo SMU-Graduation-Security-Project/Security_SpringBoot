@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.user.dto;
+package com.EmperorPenguin.SangmyungBank.member.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class UserLoginRes {
+public class MemberLoginRes {
     private String loginId;
     private String name;
     private String loginDate;

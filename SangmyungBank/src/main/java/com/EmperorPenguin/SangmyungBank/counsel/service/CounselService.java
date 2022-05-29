@@ -8,7 +8,7 @@ import com.EmperorPenguin.SangmyungBank.counsel.dto.CounselRequestRes;
 import com.EmperorPenguin.SangmyungBank.counsel.dto.CounselUpdateReq;
 import com.EmperorPenguin.SangmyungBank.counsel.entity.Counsel;
 import com.EmperorPenguin.SangmyungBank.counsel.repository.CounselRepository;
-import com.EmperorPenguin.SangmyungBank.user.repository.UserRepository;
+import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,18 +21,18 @@ import java.util.stream.Collectors;
 public class CounselService {
 
     private final CounselRepository counselRepository;
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public void createCounsel(CounselCreateReq counselCreateReq) {
         String loginId = counselCreateReq.getLoginId();
         // 먼저 해당 사용자가 있는 지 검증
-        if(!userRepository.existsByLoginId(loginId)){
-            throw new CounselException(ExceptionMessages.ERROR_USER_NOT_FOUND);
+        if(!memberRepository.existsByLoginId(loginId)){
+            throw new CounselException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND);
         }
         try {
             counselRepository.save(counselCreateReq.toEntity(
-                    userRepository.findByLoginId(loginId).get())
+                    memberRepository.findByLoginId(loginId).get())
             );
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,7 +64,7 @@ public class CounselService {
             throw new CounselException(ExceptionMessages.ERROR_EVENT_NOT_EXIST);
         }
         Counsel counsel = counselRepository.getById(counselUpdateReq.getId());
-        if(!counsel.getUserId().getLoginId().equals(counselUpdateReq.getLoginId())){
+        if(!counsel.getMemberId().getLoginId().equals(counselUpdateReq.getLoginId())){
             throw new CounselException(ExceptionMessages.ERROR_COUNSEL_UNAUTHORIZED_ACCESS);
         }
         try {
@@ -84,7 +84,7 @@ public class CounselService {
             throw new CounselException(ExceptionMessages.ERROR_COUNSEL_NOT_EXIST);
         }
         Counsel counsel = counselRepository.getById(id);
-        if(!counsel.getUserId().getLoginId().equals(loginId)){
+        if(!counsel.getMemberId().getLoginId().equals(loginId)){
             throw new CounselException(ExceptionMessages.ERROR_COUNSEL_UNAUTHORIZED_ACCESS);
         }
         try{
