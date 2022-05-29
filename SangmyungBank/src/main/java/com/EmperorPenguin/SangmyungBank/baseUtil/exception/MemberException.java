@@ -1,18 +1,18 @@
 package com.EmperorPenguin.SangmyungBank.baseUtil.exception;
 
-public class UserException extends RuntimeException {
+public class MemberException extends RuntimeException {
 
-    public UserException() {
+    public MemberException() {
         super();
     }
 
     // 기본적인 예외 메시지를 통한 오류 발생
-    public UserException(ExceptionMessages exceptionMessages) {
+    public MemberException(ExceptionMessages exceptionMessages) {
         super(exceptionMessages.getMessage());
     }
 
     // 정의되지 않은 예외 메시지를 직접 작성
-    public UserException(String message) {
+    public MemberException(String message) {
         super(message);
     }
 

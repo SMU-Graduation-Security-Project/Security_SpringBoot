@@ -1,12 +1,13 @@
 package com.EmperorPenguin.SangmyungBank.member;
-import com.EmperorPenguin.SangmyungBank.member.dto.MemberFindPasswordReq;
+import com.EmperorPenguin.SangmyungBank.memberUtil.dto.MemberFindPasswordReq;
 import com.EmperorPenguin.SangmyungBank.member.dto.MemberLoginReq;
-import com.EmperorPenguin.SangmyungBank.member.dto.MemberPasswordUpdateReq;
+import com.EmperorPenguin.SangmyungBank.memberUtil.dto.MemberPasswordUpdateReq;
 import com.EmperorPenguin.SangmyungBank.member.dto.MemberRegisterReq;
 
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
 import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
+import com.EmperorPenguin.SangmyungBank.memberUtil.service.MemberUtilService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +23,8 @@ public class MemberTest {
 
     @Autowired
     MemberService memberService;
+    @Autowired
+    MemberUtilService memberUtilService;
     @Autowired
     MemberRepository memberRepository;
     @Autowired
@@ -132,7 +135,7 @@ public class MemberTest {
                 .build();
 
         // when
-        String templatePassword = memberService.setTemplatePassword(memberFindPasswordReq);
+        String templatePassword = memberUtilService.setTemplatePassword(memberFindPasswordReq);
         Member dbMember = memberRepository.findByLoginId(loginId).get();
 
         // then
@@ -166,7 +169,7 @@ public class MemberTest {
                 .build();
 
         // given
-        String oldPassword = memberService.setTemplatePassword(memberFindPasswordReq);
+        String oldPassword = memberUtilService.setTemplatePassword(memberFindPasswordReq);
         String newPassword1 = "11111111a!";
         String newPassword2 = "11111111a!";
 
@@ -178,7 +181,7 @@ public class MemberTest {
                 .build();
 
         // when
-        memberService.updateNewPassword(memberPasswordUpdateReq);
+        memberUtilService.updateNewPassword(memberPasswordUpdateReq);
         Member dbMember = memberRepository.findByLoginId(loginId).get();
 
         // then

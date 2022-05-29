@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.member.dto;
+package com.EmperorPenguin.SangmyungBank.memberUtil.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -10,13 +10,15 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class MemberFindPasswordReq {
+public class MemberPasswordUpdateReq {
 
     @ApiModelProperty(required = true)
     private String loginId;
     @ApiModelProperty(required = true)
-    private String question;
+    private String oldPassword;
     @ApiModelProperty(required = true)
-    private String ansWord;
+    private String newPassword1;
+    @ApiModelProperty(required = true)
+    private String newPassword2;
 
 }

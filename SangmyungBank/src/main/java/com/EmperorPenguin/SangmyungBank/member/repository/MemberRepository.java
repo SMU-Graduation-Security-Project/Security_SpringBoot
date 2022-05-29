@@ -18,19 +18,19 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByPhoneNumber(String PhoneNumber);
 
     @Modifying(clearAutomatically = true)
-    @Query("update Member u set u.loginDate = :loginTime where u.loginId =:loginId")
+    @Query("update Member m set u.loginDate = :loginTime where m.loginId =:loginId")
     void updateLoginDate(@Param("loginTime")String loginTime, @Param("loginId")String LoginId);
 
     @Modifying(clearAutomatically = true)
-    @Query("update Member u set u.password = ?1, u.usingTempPassword = false where u.userId = ?2")
+    @Query("update Member m set m.password = ?1, m.usingTempPassword = false where m.userId = ?2")
     void updateUserPassword(@Param("newPassword")String newPassword, @Param("userId")Long userId);
 
     @Modifying(clearAutomatically = true)
-    @Query("update Member u set u.password = ?1, u.usingTempPassword = true where u.userId = ?2")
+    @Query("update Member m set m.password = ?1, m.usingTempPassword = true where m.userId = ?2")
     void updateUserTemplatePassword(@Param("templatePassword")String templatePassword, @Param("userId")Long userId);
 
     @Modifying(clearAutomatically = true)
-    @Query("update Member u set u.modifyDate = ?1 where u.userId = ?2")
+    @Query("update Member m set u.modifyDate = ?1 where u.userId = ?2")
     void updateUserModifyDate(@Param("modifyDate")String modifyDate, @Param("userid")Long userid);
 
     boolean existsByLoginId(String loginId);

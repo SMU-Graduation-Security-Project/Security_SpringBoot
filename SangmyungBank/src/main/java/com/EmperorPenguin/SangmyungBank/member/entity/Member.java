@@ -1,6 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.member.entity;
 
 import com.EmperorPenguin.SangmyungBank.member.dto.MemberLoginRes;
+import com.EmperorPenguin.SangmyungBank.memberUtil.dto.MemberInquiryRes;
 import lombok.*;
 
 import javax.persistence.*;
@@ -54,12 +55,25 @@ public class Member {
     @Column(nullable = false)
     private Role role;
 
-    public MemberLoginRes toDto(){
+    public MemberLoginRes toLoginDto(){
         return MemberLoginRes.builder()
                 .loginId(loginId)
                 .name(name)
                 .loginDate(loginDate)
                 .usingTempPassword(usingTempPassword)
+                .build();
+    }
+
+    public MemberInquiryRes toDto(){
+        return MemberInquiryRes.builder()
+                .loginId(loginId)
+                .email(email)
+                .name(name)
+                .age(age)
+                .sex(sex)
+                .phoneNumber(phoneNumber)
+                .loginDate(loginDate)
+                .modifyDate(modifyDate)
                 .build();
     }
 

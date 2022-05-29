@@ -1,9 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.member.controller;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.dto.BaseResult;
-import com.EmperorPenguin.SangmyungBank.member.dto.MemberFindPasswordReq;
 import com.EmperorPenguin.SangmyungBank.member.dto.MemberLoginReq;
-import com.EmperorPenguin.SangmyungBank.member.dto.MemberPasswordUpdateReq;
 import com.EmperorPenguin.SangmyungBank.member.dto.MemberRegisterReq;
 import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
 import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
@@ -47,7 +45,7 @@ public class MemberController {
         // refactoring 이후 Exception 통한 예외처리로 로직 변경
         // 없는 아이디, 잘못된 비밀번호에서 오류 발생.
         try{
-            return responseService.singleResult(memberService.login(memberLoginReq).toDto());
+            return responseService.singleResult(memberService.login(memberLoginReq).toLoginDto());
         }catch (Exception e){
             return responseService.failResult(
                     e.getMessage()
@@ -55,32 +53,7 @@ public class MemberController {
         }
     }
 
-    @PostMapping(path = "/find_Password")
-    @ApiOperation(value = "비밀번호 찾기")
-    public BaseResult findPassword(@ApiParam @RequestBody MemberFindPasswordReq memberFindPasswordReq){
-        try {
-            return responseService.singleResult(
-                    memberService.setTemplatePassword(memberFindPasswordReq));
-        }catch (Exception e){
-            return  responseService.failResult(
-                    e.getMessage()
-            );
-        }
-    }
 
-
-    @PostMapping(path = "/updatePassword")
-    @ApiOperation(value = "임시 비밀번호를 가진 사용자의 비밀번호 변경")
-    public BaseResult updateUserPassword(@ApiParam @RequestBody MemberPasswordUpdateReq memberPasswordUpdateReq){
-        try {
-            memberService.updateNewPassword(memberPasswordUpdateReq);
-            return responseService.successResult();
-        }catch (Exception e){
-            return responseService.failResult(
-                    e.getMessage()
-            );
-        }
-    }
 }
 
 
