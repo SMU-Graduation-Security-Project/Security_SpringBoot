@@ -40,11 +40,11 @@ public class MemberUtilService {
             String templatePassword = randomNumberGen();
             memberRepository.updateUserTemplatePassword(
                     passwordEncoder.encode(templatePassword),
-                    member.getUserId()
+                    member.getMemberId()
             );
             memberRepository.updateUserModifyDate(
                     new DateConfig().getDateTime(),
-                    member.getUserId()
+                    member.getMemberId()
             );
             return templatePassword;
         }catch (Exception e){
@@ -73,10 +73,10 @@ public class MemberUtilService {
         try {
             memberRepository.updateUserPassword(
                     passwordEncoder.encode(memberPasswordUpdateReq.getNewPassword1()),
-                    member.getUserId());
+                    member.getMemberId());
             memberRepository.updateUserModifyDate(
                     new DateConfig().getDateTime(),
-                    member.getUserId()
+                    member.getMemberId()
             );
         }catch (Exception e){
             e.printStackTrace();

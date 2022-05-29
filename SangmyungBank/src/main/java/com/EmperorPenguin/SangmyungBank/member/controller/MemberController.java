@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags = "회원가입,로그인, 비밀번호 찾기, 비밀번호 수정")
+@Api(tags = "회원가입,로그인")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")

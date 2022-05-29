@@ -17,7 +17,6 @@ import javax.persistence.*;
 public class Account {
 
     @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="userId")
     private Member memberId;
 
     @Id

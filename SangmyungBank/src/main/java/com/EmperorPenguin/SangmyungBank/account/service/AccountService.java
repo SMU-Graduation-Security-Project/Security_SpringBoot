@@ -107,7 +107,7 @@ public class AccountService {
             throw new AccountException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND);
         }
         return accountRepository
-                .findAllByUserId(memberRepository.findByLoginId(loginId).get())
+                .findAllByMemberId(memberRepository.findByLoginId(loginId).get())
                 .stream()
                 .map(Account::toDto)
                 .collect(Collectors.toList());
@@ -123,7 +123,7 @@ public class AccountService {
     }
 
     private void checkAccount(Account account, Member member){
-        if(!accountRepository.findAllByUserId(member).contains(account)){
+        if(!accountRepository.findAllByMemberId(member).contains(account)){
             throw new AccountException("전달받은 계좌는 사용자의 계좌가 아닙니다.");
         }
     }
