@@ -23,7 +23,7 @@ public class MemberController {
     private final ResponseService responseService;
 
     @PostMapping(path = "/register")
-    @ApiOperation(value="회원가입")
+    @ApiOperation(value="회원가입", notes = "사용자 정보를 받아 사용자를 저장합니다.")
     public BaseResult addUser(@ApiParam @RequestBody MemberRegisterReq memberRegisterReq) {
         // 이전 boolean 통해 오류를 검출하는 방식으로 작동
         // refactoring 이후 Exception 통한 예외처리로 로직 변경
@@ -39,7 +39,7 @@ public class MemberController {
     }
 
     @PostMapping(path = "/login")
-    @ApiOperation(value="로그인")
+    @ApiOperation(value="로그인", notes = "사용자의 아이디와 비밀번호를 받아 로그인을 합니다.")
     public BaseResult authUser(@ApiParam @RequestBody MemberLoginReq memberLoginReq){
         // 이전 boolean 통해 오류를 검출하는 방식으로 작동
         // refactoring 이후 Exception 통한 예외처리로 로직 변경

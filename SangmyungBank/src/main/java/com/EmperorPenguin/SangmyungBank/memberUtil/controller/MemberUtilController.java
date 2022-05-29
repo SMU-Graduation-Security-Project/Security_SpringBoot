@@ -20,7 +20,7 @@ public class MemberUtilController {
     private final ResponseService responseService;
 
     @PostMapping(path = "/find_Password")
-    @ApiOperation(value = "비밀번호 찾기")
+    @ApiOperation(value = "비밀번호 찾기", notes = "사용자의 질문과 정답을 검증해 임시비밀번호를 제공합니다.")
     public BaseResult findPassword(@ApiParam @RequestBody MemberFindPasswordReq memberFindPasswordReq){
         try {
             return responseService.singleResult(
@@ -34,7 +34,7 @@ public class MemberUtilController {
 
 
     @PostMapping(path = "/updatePassword")
-    @ApiOperation(value = "임시 비밀번호를 가진 사용자의 비밀번호 변경")
+    @ApiOperation(value = "임시 비밀번호를 가진 사용자의 비밀번호 변경",notes = "임시 비밀번호를 제공받은 유저의 새로운 비밀번호로 비밀번호를 변경합니다.")
     public BaseResult updateUserPassword(@ApiParam @RequestBody MemberPasswordUpdateReq memberPasswordUpdateReq){
         try {
             memberUtilService.updateNewPassword(memberPasswordUpdateReq);
@@ -47,7 +47,7 @@ public class MemberUtilController {
     }
 
     @GetMapping(path = "/")
-    @ApiOperation(value = "사용자 정보 가져오기")
+    @ApiOperation(value = "사용자 정보 가져오기", notes = "loginId에 해당하는 사용자의 정보를 가져옵니다.")
     public BaseResult getUserData(@ApiParam @RequestParam String loginId){
         try{
             return responseService.singleResult(memberUtilService.getMemberData(loginId));

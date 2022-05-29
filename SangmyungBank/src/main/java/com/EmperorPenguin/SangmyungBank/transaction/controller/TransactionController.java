@@ -21,7 +21,7 @@ public class TransactionController {
     private final ResponseService responseService;
 
     @GetMapping("/{accountNumber}")
-    @ApiOperation(value = "계좌 거래내역 조회")
+    @ApiOperation(value = "계좌 거래내역 조회", notes = "특정 계좌의 거래내역을 전달합니다.")
     public BaseResult getTransactionData(@PathVariable Long accountNumber){
         try {
             return responseService.listResult(

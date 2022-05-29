@@ -20,7 +20,7 @@ public class AccountController {
     private final ResponseService responseService;
 
     @PostMapping(path = "/add")
-    @ApiOperation(value = "계좌생성")
+    @ApiOperation(value = "계좌생성", notes = "사용자의 아이디와 비밀번호를 받아 사용자의 계좌를 생성합니다.")
     public BaseResult addAccount(@ApiParam @RequestBody AccountCreateReq accountCreateReq){
         try {
             accountService.createAccount(accountCreateReq);
@@ -33,7 +33,7 @@ public class AccountController {
     }
 
     @PostMapping(path = "/transaction")
-    @ApiOperation(value="계좌 이체")
+    @ApiOperation(value="계좌 이체", notes = "사용자 아이디와 이체할 계좌, 금액과 해당 계좌의 비밀번호를 받아 이체합니다.")
     public BaseResult transaction(@ApiParam @RequestBody TransferReq transferReq){
         try {
             accountService.transaction(transferReq);
@@ -46,7 +46,7 @@ public class AccountController {
     }
 
     @GetMapping(path = "/inquiry")
-    @ApiOperation(value = "전계좌 조회")
+    @ApiOperation(value = "전계좌 조회", notes = "아이디에 해당 하는 모든 계좌를 받아옵니다.")
     public BaseResult inquiry(@ApiParam @RequestParam String userId) {
         try {
             return responseService.listResult(accountService.inquiry(userId));
