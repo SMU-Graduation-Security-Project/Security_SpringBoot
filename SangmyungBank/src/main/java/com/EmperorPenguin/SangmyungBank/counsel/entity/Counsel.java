@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class Counsel {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="userId")
+    @JoinColumn(name="memberId")
     private Member memberId;
 
     @Id
