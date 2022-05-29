@@ -32,6 +32,9 @@ public enum ExceptionMessages {
     ERROR_NEWS_EXIST("해당 제목을 가진 새소식이 이미 있습니다."),
     ERROR_NEWS_NOT_EXIST("해당 아이디를 가진 새소식이 없습니다"),
 
+    ERROR_CARDLIST_EXIST("해당 제목을 가진 카드목록이 이미 있습니다."),
+    ERROR_CARDLIST_NOT_EXIST("해당 아이디를 가진 카드목록이 없습니다"),
+
     ERROR_SECURITYNOTICE_EXIST("해당 제목을 가진 보안공지가 이미 있습니다."),
     ERROR_SECURITYNOTICE_NOT_EXIST("해당 아이디를 가진 보안공지가 없습니다");
 
