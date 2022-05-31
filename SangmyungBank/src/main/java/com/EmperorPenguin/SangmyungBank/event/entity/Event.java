@@ -1,7 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.event.entity;
 
-import com.EmperorPenguin.SangmyungBank.event.dto.EventRequestRes;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.EmperorPenguin.SangmyungBank.event.dto.EventInquiryRes;
 import lombok.*;
 
 import javax.persistence.*;
@@ -33,8 +32,9 @@ public class Event {
     @Column
     private String endDate;
 
-    public EventRequestRes toDto(){
-        return EventRequestRes.builder()
+    public EventInquiryRes toDto(){
+        return EventInquiryRes.builder()
+                .id(id)
                 .title(title)
                 .content(content)
                 .createDate(createDate)

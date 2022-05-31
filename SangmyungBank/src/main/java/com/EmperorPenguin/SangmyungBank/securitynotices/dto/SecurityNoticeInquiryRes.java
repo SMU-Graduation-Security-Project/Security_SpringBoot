@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.event.dto;
+package com.EmperorPenguin.SangmyungBank.securitynotices.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +9,10 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class EventRequestRes {
+public class SecurityNoticeInquiryRes {
 
+    private Long id;
     private String title;
     private String content;
-    private String createDate;
-    private String startDate;
-    private String endDate;
+    private String createdDate;
 }

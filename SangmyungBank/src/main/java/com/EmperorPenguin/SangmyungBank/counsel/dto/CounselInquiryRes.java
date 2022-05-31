@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.securitynotices.dto;
+package com.EmperorPenguin.SangmyungBank.counsel.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,12 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class SecurityNoticeRequestRes {
+public class CounselInquiryRes {
 
+    private String loginId;
+    private Long id;
     private String title;
     private String content;
-    private String createdDate;
+    private String createDate;
+    private String modifyDate;
 }

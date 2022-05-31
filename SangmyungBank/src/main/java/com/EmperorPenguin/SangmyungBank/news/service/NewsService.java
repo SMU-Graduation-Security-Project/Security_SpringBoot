@@ -3,7 +3,7 @@ package com.EmperorPenguin.SangmyungBank.news.service;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.NewsException;
 import com.EmperorPenguin.SangmyungBank.news.dto.NewsCreateReq;
-import com.EmperorPenguin.SangmyungBank.news.dto.NewsRequestRes;
+import com.EmperorPenguin.SangmyungBank.news.dto.NewsInquiryRes;
 import com.EmperorPenguin.SangmyungBank.news.dto.NewsUpdateReq;
 import com.EmperorPenguin.SangmyungBank.news.entity.News;
 import com.EmperorPenguin.SangmyungBank.news.repository.NewsRepository;
@@ -34,7 +34,7 @@ public class NewsService {
     }
 
     @Transactional
-    public List<NewsRequestRes> getAllNews() {
+    public List<NewsInquiryRes> getAllNews() {
         return newsRepository.findAll()
                 .stream()
                 .map(News::toDto)

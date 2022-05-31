@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.counsel.dto;
+package com.EmperorPenguin.SangmyungBank.event.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +9,12 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class CounselRequestRes {
+public class EventInquiryRes {
 
-    private String loginId;
+    private Long id;
     private String title;
     private String content;
     private String createDate;
-    private String modifyDate;
+    private String startDate;
+    private String endDate;
 }

@@ -1,6 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.securitynotices.entity;
 
-import com.EmperorPenguin.SangmyungBank.securitynotices.dto.SecurityNoticeRequestRes;
+import com.EmperorPenguin.SangmyungBank.securitynotices.dto.SecurityNoticeInquiryRes;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,8 +25,9 @@ public class SecurityNotices {
     @Column
     private String createdDate;
 
-    public SecurityNoticeRequestRes toDto(){
-        return SecurityNoticeRequestRes.builder()
+    public SecurityNoticeInquiryRes toDto(){
+        return SecurityNoticeInquiryRes.builder()
+                .id(id)
                 .title(title)
                 .content(content)
                 .createdDate(createdDate)

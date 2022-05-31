@@ -1,6 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.counsel.entity;
 
-import com.EmperorPenguin.SangmyungBank.counsel.dto.CounselRequestRes;
+import com.EmperorPenguin.SangmyungBank.counsel.dto.CounselInquiryRes;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,9 +37,10 @@ public class Counsel {
     @Column
     private String modifyDate;
 
-    public CounselRequestRes toDto(){
-        return CounselRequestRes.builder()
+    public CounselInquiryRes toDto(){
+        return CounselInquiryRes.builder()
                 .loginId(memberId.getLoginId())
+                .id(id)
                 .title(title)
                 .content(content)
                 .createDate(createDate)

@@ -5,7 +5,7 @@ import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.EventException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.NewsException;
 import com.EmperorPenguin.SangmyungBank.event.dto.EventCreateReq;
-import com.EmperorPenguin.SangmyungBank.event.dto.EventRequestRes;
+import com.EmperorPenguin.SangmyungBank.event.dto.EventInquiryRes;
 import com.EmperorPenguin.SangmyungBank.event.dto.EventUpdateReq;
 import com.EmperorPenguin.SangmyungBank.event.entity.Event;
 import com.EmperorPenguin.SangmyungBank.event.repository.EventRepository;
@@ -36,7 +36,7 @@ public class EventService {
     }
 
     @Transactional
-    public List<EventRequestRes> listAllDoingEvents() {
+    public List<EventInquiryRes> listAllDoingEvents() {
         return eventRepository.findRun(new DateConfig().getDateTime())
                 .stream()
                 .map(Event::toDto)
@@ -44,7 +44,7 @@ public class EventService {
     }
 
     @Transactional
-    public List<EventRequestRes> listAllDoneEvents() {
+    public List<EventInquiryRes> listAllDoneEvents() {
         return eventRepository.findDone(new DateConfig().getDateTime())
                 .stream()
                 .map(Event::toDto)

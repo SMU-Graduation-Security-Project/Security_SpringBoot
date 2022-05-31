@@ -1,9 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.event;
 
-import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
-import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
 import com.EmperorPenguin.SangmyungBank.event.dto.EventCreateReq;
-import com.EmperorPenguin.SangmyungBank.event.dto.EventRequestRes;
+import com.EmperorPenguin.SangmyungBank.event.dto.EventInquiryRes;
 import com.EmperorPenguin.SangmyungBank.event.dto.EventUpdateReq;
 import com.EmperorPenguin.SangmyungBank.event.entity.Event;
 import com.EmperorPenguin.SangmyungBank.event.repository.EventRepository;
@@ -16,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
@@ -99,7 +96,7 @@ public class EventTest {
         eventService.createEvent(run1);
         eventService.createEvent(run2);
         eventService.createEvent(done1);
-        List<EventRequestRes> list = eventService.listAllDoingEvents();
+        List<EventInquiryRes> list = eventService.listAllDoingEvents();
 
         //then
         assertThat(list.size()).isEqualTo(2);
@@ -148,7 +145,7 @@ public class EventTest {
         eventService.createEvent(run1);
         eventService.createEvent(run2);
         eventService.createEvent(done1);
-        List<EventRequestRes> list = eventService.listAllDoneEvents();
+        List<EventInquiryRes> list = eventService.listAllDoneEvents();
 
         //then
         assertThat(list.size()).isEqualTo(1);
@@ -228,9 +225,9 @@ public class EventTest {
 
         Long updateId = event.getId();
         //when
-        List<EventRequestRes> list = eventService.listAllDoingEvents();
+        List<EventInquiryRes> list = eventService.listAllDoingEvents();
         eventService.deleteEvent(updateId);
-        List<EventRequestRes> list2 = eventService.listAllDoingEvents();
+        List<EventInquiryRes> list2 = eventService.listAllDoingEvents();
 //        eventService.deleteEvent(updateId);
 //        Optional<Event> findEvent = eventRepository.findById(updateId);
         //then

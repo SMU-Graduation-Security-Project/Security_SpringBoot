@@ -3,7 +3,7 @@ package com.EmperorPenguin.SangmyungBank.securitynotices.service;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.SecurityNoticeException;
 import com.EmperorPenguin.SangmyungBank.securitynotices.dto.SecurityNoticeCreateReq;
-import com.EmperorPenguin.SangmyungBank.securitynotices.dto.SecurityNoticeRequestRes;
+import com.EmperorPenguin.SangmyungBank.securitynotices.dto.SecurityNoticeInquiryRes;
 import com.EmperorPenguin.SangmyungBank.securitynotices.dto.SecurityNoticeUpdateReq;
 import com.EmperorPenguin.SangmyungBank.securitynotices.entity.SecurityNotices;
 import com.EmperorPenguin.SangmyungBank.securitynotices.repository.SecurityNoticesRepository;
@@ -34,7 +34,7 @@ public class SecurityNoticesService {
     }
 
     @Transactional
-    public List<SecurityNoticeRequestRes> getAllSecurityNotices() {
+    public List<SecurityNoticeInquiryRes> getAllSecurityNotices() {
         return securityNoticesRepository.findAll()
                 .stream()
                 .map(SecurityNotices::toDto)

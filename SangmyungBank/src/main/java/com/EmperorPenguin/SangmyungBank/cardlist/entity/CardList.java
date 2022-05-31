@@ -1,7 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.cardlist.entity;
 
-import com.EmperorPenguin.SangmyungBank.cardlist.dto.CardListRequestRes;
-import com.EmperorPenguin.SangmyungBank.news.dto.NewsRequestRes;
+import com.EmperorPenguin.SangmyungBank.cardlist.dto.CardListInquiryRes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,8 +24,9 @@ public class CardList {
     @Column(columnDefinition = "text", nullable = false)
     private String content;
 
-    public CardListRequestRes toDto(){
-        return CardListRequestRes.builder()
+    public CardListInquiryRes toDto(){
+        return CardListInquiryRes.builder()
+                .id(id)
                 .title(title)
                 .content(content)
                 .build();

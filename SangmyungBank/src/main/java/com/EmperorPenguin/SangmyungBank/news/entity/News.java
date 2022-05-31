@@ -1,6 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.news.entity;
 
-import com.EmperorPenguin.SangmyungBank.news.dto.NewsRequestRes;
+import com.EmperorPenguin.SangmyungBank.news.dto.NewsInquiryRes;
 import lombok.*;
 import javax.persistence.*;
 
@@ -24,8 +24,9 @@ public class News {
     @Column
     private String createdDate;
 
-    public NewsRequestRes toDto(){
-        return NewsRequestRes.builder()
+    public NewsInquiryRes toDto(){
+        return NewsInquiryRes.builder()
+                .id(id)
                 .title(title)
                 .content(content)
                 .createdDate(createdDate)

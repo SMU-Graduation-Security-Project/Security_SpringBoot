@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.news.dto;
+package com.EmperorPenguin.SangmyungBank.cardlist.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,10 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class NewsRequestRes {
+public class CardListInquiryRes {
 
+    private Long id;
     private String title;
     private String content;
-    private String createdDate;
 
 }

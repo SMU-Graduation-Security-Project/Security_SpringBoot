@@ -5,13 +5,10 @@ import com.EmperorPenguin.SangmyungBank.baseUtil.exception.CardListException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.NewsException;
 import com.EmperorPenguin.SangmyungBank.cardlist.dto.CardListCreateReq;
-import com.EmperorPenguin.SangmyungBank.cardlist.dto.CardListRequestRes;
+import com.EmperorPenguin.SangmyungBank.cardlist.dto.CardListInquiryRes;
 import com.EmperorPenguin.SangmyungBank.cardlist.dto.CardListUpdateReq;
 import com.EmperorPenguin.SangmyungBank.cardlist.entity.CardList;
 import com.EmperorPenguin.SangmyungBank.cardlist.repository.CardListRepository;
-import com.EmperorPenguin.SangmyungBank.news.dto.NewsRequestRes;
-import com.EmperorPenguin.SangmyungBank.news.dto.NewsUpdateReq;
-import com.EmperorPenguin.SangmyungBank.news.entity.News;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +36,7 @@ public class CardListService {
     }
 
     @Transactional
-    public List<CardListRequestRes> getAllCardLists() {
+    public List<CardListInquiryRes> getAllCardLists() {
         return cardListRepository.findAll()
                 .stream()
                 .map(CardList::toDto)
