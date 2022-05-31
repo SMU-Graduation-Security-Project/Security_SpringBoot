@@ -3,11 +3,13 @@ package com.EmperorPenguin.SangmyungBank.counsel.service;
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.CounselException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.MemberException;
 import com.EmperorPenguin.SangmyungBank.counsel.dto.CounselCreateReq;
 import com.EmperorPenguin.SangmyungBank.counsel.dto.CounselInquiryRes;
 import com.EmperorPenguin.SangmyungBank.counsel.dto.CounselUpdateReq;
 import com.EmperorPenguin.SangmyungBank.counsel.entity.Counsel;
 import com.EmperorPenguin.SangmyungBank.counsel.repository.CounselRepository;
+import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,8 +43,11 @@ public class CounselService {
     }
 
     @Transactional
-    public List<CounselInquiryRes> listAllCounsel() {
-        return counselRepository.findAll()
+    public List<CounselInquiryRes> listAllCounsel(String loginId) {
+        Member member = memberRepository.findByLoginId(loginId)
+                .orElseThrow(() -> new MemberException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
+
+        return counselRepository.findAllByMemberId(member)
                 .stream()
                 .map(Counsel::toDto)
                 .collect(Collectors.toList());

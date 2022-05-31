@@ -32,11 +32,11 @@ public class CounselController {
     }
 
     @GetMapping("/counsels")
-    @ApiOperation(value="상담글 모두 가져오기", notes = "상담글을 모두 가져옵니다.")
-    public BaseResult listAllCounsel() {
+    @ApiOperation(value="개인의 상담글 모두 가져오기", notes = "상담글을 모두 가져옵니다.")
+    public BaseResult listAllCounsel(@RequestParam String loginId) {
         try {
             return responseService
-                    .listResult(counselService.listAllCounsel());
+                    .listResult(counselService.listAllCounsel(loginId));
         }catch (Exception e) {
             return responseService.failResult(
                     e.getMessage()
