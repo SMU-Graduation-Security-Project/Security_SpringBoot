@@ -5,6 +5,7 @@ import com.EmperorPenguin.SangmyungBank.account.dto.AccountInquiryRes;
 import com.EmperorPenguin.SangmyungBank.account.dto.TransferReq;
 import com.EmperorPenguin.SangmyungBank.account.entity.Account;
 import com.EmperorPenguin.SangmyungBank.account.repository.AccountRepository;
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.AccountException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.transaction.entity.Transaction;
@@ -58,6 +59,10 @@ public class AccountService {
         Long sendAccount = transferReq.getSendAccountNumber();
         String password = transferReq.getAccountPassword();
 
+        if(transferReq.getMyAccountNumber() == transferReq.getSendAccountNumber()){
+            throw new AccountException(ExceptionMessages.ERROR_ACCOUNT_CURRING);
+        }
+
         Account myAccount = accountRepository
             .findAccountByAccountNumber(transferReq.getMyAccountNumber())
             .orElseThrow(() -> new AccountException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND));
@@ -85,14 +90,20 @@ public class AccountService {
             // 전달자의 거래내역을 저장
             transactionRepository.save(Transaction.builder()
                     .sendAccount(transferReq.getMyAccountNumber())
+                    .toSenderMessage(transferReq.getToSenderMessage())
                     .receiveAccount(transferReq.getSendAccountNumber())
+                    .toReceiverMessage(transferReq.getToReceiverMessage())
                     .balance(-transferReq.getBalance())
+                    .transactionDate(new DateConfig().getDateTime())
                     .build());
             // 받는이의 거래내역을 저장
             transactionRepository.save(Transaction.builder()
                     .sendAccount(transferReq.getSendAccountNumber())
+                    .toSenderMessage(transferReq.getToSenderMessage())
                     .receiveAccount(transferReq.getMyAccountNumber())
+                    .toReceiverMessage(transferReq.getToReceiverMessage())
                     .balance(transferReq.getBalance())
+                    .transactionDate(new DateConfig().getDateTime())
                     .build());
         }catch (Exception e){
             e.printStackTrace();

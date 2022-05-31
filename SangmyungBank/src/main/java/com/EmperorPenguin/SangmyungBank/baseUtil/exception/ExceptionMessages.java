@@ -20,6 +20,7 @@ public enum ExceptionMessages {
     ERROR_MEMBER_ANSWORD_NOT_MATCH("사용자의 질문에 대한 대답이 맞지 않습니다."),
 
     ERROR_ACCOUNT_NOT_FOUND("사용자의 계좌를 찾을 수 없습니다."),
+    ERROR_ACCOUNT_CURRING("이체를 하는 사람과 받는 사람이 동일합니다."),
     ERROR_ACCOUNT_PASSWORD_FORMAT("계좌비밀번호는 숫자로 6자리로 구성되어야 합니다."),
     ERROR_ACCOUNT_PASSWORD_NOT_MATCH("계좌비밀번호가 동일하지 않습니다."),
     ERROR_ACCOUNT_BALANCE("이체하기 충분한 잔액을 가지고 있지않습니다."),

@@ -12,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 public class TransactionInquiryRes {
 
     private Long senderAccount;
+    private String toSenderMessage;
     private Long receiverAccount;
+    private String toReceiverMessage;
     private Long sendMoney;
+    private String transactionDate;
 }

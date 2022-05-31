@@ -29,17 +29,30 @@ public class Transaction {
     @Column(nullable = false)
     private Long balance;
 
+    @Column
+    private String toSenderMessage;
+
+    @Column
+    private String toReceiverMessage;
+
+    @Column
+    private String transactionDate;
+
     public TransactionInquiryRes toDto() {
         if (balance > 0) {
             return TransactionInquiryRes.builder()
                     .senderAccount(receiveAccount)
+                    .toSenderMessage(toSenderMessage)
                     .receiverAccount(sendAccount)
+                    .toReceiverMessage(toReceiverMessage)
                     .sendMoney(balance)
                     .build();
         } else {
             return TransactionInquiryRes.builder()
                     .senderAccount(sendAccount)
+                    .toSenderMessage(toSenderMessage)
                     .receiverAccount(receiveAccount)
+                    .toReceiverMessage(toReceiverMessage)
                     .sendMoney(balance)
                     .build();
         }

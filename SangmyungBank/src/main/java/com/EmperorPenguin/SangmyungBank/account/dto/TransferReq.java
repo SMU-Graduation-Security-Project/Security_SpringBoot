@@ -1,5 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.account.dto;
 
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
+import com.EmperorPenguin.SangmyungBank.transaction.entity.Transaction;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +20,13 @@ public class TransferReq {
     private Long myAccountNumber;
 
     @ApiModelProperty(required = true)
+    private String toSenderMessage;
+
+    @ApiModelProperty(required = true)
     private Long sendAccountNumber;
+
+    @ApiModelProperty(required = true)
+    private String toReceiverMessage;
 
     @ApiModelProperty(required = true)
     private String accountPassword;
