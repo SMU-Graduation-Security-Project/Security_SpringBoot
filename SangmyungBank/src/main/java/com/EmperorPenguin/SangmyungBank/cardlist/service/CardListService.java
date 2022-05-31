@@ -1,5 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.cardlist.service;
 
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.CardException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.CardListException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.NewsException;
@@ -48,7 +49,7 @@ public class CardListService {
     @Transactional
     public CardList getSingleCardList(Long id) {
         if(!cardListRepository.existsById(id)){
-            throw new NewsException(ExceptionMessages.ERROR_CARDLIST_NOT_EXIST);
+            throw new CardException(ExceptionMessages.ERROR_CARDLIST_NOT_EXIST);
         }
         return cardListRepository
                 .findById(id)
@@ -58,7 +59,7 @@ public class CardListService {
     @Transactional
     public void updateCardList(CardListUpdateReq cardListUpdateReq) {
         if(!cardListRepository.existsById(cardListUpdateReq.getId())){
-            throw new NewsException(ExceptionMessages.ERROR_CARDLIST_NOT_EXIST);
+            throw new CardListException(ExceptionMessages.ERROR_CARDLIST_NOT_EXIST);
         }
         try {
             cardListRepository.updateCardList(cardListUpdateReq.getId(),cardListUpdateReq.getTitle(),cardListUpdateReq.getContent());

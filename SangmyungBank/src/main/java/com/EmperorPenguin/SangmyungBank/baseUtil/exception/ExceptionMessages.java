@@ -32,6 +32,10 @@ public enum ExceptionMessages {
     ERROR_NEWS_EXIST("해당 제목을 가진 새소식이 이미 있습니다."),
     ERROR_NEWS_NOT_EXIST("해당 아이디를 가진 새소식이 없습니다"),
 
+    ERROR_CARD_EXIST("해당 카드번호를 가진 카드가 이미 있습니다."),
+    ERROR_CARD_NOT_EXIST("해당 카드번호를 가진 카드가 없습니다"),
+//    ERROR_CARD_UNAUTHORIZED_ACCESS("해당 카드에 접근할 권한이 없습니다."),
+
     ERROR_CARDLIST_EXIST("해당 제목을 가진 카드목록이 이미 있습니다."),
     ERROR_CARDLIST_NOT_EXIST("해당 아이디를 가진 카드목록이 없습니다"),
 
