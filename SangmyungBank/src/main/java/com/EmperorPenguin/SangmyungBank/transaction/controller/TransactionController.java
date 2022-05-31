@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(tags = "이체 내역 조회")
+@Api(tags = "거래 내역 조회")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users/transactions")

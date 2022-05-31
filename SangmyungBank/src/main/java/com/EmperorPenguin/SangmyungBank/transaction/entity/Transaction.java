@@ -46,6 +46,7 @@ public class Transaction {
                     .receiverAccount(sendAccount)
                     .toReceiverMessage(toReceiverMessage)
                     .sendMoney(balance)
+                    .transactionDate(transactionDate)
                     .build();
         } else {
             return TransactionInquiryRes.builder()
@@ -54,6 +55,7 @@ public class Transaction {
                     .receiverAccount(receiveAccount)
                     .toReceiverMessage(toReceiverMessage)
                     .sendMoney(balance)
+                    .transactionDate(transactionDate)
                     .build();
         }
     }
