@@ -54,7 +54,7 @@ public class MemberUtilService {
     }
 
     @Transactional
-    public void updateNewPassword(MemberPasswordUpdateReq memberPasswordUpdateReq){
+    public void updateTemplatePassword(MemberPasswordUpdateReq memberPasswordUpdateReq){
         Member member = memberRepository
                 .findByLoginId(memberPasswordUpdateReq.getLoginId())
                 .orElseThrow(() -> new MemberException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
@@ -65,6 +65,32 @@ public class MemberUtilService {
         }
 
         // 사용자의 임시 비밀번호가 맞는지 확인.
+        if(!passwordEncoder.matches(memberPasswordUpdateReq.getOldPassword(), member.getPassword())){
+            throw new MemberException(ExceptionMessages.ERROR_MEMBER_PASSWORD);
+        }
+        // 입력한 password가 규칙에 맞는지 확인.
+        checkMemberPassword(memberPasswordUpdateReq.getNewPassword1(), memberPasswordUpdateReq.getNewPassword2());
+        try {
+            memberRepository.updateUserPassword(
+                    passwordEncoder.encode(memberPasswordUpdateReq.getNewPassword1()),
+                    member.getMemberId());
+            memberRepository.updateUserModifyDate(
+                    new DateConfig().getDateTime(),
+                    member.getMemberId()
+            );
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new MemberException("비밀번호 변경 실패");
+        }
+    }
+
+    @Transactional
+    public void updateNewPassword(MemberPasswordUpdateReq memberPasswordUpdateReq){
+        Member member = memberRepository
+                .findByLoginId(memberPasswordUpdateReq.getLoginId())
+                .orElseThrow(() -> new MemberException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
+
+        // 사용자의 현재 비밀번호가 맞는지 확인.
         if(!passwordEncoder.matches(memberPasswordUpdateReq.getOldPassword(), member.getPassword())){
             throw new MemberException(ExceptionMessages.ERROR_MEMBER_PASSWORD);
         }

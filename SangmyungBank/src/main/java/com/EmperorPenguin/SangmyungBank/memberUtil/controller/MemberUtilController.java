@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags = "비밀번호 찾기, 비밀번호 수정, 사용자 정보 가져오기")
+@Api(tags = "비밀번호 찾기, 임시비밀번호 수정 ,비밀번호 수정, 사용자 정보 가져오기")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -33,8 +33,20 @@ public class MemberUtilController {
     }
 
 
-    @PostMapping(path = "/updatePassword")
+    @PostMapping(path = "/updateTempPassword")
     @ApiOperation(value = "임시 비밀번호를 가진 사용자의 비밀번호 변경",notes = "임시 비밀번호를 제공받은 유저의 새로운 비밀번호로 비밀번호를 변경합니다.")
+    public BaseResult updateTemplateUserPassword(@ApiParam @RequestBody MemberPasswordUpdateReq memberPasswordUpdateReq){
+        try {
+            memberUtilService.updateTemplatePassword(memberPasswordUpdateReq);
+            return responseService.successResult();
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
+        }
+    }
+    @PostMapping(path = "/updatePassword")
+    @ApiOperation(value = "사용자 비밀번호 변경",notes = "사용자이전 비밀번호에서 새로운 비밀번호로 변경합니다.")
     public BaseResult updateUserPassword(@ApiParam @RequestBody MemberPasswordUpdateReq memberPasswordUpdateReq){
         try {
             memberUtilService.updateNewPassword(memberPasswordUpdateReq);
