@@ -31,8 +31,12 @@ public class MemberService {
         String password1 = memberRegisterRequest.getPassword1();
         String password2 = memberRegisterRequest.getPassword2();
 
-        if (memberRegisterRequest.checkNull()){
+        if(memberRegisterRequest.checkNull()){
             throw new MemberException(ExceptionMessages.ERROR_MEMBER_CREATE_FORM_HAS_NULL);
+        }
+
+        if(memberRegisterRequest.checkLength()){
+            throw new MemberException(ExceptionMessages.ERROR_MEMBER_LENGTH_LIMIT);
         }
 
         if(memberRepository.findByLoginId(loginId).isPresent()){

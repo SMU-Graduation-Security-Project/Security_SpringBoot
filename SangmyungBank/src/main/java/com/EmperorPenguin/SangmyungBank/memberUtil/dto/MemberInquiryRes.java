@@ -14,7 +14,7 @@ public class MemberInquiryRes {
     private String email;
     private String name;
     private int age;
-    private char sex;
+    private String sex;
     private String phoneNumber;
     private String loginDate;
     private String modifyDate;

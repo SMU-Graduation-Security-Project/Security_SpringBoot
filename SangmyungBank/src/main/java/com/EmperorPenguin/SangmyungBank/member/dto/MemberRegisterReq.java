@@ -30,7 +30,7 @@ public class MemberRegisterReq {
     @ApiModelProperty(required = true)
     private int age;
     @ApiModelProperty(required = true)
-    private char sex;
+    private String sex;
     @ApiModelProperty(required = true)
     private String phoneNumber;
     @ApiModelProperty(required = true)
@@ -39,11 +39,29 @@ public class MemberRegisterReq {
     private String ansWord;
 
     public boolean checkNull(){
-        if(loginId == null | password1 == null | password2 == null | name == null | email == null | age == 0 | phoneNumber == null | question == null | ansWord == null ){
-            return false;
+        if(loginId.length() == 0 |
+                password1.length() == 0 |
+                password2.length() == 0 |
+                name.length() == 0 |
+                email.length() == 0 |
+                age == 0 |
+                sex.length() == 0|
+                phoneNumber.length() == 0 |
+                question.length() == 0 |
+                ansWord.length() == 0 ){
+            return true;
         }
         else {
+            return false;
+        }
+    }
+
+    public boolean checkLength(){
+        if (sex.length() >= 2 | phoneNumber.length() >= 14){
             return true;
+        }
+        else{
+            return false;
         }
     }
 

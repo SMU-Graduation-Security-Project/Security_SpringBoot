@@ -10,6 +10,7 @@ public enum ExceptionMessages {
 
     ERROR_MEMBER_NOT_FOUND("사용자를 찾을 수 없습니다."),
     ERROR_MEMBER_CREATE_FORM_HAS_NULL("회원가입의 항목중 비어있는 항목이 있습니다"),
+    ERROR_MEMBER_LENGTH_LIMIT("회원가입 항목 성별 또는 전화번호의 길이가 옳지 않습니다."),
     ERROR_MEMBER_ID_DUPLICATE("이미 사용중인 아이디 입니다."),
     ERROR_MEMBER_EMAIL_DUPLICATE("이미 사용중인 이메일입니다."),
     ERROR_MEMBER_PHONENUMBER_DUPLICATE("이미 사용중인 전화번호입니다."),

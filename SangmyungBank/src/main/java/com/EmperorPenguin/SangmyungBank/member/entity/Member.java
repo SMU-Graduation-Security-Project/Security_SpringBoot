@@ -27,10 +27,10 @@ public class Member {
     @Column(nullable = false)
     private int age;
 
-    @Column(length = 2, nullable = false)
-    private char sex;
+    @Column(length = 1, nullable = false)
+    private String  sex;
 
-    @Column(length = 15, unique = true, nullable = false)
+    @Column(length = 14, unique = true, nullable = false)
     private String phoneNumber;
 
     @Column
