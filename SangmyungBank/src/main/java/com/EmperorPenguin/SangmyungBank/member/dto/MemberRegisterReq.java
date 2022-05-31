@@ -1,6 +1,8 @@
 package com.EmperorPenguin.SangmyungBank.member.dto;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.MemberException;
 import com.EmperorPenguin.SangmyungBank.member.entity.Role;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import io.swagger.annotations.ApiModelProperty;
@@ -35,6 +37,15 @@ public class MemberRegisterReq {
     private String question;
     @ApiModelProperty(required = true)
     private String ansWord;
+
+    public boolean checkNull(){
+        if(loginId == null | password1 == null | password2 == null | name == null | email == null | age == 0 | phoneNumber == null | question == null | ansWord == null ){
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 
     public Member toEntity(String encryptedPassword, Role defaultRole)
     {
