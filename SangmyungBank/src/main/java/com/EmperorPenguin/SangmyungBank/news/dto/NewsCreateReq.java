@@ -23,7 +23,7 @@ public class NewsCreateReq {
         return News.builder()
                 .title(title)
                 .content(content)
-                .createdDate(new DateConfig().getDateTime())
+                .createdDate(new DateConfig().getDate())
                 .build();
     }
 }
