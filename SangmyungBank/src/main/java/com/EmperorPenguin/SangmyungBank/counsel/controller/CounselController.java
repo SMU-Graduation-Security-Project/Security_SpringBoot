@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags="상담글 생성, 모든 상담글 가져오기 ,특정 상담글 가져오기, 상담글 업데이트, 상담글 삭제")
+@Api(tags="상담글 생성, 개인 상담글 가져오기 ,특정 상담글 가져오기, 상담글 업데이트, 상담글 삭제")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cont")
