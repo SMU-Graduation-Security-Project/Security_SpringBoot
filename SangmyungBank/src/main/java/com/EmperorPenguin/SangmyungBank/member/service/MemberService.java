@@ -39,10 +39,7 @@ public class MemberService {
             throw new MemberException(ExceptionMessages.ERROR_MEMBER_LENGTH_LIMIT);
         }
 
-        if(memberRepository.findByLoginId(loginId).isPresent()){
-            throw new MemberException(ExceptionMessages.ERROR_MEMBER_ID_DUPLICATE);
-        }
-
+        checkMember(loginId);
         // 사용자의 아이디와 비밀번호 검증
         checkLoginId(loginId);
         checkMemberPassword(password1,password2);
@@ -85,7 +82,6 @@ public class MemberService {
                 .orElseThrow(() -> new MemberException(ExceptionMessages.ERROR_UNDEFINED));
     }
 
-
     private void checkMemberPassword(String password1, String password2) {
         // Password 규칙은 영문자, 특수문자를 포함 8~20이하이다.
         Pattern passwordExpression = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$");
@@ -101,6 +97,17 @@ public class MemberService {
         if (!nameExpression.matcher(loginId).matches()) {
             throw new MemberException(ExceptionMessages.ERROR_MEMBER_ID_FORMAT);
         }
+    }
+
+    public void checkMember(String loginId){
+        if(memberRepository.findByLoginId(loginId).isEmpty()){
+            throw new MemberException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND);
+        }
+    }
+
+    public Member getMember(String loginId){
+        return memberRepository.findByLoginId(loginId)
+                .orElseThrow(() -> new MemberException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
     }
 
 

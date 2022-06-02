@@ -3,14 +3,13 @@ package com.EmperorPenguin.SangmyungBank.counsel.service;
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.CounselException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.MemberException;
 import com.EmperorPenguin.SangmyungBank.counsel.dto.CounselCreateReq;
 import com.EmperorPenguin.SangmyungBank.counsel.dto.CounselInquiryRes;
 import com.EmperorPenguin.SangmyungBank.counsel.dto.CounselUpdateReq;
 import com.EmperorPenguin.SangmyungBank.counsel.entity.Counsel;
 import com.EmperorPenguin.SangmyungBank.counsel.repository.CounselRepository;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
-import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
+import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,18 +22,16 @@ import java.util.stream.Collectors;
 public class CounselService {
 
     private final CounselRepository counselRepository;
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     @Transactional
     public void createCounsel(CounselCreateReq counselCreateReq) {
         String loginId = counselCreateReq.getLoginId();
         // 먼저 해당 사용자가 있는 지 검증
-        if(!memberRepository.existsByLoginId(loginId)){
-            throw new CounselException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND);
-        }
+        memberService.checkMember(loginId);
         try {
             counselRepository.save(counselCreateReq.toEntity(
-                    memberRepository.findByLoginId(loginId).get())
+                    memberService.getMember(loginId))
             );
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,8 +41,7 @@ public class CounselService {
 
     @Transactional
     public List<CounselInquiryRes> listAllCounsel(String loginId) {
-        Member member = memberRepository.findByLoginId(loginId)
-                .orElseThrow(() -> new MemberException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
+        Member member = memberService.getMember(loginId);
 
         return counselRepository.findAllByMemberId(member)
                 .stream()

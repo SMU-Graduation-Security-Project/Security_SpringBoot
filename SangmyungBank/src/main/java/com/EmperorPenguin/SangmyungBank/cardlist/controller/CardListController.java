@@ -5,8 +5,6 @@ import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
 import com.EmperorPenguin.SangmyungBank.cardlist.dto.CardListCreateReq;
 import com.EmperorPenguin.SangmyungBank.cardlist.dto.CardListUpdateReq;
 import com.EmperorPenguin.SangmyungBank.cardlist.service.CardListService;
-import com.EmperorPenguin.SangmyungBank.news.dto.NewsCreateReq;
-import com.EmperorPenguin.SangmyungBank.news.dto.NewsUpdateReq;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,5 @@
 package com.EmperorPenguin.SangmyungBank.card.dto;
 
-import com.EmperorPenguin.SangmyungBank.account.entity.Account;
-import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

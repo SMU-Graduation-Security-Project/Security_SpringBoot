@@ -8,10 +8,10 @@ import com.EmperorPenguin.SangmyungBank.account.repository.AccountRepository;
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.AccountException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
+import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
 import com.EmperorPenguin.SangmyungBank.transaction.entity.Transaction;
-import com.EmperorPenguin.SangmyungBank.transaction.repository.TransactionRepository;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
-import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
+import com.EmperorPenguin.SangmyungBank.transaction.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,9 +26,9 @@ import java.util.stream.Collectors;
 public class AccountService {
 
     private final AccountRepository accountRepository;
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
-    private final TransactionRepository transactionRepository;
+    private final TransactionService transactionService;
 
     @Transactional
     public void createAccount(AccountCreateReq accountCreateReq) {
@@ -37,12 +37,11 @@ public class AccountService {
 
         checkPassword(password);
         // 전달 받은 아이디를 통해 사용자가 있는지 확인 없다면 사용자가 없다는 예외를 발생.
-        if(memberRepository.findByLoginId(loginId).isEmpty()){
-            throw new AccountException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND);
-        }
+        memberService.checkMember(loginId);
+
         try{
             accountRepository.save(accountCreateReq.toEntity(
-                    memberRepository.findByLoginId(loginId).get(),
+                    memberService.getMember(loginId),
                     passwordEncoder.encode(password),
                     0L));
         }catch (Exception e)
@@ -68,7 +67,7 @@ public class AccountService {
             .orElseThrow(() -> new AccountException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND));
 
         // 사용자의 아이디로부터 자신의 계좌가 맞는지 확인.
-        checkAccount(myAccount, memberRepository.findByLoginId(loginId).get());
+        checkAccount(myAccount, memberService.getMember(loginId));
 
         // 보내는 계좌 번호가 존재하는지 확인.
         if(!accountRepository.existsAccountByAccountNumber(sendAccount)){
@@ -88,7 +87,7 @@ public class AccountService {
             accountRepository.updateBalance(transferReq.getBalance(),
                     transferReq.getSendAccountNumber());
             // 전달자의 거래내역을 저장
-            transactionRepository.save(Transaction.builder()
+           transactionService.saveData(Transaction.builder()
                     .sendAccount(transferReq.getMyAccountNumber())
                     .toSenderMessage(transferReq.getToSenderMessage())
                     .receiveAccount(transferReq.getSendAccountNumber())
@@ -97,7 +96,7 @@ public class AccountService {
                     .transactionDate(new DateConfig().getDateTime())
                     .build());
             // 받는이의 거래내역을 저장
-            transactionRepository.save(Transaction.builder()
+            transactionService.saveData(Transaction.builder()
                     .sendAccount(transferReq.getSendAccountNumber())
                     .toSenderMessage(transferReq.getToSenderMessage())
                     .receiveAccount(transferReq.getMyAccountNumber())
@@ -114,11 +113,10 @@ public class AccountService {
     @Transactional
     public List<AccountInquiryRes> inquiry(String loginId) {
         // 정확한 사용자를 넘겨줬는지 확인
-        if (memberRepository.findByLoginId(loginId).isEmpty()) {
-            throw new AccountException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND);
-        }
+        memberService.checkMember(loginId);
+
         return accountRepository
-                .findAllByMemberId(memberRepository.findByLoginId(loginId).get())
+                .findAllByMemberId(memberService.getMember(loginId))
                 .stream()
                 .map(Account::toDto)
                 .collect(Collectors.toList());
@@ -137,5 +135,16 @@ public class AccountService {
         if(!accountRepository.findAllByMemberId(member).contains(account)){
             throw new AccountException("전달받은 계좌는 사용자의 계좌가 아닙니다.");
         }
+    }
+
+    public void checkAccount(Long accountNumber){
+        if(!accountRepository.existsAccountByAccountNumber(accountNumber)){
+            throw new AccountException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND);
+        }
+    }
+
+    public Account getAccount(Long accountNumber){
+        return accountRepository.findAccountByAccountNumber(accountNumber)
+                .orElseThrow(() -> new AccountException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND));
     }
 }
