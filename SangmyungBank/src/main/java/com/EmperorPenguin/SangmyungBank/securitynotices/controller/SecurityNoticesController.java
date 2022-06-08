@@ -21,7 +21,7 @@ public class SecurityNoticesController {
     private final ResponseService responseService;
 
     @PostMapping("/security-notices")
-    @ApiOperation(value="보안공지 생성", notes = "보안공지 이름, 내용을 받아 저장합니다.")
+    @ApiOperation(value="1. 보안공지 생성", notes = "보안공지 이름, 내용을 받아 저장합니다.")
     public BaseResult createNews(@RequestBody SecurityNoticeCreateReq securityNoticeCreateReq) {
         try {
             securityNoticesService.createSecurityNotice(securityNoticeCreateReq);
@@ -34,7 +34,7 @@ public class SecurityNoticesController {
     }
 
     @GetMapping("/security-notices")
-    @ApiOperation(value="보안공지 모두 가져오기",notes = "보안공지들을 전부 가져옵니다.")
+    @ApiOperation(value="2. 보안공지 모두 가져오기",notes = "보안공지들을 전부 가져옵니다.")
     public BaseResult listAllSecurityNotices() {
         try {
             return responseService.listResult(securityNoticesService.getAllSecurityNotices());
@@ -46,7 +46,7 @@ public class SecurityNoticesController {
     }
 
     @GetMapping("/security-notices/{id}")
-    @ApiOperation(value="특정 보안공지 가져오기", notes = "PK에 해당하는 보안공지를 가져옵니다.")
+    @ApiOperation(value="3. 특정 보안공지 가져오기", notes = "PK에 해당하는 보안공지를 가져옵니다.")
     public BaseResult getNewsDetail(@PathVariable Long id) {
         try {
             return responseService.singleResult(securityNoticesService.getSingleSecurityNotice(id).toDto());
@@ -58,7 +58,7 @@ public class SecurityNoticesController {
     }
 
     @PutMapping("/security-notices/{id}")
-    @ApiOperation(value="보안공지 업데이트", notes = "PK와 업데이트할 보안공지 내용을 받아 업데이트 합니다.")
+    @ApiOperation(value="4. 보안공지 업데이트", notes = "PK와 업데이트할 보안공지 내용을 받아 업데이트 합니다.")
     public BaseResult updateNews(@RequestBody SecurityNoticeUpdateReq securityNoticeUpdateReq) {
         try {
             securityNoticesService.updateSecurityNotice(securityNoticeUpdateReq);
@@ -71,7 +71,7 @@ public class SecurityNoticesController {
     }
 
     @DeleteMapping("/security-notices/{id}")
-    @ApiOperation(value="보안공지 삭제", notes = "PK에 해당하는 보안공지를 삭제합니다.")
+    @ApiOperation(value="5. 보안공지 삭제", notes = "PK에 해당하는 보안공지를 삭제합니다.")
     public BaseResult deleteNews(@PathVariable Long id) {
         try {
             securityNoticesService.deleteSecurityNotice(id);

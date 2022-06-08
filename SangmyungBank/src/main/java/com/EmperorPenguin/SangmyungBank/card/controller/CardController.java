@@ -19,7 +19,7 @@ public class CardController {
     private final ResponseService responseService;
 
     @PostMapping("")
-    @ApiOperation(value="카드 생성", notes = "사용자의 아이디와 계좌번호, 카드종류를 받아 카드 생성")
+    @ApiOperation(value="1. 카드 생성", notes = "사용자의 아이디와 계좌번호, 카드종류를 받아 카드 생성")
     public BaseResult createCard(@RequestBody CardCreateReq cardCreateReq) {
         try {
             cardService.createCard(cardCreateReq);
@@ -32,7 +32,7 @@ public class CardController {
     }
 
     @GetMapping(path = "/cardlist")
-    @ApiOperation(value = "카드 조회", notes = "아이디에 해당 하는 모든 카드를 받아옵니다.")
+    @ApiOperation(value = "2. 카드 조회", notes = "아이디에 해당 하는 모든 카드를 받아옵니다.")
     public BaseResult cardList(@ApiParam @RequestParam String loginId) {
         try {
             return responseService.listResult(cardService.cardList(loginId));

@@ -21,7 +21,7 @@ public class TransactionController {
     private final ResponseService responseService;
 
     @PostMapping("/inquiry")
-    @ApiOperation(value = "계좌 거래내역 조회", notes = "특정 계좌의 거래내역을 전달합니다.")
+    @ApiOperation(value = "1. 계좌 거래내역 조회", notes = "특정 계좌의 거래내역을 전달합니다.")
     public BaseResult getTransactionData(@RequestBody TransactionInquiryReq transactionInquiryReq){
         try {
             return responseService.listResult(

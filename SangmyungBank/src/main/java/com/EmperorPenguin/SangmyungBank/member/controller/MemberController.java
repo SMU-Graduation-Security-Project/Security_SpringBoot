@@ -19,7 +19,7 @@ public class MemberController {
     private final ResponseService responseService;
 
     @GetMapping(path = "/")
-    @ApiOperation(value = "사용자 정보 가져오기", notes = "loginId에 해당하는 사용자의 정보를 가져옵니다.")
+    @ApiOperation(value = "1. 사용자 정보 가져오기", notes = "loginId에 해당하는 사용자의 정보를 가져옵니다.")
     public BaseResult getUserData(@ApiParam @RequestParam String loginId){
         try{
             return responseService.singleResult(memberService.getMemberData(loginId));
@@ -31,7 +31,7 @@ public class MemberController {
     }
 
     @PostMapping(path = "/updatePassword")
-    @ApiOperation(value = "사용자 비밀번호 변경",notes = "사용자이전 비밀번호에서 새로운 비밀번호로 변경합니다.")
+    @ApiOperation(value = "2. 사용자 비밀번호 변경",notes = "사용자이전 비밀번호에서 새로운 비밀번호로 변경합니다.")
     public BaseResult updateUserPassword(@ApiParam @RequestBody MemberPasswordUpdateReq memberPasswordUpdateReq){
         try {
             memberService.updateNewPassword(memberPasswordUpdateReq);

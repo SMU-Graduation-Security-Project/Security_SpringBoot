@@ -20,7 +20,7 @@ public class NewsController {
     private final ResponseService responseService;
 
     @PostMapping("/news")
-    @ApiOperation(value="새소식 생성", notes = "새소식 이름과 내용을 받아 새소식을 저장합니다.")
+    @ApiOperation(value="1. 새소식 생성", notes = "새소식 이름과 내용을 받아 새소식을 저장합니다.")
     public BaseResult createNews(@RequestBody NewsCreateReq newsCreateReq) {
         try {
             newsService.createNews(newsCreateReq);
@@ -33,7 +33,7 @@ public class NewsController {
     }
 
     @GetMapping("/news")
-    @ApiOperation(value="새소식 모두 가져오기", notes = "모든 새소식을 가져옵니다.")
+    @ApiOperation(value="2. 새소식 모두 가져오기", notes = "모든 새소식을 가져옵니다.")
     public BaseResult listAllNews() {
         try {
             return responseService.listResult(newsService.getAllNews());
@@ -45,7 +45,7 @@ public class NewsController {
     }
 
     @GetMapping("/news/{id}")
-    @ApiOperation(value="특정 새소식 가져오기", notes = "PK에 해당하는 새소식을 가져옵니다.")
+    @ApiOperation(value="3. 특정 새소식 가져오기", notes = "PK에 해당하는 새소식을 가져옵니다.")
     public BaseResult getNewsDetail(@PathVariable Long id) {
         try {
             return responseService.singleResult(newsService.getSingleNews(id).toDto());
@@ -57,7 +57,7 @@ public class NewsController {
     }
 
     @PutMapping("/news/{id}")
-    @ApiOperation(value="새소식 업데이트", notes = "PK에 해당하는 새소식의 정보를 업데이트 합니다.")
+    @ApiOperation(value="4. 새소식 업데이트", notes = "PK에 해당하는 새소식의 정보를 업데이트 합니다.")
     public BaseResult updateNews(@RequestBody NewsUpdateReq newsUpdateReq) {
         try {
             newsService.updateNews(newsUpdateReq);
@@ -70,7 +70,7 @@ public class NewsController {
     }
 
     @DeleteMapping("/news/{id}")
-    @ApiOperation(value="새소식 삭제", notes = "PK에 해당하는 새소식을 제거합니다.")
+    @ApiOperation(value="5. 새소식 삭제", notes = "PK에 해당하는 새소식을 제거합니다.")
     public BaseResult deleteNews(@PathVariable Long id) {
         try {
             newsService.deleteNews(id);

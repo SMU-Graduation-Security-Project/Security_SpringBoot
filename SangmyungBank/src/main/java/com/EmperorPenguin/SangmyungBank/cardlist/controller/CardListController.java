@@ -20,7 +20,7 @@ public class CardListController {
     private final ResponseService responseService;
 
     @PostMapping("")
-    @ApiOperation(value="카드목록 생성")
+    @ApiOperation(value="1. 카드목록 생성")
     public BaseResult createCardList(@RequestBody CardListCreateReq cardListCreateReq) {
         try {
             cardListService.createCardList(cardListCreateReq);
@@ -33,7 +33,7 @@ public class CardListController {
     }
 
     @GetMapping("")
-    @ApiOperation(value="카드목록 모두 가져오기")
+    @ApiOperation(value="2. 카드목록 모두 가져오기")
     public BaseResult listAllCardLists() {
         try {
             return responseService.listResult(cardListService.getAllCardLists());
@@ -45,7 +45,7 @@ public class CardListController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value="특정 카드목록 가져오기")
+    @ApiOperation(value="3. 특정 카드목록 가져오기")
     public BaseResult getCardListDetail(@PathVariable Long id) {
         try {
             return responseService.singleResult(cardListService.getSingleCardList(id).toDto());
@@ -57,7 +57,7 @@ public class CardListController {
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value="카드목록 업데이트")
+    @ApiOperation(value="4. 카드목록 업데이트")
     public BaseResult updateCardList(@RequestBody CardListUpdateReq cardListUpdateReq) {
         try {
             cardListService.updateCardList(cardListUpdateReq);
@@ -70,7 +70,7 @@ public class CardListController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value="카드목록 삭제")
+    @ApiOperation(value="5. 카드목록 삭제")
     public BaseResult deleteCardList(@PathVariable Long id) {
         try {
             cardListService.deleteCardList(id);
