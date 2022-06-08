@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.memberUtil.dto;
+package com.EmperorPenguin.SangmyungBank.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

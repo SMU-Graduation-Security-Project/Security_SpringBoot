@@ -1,7 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.member.entity;
 
 import com.EmperorPenguin.SangmyungBank.member.dto.MemberLoginRes;
-import com.EmperorPenguin.SangmyungBank.memberUtil.dto.MemberInquiryRes;
+import com.EmperorPenguin.SangmyungBank.member.dto.MemberInquiryRes;
 import lombok.*;
 
 import javax.persistence.*;
