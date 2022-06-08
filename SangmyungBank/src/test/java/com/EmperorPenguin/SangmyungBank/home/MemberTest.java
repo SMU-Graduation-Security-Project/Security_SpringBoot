@@ -1,13 +1,12 @@
-package com.EmperorPenguin.SangmyungBank.member;
-import com.EmperorPenguin.SangmyungBank.memberUtil.dto.MemberFindPasswordReq;
+package com.EmperorPenguin.SangmyungBank.home;
+import com.EmperorPenguin.SangmyungBank.member.dto.MemberFindPasswordReq;
 import com.EmperorPenguin.SangmyungBank.member.dto.MemberLoginReq;
-import com.EmperorPenguin.SangmyungBank.memberUtil.dto.MemberPasswordUpdateReq;
+import com.EmperorPenguin.SangmyungBank.member.dto.MemberPasswordUpdateReq;
 import com.EmperorPenguin.SangmyungBank.member.dto.MemberRegisterReq;
 
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
 import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
-import com.EmperorPenguin.SangmyungBank.memberUtil.service.MemberUtilService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,8 +23,6 @@ public class MemberTest {
     @Autowired
     MemberService memberService;
     @Autowired
-    MemberUtilService memberUtilService;
-    @Autowired
     MemberRepository memberRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -41,7 +38,7 @@ public class MemberTest {
         String email = "SpringTest@email.com";
         String question = "테스트입니까?";
         String ansWord = "테스트";
-        char sex = 'M';
+        String sex = "M";
         int age = 13;
         String phoneNumber = "010-1111-1111";
 
@@ -83,7 +80,7 @@ public class MemberTest {
                 .name("테스트")
                 .email("SpringTest@email.com")
                 .age(13)
-                .sex('M')
+                .sex("M")
                 .phoneNumber("010-1111-1111")
                 .question("테스트입니까?")
                 .ansWord("네 테스트입니다.")
@@ -117,7 +114,7 @@ public class MemberTest {
                 .name("테스트")
                 .email("SpringTest@email.com")
                 .age(13)
-                .sex('M')
+                .sex("M")
                 .phoneNumber("010-1111-1111")
                 .question("테스트입니까?")
                 .ansWord("네 테스트입니다.")
@@ -135,7 +132,7 @@ public class MemberTest {
                 .build();
 
         // when
-        String templatePassword = memberUtilService.setTemplatePassword(memberFindPasswordReq);
+        String templatePassword = memberService.setTemplatePassword(memberFindPasswordReq);
         Member dbMember = memberRepository.findByLoginId(loginId).get();
 
         // then
@@ -152,7 +149,7 @@ public class MemberTest {
                 .name("테스트")
                 .email("SpringTest@email.com")
                 .age(13)
-                .sex('M')
+                .sex("M")
                 .phoneNumber("010-1111-1111")
                 .question("테스트입니까?")
                 .ansWord("네 테스트입니다.")
@@ -169,7 +166,7 @@ public class MemberTest {
                 .build();
 
         // given
-        String oldPassword = memberUtilService.setTemplatePassword(memberFindPasswordReq);
+        String oldPassword = memberService.setTemplatePassword(memberFindPasswordReq);
         String newPassword1 = "11111111a!";
         String newPassword2 = "11111111a!";
 
@@ -181,7 +178,7 @@ public class MemberTest {
                 .build();
 
         // when
-        memberUtilService.updateNewPassword(memberPasswordUpdateReq);
+        memberService.updateNewPassword(memberPasswordUpdateReq);
         Member dbMember = memberRepository.findByLoginId(loginId).get();
 
         // then

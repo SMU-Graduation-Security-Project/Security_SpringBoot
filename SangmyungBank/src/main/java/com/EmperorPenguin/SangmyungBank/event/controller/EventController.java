@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 
 
-@Api(tags="이벤트 생성, 진행중인 이벤트 가저오기, 종료된 이벤트 가져오기 ,특정 이벤트 가져오기, 이벤트 업데이트, 이벤트 삭제")
+@Api(tags="7. 이벤트")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cont")

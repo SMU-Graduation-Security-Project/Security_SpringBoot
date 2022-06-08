@@ -18,13 +18,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TransactionService {
 
-    private final AccountService accountService;
     private final TransactionRepository transactionRepository;
 
     @Transactional
     public List<TransactionInquiryRes> showTransactions(TransactionInquiryReq transactionInquiryReq){
         //  사용자의 계좌가 없다면 예외를 발생.
-        accountService.checkAccount(transactionInquiryReq.getAccountNumber());
 
         return transactionRepository.getAllBySendAccount(transactionInquiryReq.getAccountNumber()
                 , transactionInquiryReq.getStartDate()

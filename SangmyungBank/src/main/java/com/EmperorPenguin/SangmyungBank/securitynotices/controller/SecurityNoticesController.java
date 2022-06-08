@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 
-@Api(tags="보안공지 생성, 보안공지 모두 가져오기, 특정 보안공지 가져오기, 보안공지 업데이트, 보안공지 삭제")
+@Api(tags="9. 보안공지")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cont")

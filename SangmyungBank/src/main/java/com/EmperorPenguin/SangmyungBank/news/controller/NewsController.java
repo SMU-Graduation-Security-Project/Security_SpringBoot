@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags="새소식 생성, 모든 새소식 가저오기, 특정 새소식 가져오기, 새소식 업데이트, 새소식 삭제")
+@Api(tags="8. 새소식")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cont")

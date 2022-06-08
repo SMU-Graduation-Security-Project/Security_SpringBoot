@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags = "계좌 생성, 계좌이체, 전계좌 조회")
+@Api(tags = "2. 계좌")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users/accounts")

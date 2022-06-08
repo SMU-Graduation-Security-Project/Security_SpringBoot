@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags="카드목록 생성, 모든 카드목록 가저오기, 특정 카드목록 가져오기, 카드목록 업데이트, 카드목록 삭제")
+@Api(tags="5. 카드 목록")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/users/cardlist")
