@@ -37,7 +37,7 @@ public class AccountService {
 
         checkPassword(password);
         // 전달 받은 아이디를 통해 사용자가 있는지 확인 없다면 사용자가 없다는 예외를 발생.
-        memberService.checkMember(loginId);
+        memberService.checkEmptyMember(loginId);
 
         try{
             accountRepository.save(accountCreateReq.toEntity(
@@ -113,7 +113,7 @@ public class AccountService {
     @Transactional
     public List<AccountInquiryRes> inquiry(String loginId) {
         // 정확한 사용자를 넘겨줬는지 확인
-        memberService.checkMember(loginId);
+        memberService.checkEmptyMember(loginId);
 
         return accountRepository
                 .findAllByMemberId(memberService.getMember(loginId))

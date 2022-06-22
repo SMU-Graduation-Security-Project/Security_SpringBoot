@@ -190,6 +190,12 @@ public class MemberService {
     }
 
     public void checkMember(String loginId){
+        if(memberRepository.findByLoginId(loginId).isPresent()){
+            throw new MemberException(ExceptionMessages.ERROR_MEMBER_EXIST);
+        }
+    }
+
+    public void checkEmptyMember(String loginId){
         if(memberRepository.findByLoginId(loginId).isEmpty()){
             throw new MemberException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND);
         }

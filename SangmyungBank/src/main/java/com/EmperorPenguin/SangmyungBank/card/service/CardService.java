@@ -43,7 +43,7 @@ public class CardService {
     @Transactional
     public List<CardRequestRes> cardList(String loginId) {
         // 정확한 사용자를 넘겨줬는지 확인
-        memberService.checkMember(loginId);
+        memberService.checkEmptyMember(loginId);
 
         return cardRepository
                 .findAllByMemberId(memberService.getMember(loginId))
