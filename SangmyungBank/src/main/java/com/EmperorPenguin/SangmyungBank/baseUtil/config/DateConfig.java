@@ -26,4 +26,11 @@ public class DateConfig {
         cal.add(Calendar.YEAR, +10);
         return dtf.format(cal.getTime());
     }
+
+    public static String getDueDate() {
+        DateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
+        final Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, +8);
+        return dtf.format(cal.getTime());
+    }
 }

@@ -15,4 +15,6 @@ public class LoanRequestRes {
     private Long loanList;
     private Long amount;
     private Long balance;
+    private String createDate;
+    private String dueDate;
 }

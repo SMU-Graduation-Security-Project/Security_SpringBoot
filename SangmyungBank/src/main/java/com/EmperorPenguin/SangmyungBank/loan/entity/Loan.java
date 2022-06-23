@@ -37,6 +37,10 @@ public class Loan {
 
     private Long amount;
 
+    private String createDate;
+
+    private String dueDate;
+
     public LoanRequestRes toDto(){
         return LoanRequestRes.builder()
                 .id(id)
@@ -44,6 +48,8 @@ public class Loan {
                 .loanList(loanList.getId())
                 .amount(amount)
                 .balance(accountNumber.getBalance())
+                .createDate(createDate)
+                .dueDate(dueDate)
                 .build();
     }
 }

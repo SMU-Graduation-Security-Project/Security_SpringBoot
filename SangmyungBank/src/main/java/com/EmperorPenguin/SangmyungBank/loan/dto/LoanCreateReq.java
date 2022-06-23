@@ -36,6 +36,8 @@ public class LoanCreateReq {
                 .accountNumber(account)
                 .loanList(loanList)
                 .amount(amount)
+                .createDate(new DateConfig().getDate())
+                .dueDate(new DateConfig().getDueDate())
                 .build();
     }
 }
