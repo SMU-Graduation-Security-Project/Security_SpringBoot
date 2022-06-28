@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +40,7 @@ public class EventService {
     public List<EventInquiryRes> listAllDoingEvents() {
         return eventRepository.findRun(new DateConfig().getDateTime())
                 .stream()
+                .sorted(Comparator.comparing(Event::getId).reversed())
                 .map(Event::toDto)
                 .collect(Collectors.toList());
     }
@@ -47,6 +49,7 @@ public class EventService {
     public List<EventInquiryRes> listAllDoneEvents() {
         return eventRepository.findDone(new DateConfig().getDateTime())
                 .stream()
+                .sorted(Comparator.comparing(Event::getId).reversed())
                 .map(Event::toDto)
                 .collect(Collectors.toList());
     }
