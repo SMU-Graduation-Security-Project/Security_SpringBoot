@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,7 @@ public class NewsService {
     public List<NewsInquiryRes> getAllNews() {
         return newsRepository.findAll()
                 .stream()
+                .sorted(Comparator.comparing(News::getId).reversed())
                 .map(News::toDto)
                 .collect(Collectors.toList());
     }
