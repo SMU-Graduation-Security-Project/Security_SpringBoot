@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 
 @Api(tags = "3. 거래 내역")
 @RestController
@@ -25,7 +24,7 @@ public class TransactionController {
     public BaseResult getTransactionData(@RequestBody TransactionInquiryReq transactionInquiryReq){
         try {
             return responseService.listResult(
-                    Collections.reverse(transactionService.showTransactions(transactionInquiryReq))
+                    transactionService.showTransactions(transactionInquiryReq)
             );
         }catch (Exception e){
             return responseService.failResult(
