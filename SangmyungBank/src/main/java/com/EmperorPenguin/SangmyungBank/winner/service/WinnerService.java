@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,6 +48,7 @@ public class WinnerService {
     public List<WinnerRequestRes> getAllWinnerLists() {
         return winnerRepository.findAll()
                 .stream()
+                .sorted(Comparator.comparing(Winner::getId).reversed())
                 .map(Winner::toDto)
                 .collect(Collectors.toList());
     }
