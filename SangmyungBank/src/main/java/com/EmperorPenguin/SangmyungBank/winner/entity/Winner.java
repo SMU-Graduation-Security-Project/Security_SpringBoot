@@ -1,6 +1,5 @@
 package com.EmperorPenguin.SangmyungBank.winner.entity;
 
-import com.EmperorPenguin.SangmyungBank.cardlist.dto.CardListInquiryRes;
 import com.EmperorPenguin.SangmyungBank.event.entity.Event;
 import com.EmperorPenguin.SangmyungBank.winner.dto.WinnerRequestRes;
 import lombok.AllArgsConstructor;

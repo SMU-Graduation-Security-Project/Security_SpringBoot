@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 
 
-@Api(tags="7. 이벤트")
+@Api(tags="11. 이벤트")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cont")

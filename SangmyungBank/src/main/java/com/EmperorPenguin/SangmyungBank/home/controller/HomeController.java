@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags = "0. 홈")
+@Api(tags = "00. 홈")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")

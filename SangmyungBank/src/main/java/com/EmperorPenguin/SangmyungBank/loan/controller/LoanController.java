@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags="12. 대출")
+@Api(tags="06. 대출")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/users/loans")

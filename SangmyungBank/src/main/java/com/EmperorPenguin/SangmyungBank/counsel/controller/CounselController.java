@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags="6. 상담글")
+@Api(tags="10. 상담글")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cont")

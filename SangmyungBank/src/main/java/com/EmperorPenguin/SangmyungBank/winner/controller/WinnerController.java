@@ -2,8 +2,6 @@ package com.EmperorPenguin.SangmyungBank.winner.controller;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.dto.BaseResult;
 import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
-import com.EmperorPenguin.SangmyungBank.event.dto.EventCreateReq;
-import com.EmperorPenguin.SangmyungBank.news.dto.NewsUpdateReq;
 import com.EmperorPenguin.SangmyungBank.winner.dto.WinnerCreateReq;
 import com.EmperorPenguin.SangmyungBank.winner.dto.WinnerUpdateReq;
 import com.EmperorPenguin.SangmyungBank.winner.service.WinnerService;
@@ -12,7 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags="10. 당첨자발표")
+@Api(tags="12. 당첨자발표")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cont/events")
