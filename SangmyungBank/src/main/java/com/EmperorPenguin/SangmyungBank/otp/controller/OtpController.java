@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags="12.OTP")
+@Api(tags="02.OTP")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/users/otp")

@@ -4,17 +4,14 @@ import com.EmperorPenguin.SangmyungBank.baseUtil.dto.BaseResult;
 import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
 import com.EmperorPenguin.SangmyungBank.event.dto.EventCreateReq;
 import com.EmperorPenguin.SangmyungBank.event.dto.EventUpdateReq;
-import com.EmperorPenguin.SangmyungBank.event.entity.Event;
 import com.EmperorPenguin.SangmyungBank.event.service.EventService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 
-
-@Api(tags="11. 이벤트")
+@Api(tags="12. 이벤트")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cont")

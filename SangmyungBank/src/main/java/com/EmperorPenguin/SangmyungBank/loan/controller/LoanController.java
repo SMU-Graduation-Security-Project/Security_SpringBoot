@@ -2,8 +2,6 @@ package com.EmperorPenguin.SangmyungBank.loan.controller;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.dto.BaseResult;
 import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
-import com.EmperorPenguin.SangmyungBank.card.dto.CardCreateReq;
-import com.EmperorPenguin.SangmyungBank.card.service.CardService;
 import com.EmperorPenguin.SangmyungBank.loan.dto.LoanCreateReq;
 import com.EmperorPenguin.SangmyungBank.loan.service.LoanService;
 import io.swagger.annotations.Api;
@@ -12,7 +10,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags="06. 대출")
+@Api(tags="07. 대출")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/users/loans")

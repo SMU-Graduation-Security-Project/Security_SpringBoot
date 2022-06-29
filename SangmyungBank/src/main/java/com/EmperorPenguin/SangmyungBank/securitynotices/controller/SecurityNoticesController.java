@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 
-@Api(tags="09. 보안공지")
+@Api(tags="10. 보안공지")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cont")

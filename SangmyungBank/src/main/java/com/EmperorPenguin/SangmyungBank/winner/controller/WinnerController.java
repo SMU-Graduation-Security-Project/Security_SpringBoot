@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags="12. 당첨자발표")
+@Api(tags="13. 당첨자발표")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cont/events")
