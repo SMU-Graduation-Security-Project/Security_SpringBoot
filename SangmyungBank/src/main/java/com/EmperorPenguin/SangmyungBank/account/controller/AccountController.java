@@ -1,10 +1,11 @@
 package com.EmperorPenguin.SangmyungBank.account.controller;
 
 import com.EmperorPenguin.SangmyungBank.account.dto.AccountCreateReq;
-import com.EmperorPenguin.SangmyungBank.account.dto.TransferReq;
+import com.EmperorPenguin.SangmyungBank.account.dto.TransferTotalReq;
 import com.EmperorPenguin.SangmyungBank.account.service.AccountService;
 import com.EmperorPenguin.SangmyungBank.baseUtil.dto.BaseResult;
 import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
+import com.EmperorPenguin.SangmyungBank.otp.service.OtpService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -16,8 +17,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/users/accounts")
 public class AccountController {
+
     private final AccountService accountService;
     private final ResponseService responseService;
+    private final OtpService otpService;
+
 
     @PostMapping(path = "/add")
     @ApiOperation(value = "1. 계좌생성", notes = "사용자의 아이디와 비밀번호를 받아 사용자의 계좌를 생성합니다.")
@@ -34,9 +38,11 @@ public class AccountController {
 
     @PostMapping(path = "/transaction")
     @ApiOperation(value="2. 계좌 이체", notes = "사용자 아이디와 이체할 계좌, 금액과 해당 계좌의 비밀번호를 받아 이체합니다.")
-    public BaseResult transaction(@ApiParam @RequestBody TransferReq transferReq){
+    public BaseResult transaction(@ApiParam @RequestBody TransferTotalReq transferTotalReq){
         try {
-            accountService.transaction(transferReq);
+            accountService.validationAccount(transferTotalReq.toTransfer());
+            otpService.validationOtp(transferTotalReq.toOtp());
+            accountService.transaction(transferTotalReq.toTransfer());
             return responseService.successResult();
         }catch (Exception e){
             return responseService.failResult(
@@ -56,4 +62,5 @@ public class AccountController {
             );
         }
     }
+
 }

@@ -9,6 +9,7 @@ import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.AccountException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
+import com.EmperorPenguin.SangmyungBank.otp.service.OtpService;
 import com.EmperorPenguin.SangmyungBank.transaction.entity.Transaction;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import com.EmperorPenguin.SangmyungBank.transaction.service.TransactionService;
@@ -29,6 +30,7 @@ public class AccountService {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
     private final TransactionService transactionService;
+    private final OtpService otpService;
     // 계좌 예시102-82-01669
     private Long StartAccountNumber = 1028201669L;
 
@@ -55,8 +57,7 @@ public class AccountService {
     }
 
     @Transactional
-    public void transaction(TransferReq transferReq)
-    {
+    public void validationAccount(TransferReq transferReq){
         String loginId = transferReq.getLoginId();
         Long sendAccount = transferReq.getSendAccountNumber();
         String password = transferReq.getAccountPassword();
@@ -66,8 +67,8 @@ public class AccountService {
         }
 
         Account myAccount = accountRepository
-            .findAccountByAccountNumber(transferReq.getMyAccountNumber())
-            .orElseThrow(() -> new AccountException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND));
+                .findAccountByAccountNumber(transferReq.getMyAccountNumber())
+                .orElseThrow(() -> new AccountException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND));
 
         // 사용자의 아이디로부터 자신의 계좌가 맞는지 확인.
         checkAccount(myAccount, memberService.getMember(loginId));
@@ -84,9 +85,14 @@ public class AccountService {
         if(myAccount.getBalance() < transferReq.getBalance()) {
             throw new AccountException(ExceptionMessages.ERROR_ACCOUNT_BALANCE);
         }
-        try {
+    }
+
+    @Transactional
+    public void transaction(TransferReq transferReq)
+    {
+       try {
             accountRepository.updateMyBalance(transferReq.getBalance(),
-                    myAccount.getAccountNumber());
+                    transferReq.getMyAccountNumber());
             accountRepository.updateBalance(transferReq.getBalance(),
                     transferReq.getSendAccountNumber());
             // 전달자의 거래내역을 저장
@@ -136,12 +142,6 @@ public class AccountService {
     private void checkAccount(Account account, Member member){
         if(!accountRepository.findAllByMemberId(member).contains(account)){
             throw new AccountException("전달받은 계좌는 사용자의 계좌가 아닙니다.");
-        }
-    }
-
-    public void checkAccount(Long accountNumber){
-        if(!accountRepository.existsAccountByAccountNumber(accountNumber)){
-            throw new AccountException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND);
         }
     }
 

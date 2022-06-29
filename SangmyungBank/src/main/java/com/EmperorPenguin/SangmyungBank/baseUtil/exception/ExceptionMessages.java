@@ -41,7 +41,6 @@ public enum ExceptionMessages {
 
     ERROR_CARD_EXIST("해당 카드번호를 가진 카드가 이미 있습니다."),
     ERROR_CARD_NOT_EXIST("해당 카드번호를 가진 카드가 없습니다"),
-//    ERROR_CARD_UNAUTHORIZED_ACCESS("해당 카드에 접근할 권한이 없습니다."),
 
     ERROR_CARDLIST_EXIST("해당 제목을 가진 카드목록이 이미 있습니다."),
     ERROR_CARDLIST_NOT_EXIST("해당 아이디를 가진 카드목록이 없습니다"),
@@ -52,6 +51,9 @@ public enum ExceptionMessages {
     ERROR_LOAN_EXIST("해당 대출이 이미 있습니다."),
 
     ERROR_OTP_EXIST("OTP를 이미 보유하고 있습니다."),
+    ERROR_OTP_NOT_EXIST("OTP가 발급되어있지 않습니다."),
+    ERROR_OTP_PK_NOT_MATCH("OTP PK값이 일치하지 않습니다."),
+    ERROR_OTP_NOT_MATCH("입력한 OTP번호가 옳지 않습니다."),
 
     ERROR_SECURITYNOTICE_EXIST("해당 제목을 가진 보안공지가 이미 있습니다."),
     ERROR_SECURITYNOTICE_NOT_EXIST("해당 아이디를 가진 보안공지가 없습니다");

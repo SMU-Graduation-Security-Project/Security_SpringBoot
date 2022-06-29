@@ -33,5 +33,4 @@ public class TransferReq {
 
     @ApiModelProperty(required = true)
     private Long balance;
-
 }

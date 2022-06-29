@@ -3,6 +3,7 @@ package com.EmperorPenguin.SangmyungBank.otp.service;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.OtpException;
 import com.EmperorPenguin.SangmyungBank.otp.dto.OtpRequestRes;
+import com.EmperorPenguin.SangmyungBank.otp.dto.OtpValidReq;
 import com.EmperorPenguin.SangmyungBank.otp.entity.Otp;
 import com.EmperorPenguin.SangmyungBank.otp.repository.OtpRepository;
 import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
@@ -55,6 +56,40 @@ public class OtpService {
         return otpRepository.findByMemberId(memberService.getMember(loginId)).get().toDto();
     }
 
+    @Transactional
+    public void validationOtp(OtpValidReq otpValidReq){
+        String loginId = otpValidReq.getLoginId();
+        memberService.checkEmptyMember(loginId);
+
+        Otp memberOtp = otpRepository.findByMemberId(memberService.getMember(loginId))
+                .orElseThrow(() -> new OtpException(ExceptionMessages.ERROR_OTP_NOT_EXIST));
+
+        checkOTP(memberOtp, otpValidReq);
+    }
+
+    private void checkOTP(Otp otp, OtpValidReq otpValidReq) {
+        int Pk4 = (otp.getOtpPrivateNumber() % 10000);
+        int[] otpNumList = new int[6];
+
+        if(Pk4 != otpValidReq.getPkOTP4()){
+            throw new OtpException(ExceptionMessages.ERROR_OTP_PK_NOT_MATCH);
+        }
+
+        // OTP값을 검증하기 위해 배열에 저장.
+        otpNumList[0] = otp.getNumber1();
+        otpNumList[1] = otp.getNumber2();
+        otpNumList[2] = otp.getNumber3();
+        otpNumList[3] = otp.getNumber4();
+        otpNumList[4] = otp.getNumber5();
+        otpNumList[5] = otp.getNumber6();
+
+        if((otpNumList[otpValidReq.getSelectNum1()-1] / 100) != otpValidReq.getAnsNum1()){
+            throw new OtpException(ExceptionMessages.ERROR_OTP_NOT_MATCH);
+        }
+        if ((otpNumList[otpValidReq.getSelectNum2()-1] % 100) != otpValidReq.getAnsNum2()){
+            throw new OtpException(ExceptionMessages.ERROR_OTP_NOT_MATCH);
+        }
+    }
 }
 
 
