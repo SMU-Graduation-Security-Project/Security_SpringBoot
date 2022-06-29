@@ -29,6 +29,8 @@ public class AccountService {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
     private final TransactionService transactionService;
+    // 계좌 예시102-82-01669
+    private Long StartAccountNumber = 1028201669L;
 
     @Transactional
     public void createAccount(AccountCreateReq accountCreateReq) {
@@ -42,6 +44,7 @@ public class AccountService {
         try{
             accountRepository.save(accountCreateReq.toEntity(
                     memberService.getMember(loginId),
+                    StartAccountNumber++,
                     passwordEncoder.encode(password),
                     0L));
         }catch (Exception e)
@@ -122,8 +125,7 @@ public class AccountService {
                 .collect(Collectors.toList());
     }
 
-    private void checkPassword(String password)
-    {
+    private void checkPassword(String password) {
         // 계좌 비밀번호는 숫자로 6자로 구성되어있다.
         Pattern passwordExpression = Pattern.compile("[0-9]{6}");
         if(!passwordExpression.matcher(password).matches()){

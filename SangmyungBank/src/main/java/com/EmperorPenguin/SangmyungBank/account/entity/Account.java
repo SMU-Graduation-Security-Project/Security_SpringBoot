@@ -21,7 +21,6 @@ public class Account {
     private Member memberId;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountNumber;
 
     @Column(columnDefinition = "text",nullable = false)

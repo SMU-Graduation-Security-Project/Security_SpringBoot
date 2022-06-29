@@ -21,9 +21,10 @@ public class AccountCreateReq {
     @ApiModelProperty(required = true)
     private String accountPassword;
 
-    public Account toEntity(Member Member, String encodedPassword, Long balance){
+    public Account toEntity(Member Member, Long accountNumber, String encodedPassword, Long balance){
         return Account.builder()
                 .memberId(Member)
+                .accountNumber(accountNumber)
                 .accountPassword(encodedPassword)
                 .balance(balance)
                 .CreateDate(new DateConfig().getDateTime())
