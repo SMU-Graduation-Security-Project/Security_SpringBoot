@@ -18,7 +18,6 @@ import javax.persistence.*;
 public class Card {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cardNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)

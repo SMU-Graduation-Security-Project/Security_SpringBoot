@@ -25,10 +25,11 @@ public class CardCreateReq {
     @ApiModelProperty(required = true)
     private String cardType;
 
-    public Card toEntity(Member member, Account account) {
+    public Card toEntity(Member member, Account account, Long cardNumber) {
         return Card.builder()
                 .memberId(member)
                 .accountNumber(account)
+                .cardNumber(cardNumber)
                 .cardType(cardType)
                 .expireDate(new DateConfig().getExpireDate())
                 .build();

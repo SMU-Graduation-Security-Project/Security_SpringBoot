@@ -22,6 +22,8 @@ public class CardService {
     private final CardRepository cardRepository;
     private final MemberService memberService;
     private final AccountService accountService;
+    // 카드번호 예시 3052-7512-XXXX-XXXX
+    private Long StartCardNumber = 1101310000282457L;
 
     @Transactional
     public void createCard(CardCreateReq cardCreateReq) {
@@ -32,7 +34,8 @@ public class CardService {
         try {
             cardRepository.save(cardCreateReq.toEntity(
                     memberService.getMember(loginId),
-                    accountService.getAccount(accountNumber))
+                    accountService.getAccount(accountNumber),
+                    StartCardNumber++)
             );
         } catch (Exception e) {
             e.printStackTrace();
