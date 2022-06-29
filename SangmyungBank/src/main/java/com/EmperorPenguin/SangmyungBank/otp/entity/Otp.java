@@ -14,8 +14,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 
 public class Otp {
+
     @Id
-    private int otpNumber;
+    private int otpPrivateNumber;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="memberId")
@@ -36,14 +37,18 @@ public class Otp {
     @Column
     private int number5;
 
+    @Column
+    private int number6;
+
     public OtpRequestRes toDto(){
         return OtpRequestRes.builder()
-                .otpNumber(otpNumber)
+                .otpPrivateNumber(otpPrivateNumber)
                 .number1(number1)
                 .number2(number2)
                 .number3(number3)
                 .number4(number4)
                 .number5(number5)
+                .number6(number6)
                 .build();
     }
 }

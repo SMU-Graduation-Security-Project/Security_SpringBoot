@@ -51,7 +51,7 @@ public enum ExceptionMessages {
 
     ERROR_LOAN_EXIST("해당 대출이 이미 있습니다."),
 
-    RROR_OTP_EXIST("OTP를 이미 보유하고 있습니다."),
+    ERROR_OTP_EXIST("OTP를 이미 보유하고 있습니다."),
 
     ERROR_SECURITYNOTICE_EXIST("해당 제목을 가진 보안공지가 이미 있습니다."),
     ERROR_SECURITYNOTICE_NOT_EXIST("해당 아이디를 가진 보안공지가 없습니다");

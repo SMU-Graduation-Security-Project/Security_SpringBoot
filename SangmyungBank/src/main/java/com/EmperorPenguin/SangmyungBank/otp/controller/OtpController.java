@@ -2,7 +2,6 @@ package com.EmperorPenguin.SangmyungBank.otp.controller;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.dto.BaseResult;
 import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
-import com.EmperorPenguin.SangmyungBank.otp.dto.OtpCreateReq;
 import com.EmperorPenguin.SangmyungBank.otp.service.OtpService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,9 +19,9 @@ public class OtpController {
 
     @PostMapping("")
     @ApiOperation(value="1. OTP 발급", notes = "사용자의 아이디로 OTP 생성")
-    public BaseResult createCard(@RequestBody OtpCreateReq otpCreateReq) {
+    public BaseResult createCard(@RequestBody String loginId) {
         try {
-            otpService.createOtp(otpCreateReq);
+            otpService.createOtp(loginId);
             return responseService.successResult();
         }catch (Exception e){
             return responseService.failResult(
@@ -35,7 +34,7 @@ public class OtpController {
     @ApiOperation(value = "2. OTP 조회", notes = "아이디에 해당 하는 OTP를 조회합니다.")
     public BaseResult cardList(@ApiParam @RequestParam String loginId) {
         try {
-            return responseService.listResult(otpService.otpList(loginId));
+            return responseService.singleResult(otpService.getOtpData(loginId));
         }catch (Exception e){
             return responseService.failResult(
                     e.getMessage());
