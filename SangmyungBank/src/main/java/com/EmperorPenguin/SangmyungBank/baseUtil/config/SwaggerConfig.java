@@ -31,7 +31,7 @@ public class SwaggerConfig {
                 .description("SangmyungBank 서버 API 문서입니다..")
                 .license("EmperorPenguin")
                 .licenseUrl("EmperorPenguin")
-                .version("Proto")
+                .version("v1")
                 .build();
     }
 }
