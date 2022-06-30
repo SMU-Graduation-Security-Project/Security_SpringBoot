@@ -21,14 +21,17 @@ public class AccountCreateReq {
     @ApiModelProperty(required = true)
     private String accountPassword;
 
+    @ApiModelProperty(required = true)
+    private String accountType;
+
     public Account toEntity(Member Member, Long accountNumber, String encodedPassword, Long balance){
         return Account.builder()
                 .memberId(Member)
                 .accountNumber(accountNumber)
                 .accountPassword(encodedPassword)
                 .balance(balance)
-                .CreateDate(new DateConfig().getDateTime())
-                .bankName("상명은행")
+                .createDate(new DateConfig().getDateTime())
+                .accountType(accountType)
                 .build();
     }
 }

@@ -13,5 +13,6 @@ import lombok.RequiredArgsConstructor;
 public class AccountInquiryRes {
 
     private Long accountNumber;
+    private String accountType;
     private Long balance;
 }

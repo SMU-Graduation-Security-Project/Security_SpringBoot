@@ -30,14 +30,15 @@ public class Account {
     private Long balance;
 
     @Column
-    private String CreateDate;
+    private String createDate;
 
     @Column
-    private String bankName;
+    private String accountType;
 
     public AccountInquiryRes toDto() {
         return AccountInquiryRes.builder()
                 .accountNumber(accountNumber)
+                .accountType(accountType)
                 .balance(balance)
                 .build();
     }
