@@ -32,6 +32,9 @@ public class Account {
     @Column
     private String CreateDate;
 
+    @Column
+    private String bankName;
+
     public AccountInquiryRes toDto() {
         return AccountInquiryRes.builder()
                 .accountNumber(accountNumber)

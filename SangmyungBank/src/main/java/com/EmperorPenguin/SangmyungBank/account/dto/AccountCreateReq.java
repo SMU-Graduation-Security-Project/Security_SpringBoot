@@ -28,6 +28,7 @@ public class AccountCreateReq {
                 .accountPassword(encodedPassword)
                 .balance(balance)
                 .CreateDate(new DateConfig().getDateTime())
+                .bankName("상명은행")
                 .build();
     }
 }
