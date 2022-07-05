@@ -5,6 +5,9 @@ import com.EmperorPenguin.SangmyungBank.member.dto.MemberInquiryRes;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Builder
 @Getter
@@ -28,7 +31,7 @@ public class Member {
     private int age;
 
     @Column(length = 1, nullable = false)
-    private String  sex;
+    private String sex;
 
     @Column(length = 14, unique = true, nullable = false)
     private String phoneNumber;
@@ -55,7 +58,7 @@ public class Member {
     @Column(nullable = false)
     private Role role;
 
-    public MemberLoginRes toLoginDto(){
+    public MemberLoginRes toLoginDto() {
         return MemberLoginRes.builder()
                 .loginId(loginId)
                 .name(name)
@@ -64,7 +67,7 @@ public class Member {
                 .build();
     }
 
-    public MemberInquiryRes toDto(){
+    public MemberInquiryRes toDto() {
         return MemberInquiryRes.builder()
                 .loginId(loginId)
                 .email(email)
@@ -77,10 +80,21 @@ public class Member {
                 .build();
     }
 
-    public String getRoleKey(){
+    public String getRoleKey() {
         return this.role.getKey();
     }
+
+    public List<String> getRoleList(){
+        if(this.role.getKey().length() > 0){
+            return Arrays.asList(this.role.getKey().split(","));
+        }
+        return new ArrayList<>();
+    }
+
+
+
 }
+
 
 
 

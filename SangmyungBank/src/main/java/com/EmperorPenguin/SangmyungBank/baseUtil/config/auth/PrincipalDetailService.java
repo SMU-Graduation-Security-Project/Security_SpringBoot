@@ -20,9 +20,10 @@ public class PrincipalDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println(username);
+        System.out.println("PrincipalDetailService의 loadUserByUsername()");
         Member memberEntity = memberRepository.findByLoginId(username)
                 .orElseThrow(()-> new MemberException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
+        System.out.println("memberEntity"+memberEntity);
         return new PrincipalDetails(memberEntity);
     }
 }
