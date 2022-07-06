@@ -2,7 +2,6 @@ package com.EmperorPenguin.SangmyungBank.baseUtil.config;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.jwt.JwtAuthenticationFilter;
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.jwt.JwtAuthorizationFilter;
-import com.EmperorPenguin.SangmyungBank.baseUtil.filter.BankFilterBeforeBasicAuth;
 import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.addFilterBefore(new BankFilterBeforeBasicAuth(), BasicAuthenticationFilter.class);
+
         http.csrf().disable();
         http.
                 sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Session을 사용하지 않는다
@@ -39,15 +38,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().disable()
                 .httpBasic().disable()  //Bearer 방식을 사용할 것이므로
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))  //Autentication Manger를 던져줘야 한다.
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), memberRepository))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(),memberRepository))
                 .authorizeRequests()
                 // LOGIN
                 .antMatchers("/users/login/**").permitAll()
                 // USER
-                .antMatchers("/users/user/**")
+                .antMatchers("/api/v1/user/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 // ADMIN
-                .antMatchers("/users/admin/**")
+                .antMatchers("/api/v1/admin/**")
                 .access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll();
 

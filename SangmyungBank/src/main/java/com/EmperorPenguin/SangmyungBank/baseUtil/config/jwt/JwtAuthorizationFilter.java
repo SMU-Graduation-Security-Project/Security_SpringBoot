@@ -5,6 +5,7 @@ import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.Claim;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,25 +32,23 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     // 인증이나 권한이 필요한 주소요청이 있을 때 해당 필터를 거친다.
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String jwtHeader = request.getHeader("Authorization");
+        System.out.println("인증이나 권한이 필요한 주소 요청이 됨");
 
-        // Header가 있는지 확인.
-        if (jwtHeader == null || !jwtHeader.startsWith("Bearer")) {
+        String jwtHeader = request.getHeader(JwtProperties.HEADER_PREFIX);
+        System.out.println("jwtHeader:"+jwtHeader);
+
+        //Header가 있는지 확인
+        if (jwtHeader == null || !jwtHeader.startsWith(JwtProperties.TOKEN_PREFIX)) {
             chain.doFilter(request, response);
             return;
         }
-
         // JWT 토큰을 검증을 해서 정상적인 사용자인지 확인
-        String jwtToken = request.getHeader("Authorization").replace("Bearer", "");
+        String jwtToken = request.getHeader(JwtProperties.HEADER_PREFIX).replace(JwtProperties.TOKEN_PREFIX, "");
 
-        String userId = JWT.require(Algorithm.HMAC512("sumung"))
-                .build()
-                .verify(jwtToken)
-                .getClaim("userId").asString();
-
-        // 서명이 정상적으로 됨
-        if (userId != null) {
-            Member memberEntity = memberRepository.findByLoginId(userId).get();
+        String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(jwtToken).getClaim("username").asString();
+        //서명이 정상적으로 됨
+        if(username!=null){
+            Member memberEntity = memberRepository.findByLoginId(username).get();
 
             PrincipalDetails principalDetails = new PrincipalDetails(memberEntity);
 
@@ -62,5 +61,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
             chain.doFilter(request, response);
         }
+
+
+
     }
 }

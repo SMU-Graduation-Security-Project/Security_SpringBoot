@@ -69,12 +69,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         //RSA가 아닌 Hash암호방싯
         String jwtToken=JWT.create()
                 .withSubject((principalDetails.getUsername()))
-                .withExpiresAt(new Date(System.currentTimeMillis()+(60000*10)))
+                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
                 .withClaim("memberId",principalDetails.getMember().getMemberId())
                 .withClaim("username",principalDetails.getMember().getLoginId())
-                .sign(Algorithm.HMAC512("sumung"));
+                .sign(Algorithm.HMAC512(JwtProperties.SECRET));
 
-        response.addHeader("Autorization","Bearer"+jwtToken);
+        response.addHeader(JwtProperties.HEADER_PREFIX,JwtProperties.TOKEN_PREFIX+jwtToken);
     }
 
 }
