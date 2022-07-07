@@ -56,7 +56,13 @@ public enum ExceptionMessages {
     ERROR_OTP_NOT_MATCH("입력한 OTP번호가 옳지 않습니다."),
 
     ERROR_SECURITYNOTICE_EXIST("해당 제목을 가진 보안공지가 이미 있습니다."),
-    ERROR_SECURITYNOTICE_NOT_EXIST("해당 아이디를 가진 보안공지가 없습니다");
+    ERROR_SECURITYNOTICE_NOT_EXIST("해당 아이디를 가진 보안공지가 없습니다"),
+
+    ERROR_JWT_NEED_LOGIN("다시 로그인 해주세요."),
+    ERROR_JWT_REFRESH_TOKEN("REFRESH JWT 토큰이 잘못되었습니다."),
+    ERROR_JWT_FORMAT("JWT 토큰이 잘못되었습니다."),
+    ERROR_JWT_EXPIRED("JWT 토큰이 만료되었습니다."),
+    ERROR_JWT_ACCESS_DENIED("접근이 거부되었습니다.");
 
     private final String message;
 }

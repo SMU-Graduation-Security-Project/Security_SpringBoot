@@ -1,11 +1,17 @@
 package com.EmperorPenguin.SangmyungBank.baseUtil.config.jwt;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.auth.PrincipalDetails;
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.service.JwtService;
+import com.EmperorPenguin.SangmyungBank.baseUtil.dto.JwtErrorCode;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.CustomJwtException;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.Claim;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,15 +24,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 // 시큐리티 Filter 가지고 있음 그 필터 중에 BasicAuthenticationFilter.
-// 권한이아 인증이 필요한 특정 주소를 요청했을 때 위 필터를 무조껀 타게 되어있음.
+// 권한이아 인증이 필요한 특정 주소를 요청했을 때 위 필터를 무조건 타게 되어있음.
 // 만약 권한 인증이 필요한 주소가 아니라면 이 필터를 타지 않는다.
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
-    private final MemberRepository memberRepository;
+//    private final MemberRepository memberRepository;
+    private final JwtService jwtService;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, MemberRepository memberRepository) {
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, JwtService jwtService) {
         super(authenticationManager);
-        this.memberRepository = memberRepository;
+        this.jwtService = jwtService;
     }
 
     // 인증이나 권한이 필요한 주소요청이 있을 때 해당 필터를 거친다.
@@ -34,35 +41,47 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         System.out.println("인증이나 권한이 필요한 주소 요청이 됨");
 
-        String jwtHeader = request.getHeader(JwtProperties.HEADER_PREFIX);
-        System.out.println("jwtHeader:"+jwtHeader);
+        try {
+            jwtService.checkHeaderValid(request);
+            String accessJwtToken = request
+                    .getHeader(JwtProperties.HEADER_PREFIX)
+                    .replace(JwtProperties.TOKEN_PREFIX, "");
+            String refreshJwtToken = request
+                    .getHeader(JwtProperties.REFRESH_HEADER_PREFIX)
+                    .replace(JwtProperties.TOKEN_PREFIX, "");
+            jwtService.checkTokenValid(refreshJwtToken);
 
-        //Header가 있는지 확인
-        if (jwtHeader == null || !jwtHeader.startsWith(JwtProperties.TOKEN_PREFIX)) {
-            chain.doFilter(request, response);
-            return;
+            System.out.println("리프레쉬 토큰 회원 조회");
+            Member memberByRefreshToken = jwtService.getMemberByRefreshToken(refreshJwtToken);
+            String loginId = memberByRefreshToken.getLoginId();
+            Long id = memberByRefreshToken.getMemberId();
+
+
+            try {
+                System.out.println("액세스 토큰 검증");
+                jwtService.checkTokenValid(accessJwtToken);
+            } catch (TokenExpiredException expired) {
+                System.out.println("ACCESS TOKEN REISSUE : " + JwtErrorCode.JWT_ACCESS_EXPIRED);
+                accessJwtToken = jwtService.createAccessToken(id, loginId);
+                response.addHeader(JwtProperties.HEADER_PREFIX, JwtProperties.TOKEN_PREFIX + accessJwtToken);
+            }
+
+            PrincipalDetails principalDetails = new PrincipalDetails(memberByRefreshToken);
+            Authentication auth = new UsernamePasswordAuthenticationToken
+                    (principalDetails, null, principalDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(auth);
+        } catch (CustomJwtException cusJwtExc) {
+            request.setAttribute(JwtProperties.EXCEPTION, cusJwtExc.getMessage());
+        } catch (TokenExpiredException ee) {
+            request.setAttribute(JwtProperties.EXCEPTION, JwtErrorCode.JWT_REFRESH_EXPIRED);
+        } catch (MalformedJwtException | UnsupportedJwtException mj) {
+            request.setAttribute(JwtProperties.EXCEPTION, JwtErrorCode.JWT_NOT_VALID);
+        } catch (Exception e) {
+            System.out.println("미정의 에러 : " + e);
+            System.out.println(e.getMessage());
+            request.setAttribute(JwtProperties.EXCEPTION, JwtErrorCode.JWT_NOT_VALID);
         }
-        // JWT 토큰을 검증을 해서 정상적인 사용자인지 확인
-        String jwtToken = request.getHeader(JwtProperties.HEADER_PREFIX).replace(JwtProperties.TOKEN_PREFIX, "");
 
-        String username = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(jwtToken).getClaim("username").asString();
-        //서명이 정상적으로 됨
-        if(username!=null){
-            Member memberEntity = memberRepository.findByLoginId(username).get();
-
-            PrincipalDetails principalDetails = new PrincipalDetails(memberEntity);
-
-            // JWT 토큰 서명을 통해서 서명이 정상이면 Authentication 객체를 만들어준다.
-            Authentication authentication =
-                    new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
-
-            // 강제로 시큐리티 세션에 접근해서 Authentication 객체를 저장.
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
-            chain.doFilter(request, response);
-        }
-
-
-
+        chain.doFilter(request, response);
     }
 }

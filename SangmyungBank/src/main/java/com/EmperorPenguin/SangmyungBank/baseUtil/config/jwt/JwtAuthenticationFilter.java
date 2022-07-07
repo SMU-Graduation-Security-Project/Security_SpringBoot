@@ -1,11 +1,13 @@
 package com.EmperorPenguin.SangmyungBank.baseUtil.config.jwt;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.auth.PrincipalDetails;
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.service.JwtService;
 import com.EmperorPenguin.SangmyungBank.member.dto.MemberLoginReq;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nimbusds.oauth2.sdk.token.RefreshToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,6 +30,7 @@ import java.util.Date;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
 
     // /login 요청을 하면 로그인 시도를 위해서 실행되는 함수
@@ -66,15 +69,19 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             throws IOException, ServletException {
         System.out.println("successfulAuthentication 실행됨:인증완료");
         PrincipalDetails principalDetails =(PrincipalDetails)authResult.getPrincipal();
-        //RSA가 아닌 Hash암호방싯
-        String jwtToken=JWT.create()
-                .withSubject((principalDetails.getUsername()))
-                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
-                .withClaim("memberId",principalDetails.getMember().getMemberId())
-                .withClaim("username",principalDetails.getMember().getLoginId())
-                .sign(Algorithm.HMAC512(JwtProperties.SECRET));
+        //RSA가 아닌 Hash암호방식
+        Member member = principalDetails.getMember();
+        String accessJwt = jwtService.createAccessToken(member.getMemberId(), member.getLoginId());
+        String refreshJwt = jwtService.createRefreshToken();
 
-        response.addHeader(JwtProperties.HEADER_PREFIX,JwtProperties.TOKEN_PREFIX+jwtToken);
+        // login 성공 -> Refresh 토큰 재발급
+        jwtService.setRefreshToken(member.getLoginId(), refreshJwt);
+
+        response.addHeader(JwtProperties.HEADER_PREFIX,JwtProperties.TOKEN_PREFIX+ accessJwt);
+        response.addHeader(JwtProperties.REFRESH_HEADER_PREFIX,JwtProperties.TOKEN_PREFIX+ refreshJwt);
+
+
+        System.out.println("인증완료");
     }
 
 }

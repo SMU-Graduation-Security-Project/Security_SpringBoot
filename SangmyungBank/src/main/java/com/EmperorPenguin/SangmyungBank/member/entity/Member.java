@@ -58,6 +58,10 @@ public class Member {
     @Column(nullable = false)
     private Role role;
 
+    @Setter
+    @Column
+    private String refreshToken;
+
     public MemberLoginRes toLoginDto() {
         return MemberLoginRes.builder()
                 .loginId(loginId)

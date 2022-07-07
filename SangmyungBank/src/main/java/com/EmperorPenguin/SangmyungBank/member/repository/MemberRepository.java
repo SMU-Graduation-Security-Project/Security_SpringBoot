@@ -17,6 +17,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findByPhoneNumber(String PhoneNumber);
 
+    Optional<Member> findByRefreshToken(String refreshToken);
+
     @Modifying(clearAutomatically = true)
     @Query("update Member m set m.loginDate = :loginTime where m.loginId =:loginId")
     void updateLoginDate(@Param("loginTime")String loginTime, @Param("loginId")String LoginId);

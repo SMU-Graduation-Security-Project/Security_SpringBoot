@@ -2,6 +2,9 @@ package com.EmperorPenguin.SangmyungBank.baseUtil.config;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.jwt.JwtAuthenticationFilter;
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.jwt.JwtAuthorizationFilter;
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.service.JwtService;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.exceptionHandleClass.CustomAccessDeniedHandler;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.exceptionHandleClass.CustomAuthenticationEntryPoint;
 import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +22,9 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CorsFilter corsFilter;
-    private final MemberRepository memberRepository;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final JwtService jwtService;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -37,8 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(corsFilter)  //@CrossOrigin(인증X)/ Security Filter 인증(O)
                 .formLogin().disable()
                 .httpBasic().disable()  //Bearer 방식을 사용할 것이므로
-                .addFilter(new JwtAuthenticationFilter(authenticationManager()))  //Autentication Manger를 던져줘야 한다.
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(),memberRepository))
+                .addFilter(jwtAuthenticationFilter())  //AutenticationManger를 던져줘야 한다.
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtService))
                 .authorizeRequests()
                 // LOGIN
                 .antMatchers("/users/login/**").permitAll()
@@ -48,8 +53,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // ADMIN
                 .antMatchers("/api/v1/admin/**")
                 .access("hasRole('ROLE_ADMIN')")
-                .anyRequest().permitAll();
+                .anyRequest().permitAll() // 그외 요청 모두 허용
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(customAuthenticationEntryPoint)
+                .accessDeniedHandler(customAccessDeniedHandler);
 
 
+
+    }
+
+    public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
+        JwtAuthenticationFilter jwtAuthenticationFilter =
+                new JwtAuthenticationFilter(authenticationManager(), jwtService);
+        jwtAuthenticationFilter
+                .setFilterProcessesUrl("/users/login");
+        return jwtAuthenticationFilter;
     }
 }
