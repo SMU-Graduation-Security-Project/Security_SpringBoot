@@ -6,6 +6,7 @@ import com.EmperorPenguin.SangmyungBank.baseUtil.config.service.JwtService;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.exceptionHandleClass.CustomAccessDeniedHandler;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.exceptionHandleClass.CustomAuthenticationEntryPoint;
 import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
+import com.EmperorPenguin.SangmyungBank.member.service.OauthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,6 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
     private final JwtService jwtService;
+    private final OauthService oauthService;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -48,8 +50,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // LOGIN
                 .antMatchers("/users/login/**").permitAll()
                 // USER
+                .antMatchers("/api/v1/guest/**")
+                .access("hasRole('ROLE_GUEST') or hasRole('ROLE_ADMIN')")
+                // GUEST
                 .antMatchers("/api/v1/user/**")
-                .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+                .access("hasRole('ROLE_/USER') or hasRole('ROLE_ADMIN')")
                 // ADMIN
                 .antMatchers("/api/v1/admin/**")
                 .access("hasRole('ROLE_ADMIN')")
@@ -57,7 +62,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(customAuthenticationEntryPoint)
-                .accessDeniedHandler(customAccessDeniedHandler);
+                .accessDeniedHandler(customAccessDeniedHandler)
+                .and()					//추가
+                .oauth2Login()				// OAuth2기반의 로그인인 경우
+
+                .userInfoEndpoint()			// 로그인 성공 후 사용자정보를 가져온다
+                .userService(oauthService);	//사용자정보를 처리할 때 사용한다
+
 
 
 

@@ -39,3 +39,4 @@ out/
 ### application Properties
 application-Jwt.properties
 application-db.properties
+application-oauth.properties

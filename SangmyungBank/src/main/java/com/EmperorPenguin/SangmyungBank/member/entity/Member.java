@@ -94,9 +94,10 @@ public class Member {
         }
         return new ArrayList<>();
     }
-
-
-
+    public Member update(String name){
+        this.name=name;
+        return this;
+    }
 }
 
 
