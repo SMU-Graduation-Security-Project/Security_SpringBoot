@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class LoanRequestRes {
     private Long id;
     private Long accountNumber;
-    private Long loanList;
+    private String loanList;
     private Long amount;
     private Long balance;
     private String createDate;

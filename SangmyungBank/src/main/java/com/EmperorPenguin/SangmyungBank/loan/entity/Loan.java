@@ -45,7 +45,7 @@ public class Loan {
         return LoanRequestRes.builder()
                 .id(id)
                 .accountNumber(accountNumber.getAccountNumber())
-                .loanList(loanList.getId())
+                .loanList(loanList.getTitle())
                 .amount(amount)
                 .balance(accountNumber.getBalance())
                 .createDate(createDate)

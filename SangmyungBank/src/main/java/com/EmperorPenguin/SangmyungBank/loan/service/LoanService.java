@@ -38,8 +38,9 @@ public class LoanService {
         Long accountNumber = loanCreateReq.getAccountNumber();
         Long loanList = loanCreateReq.getLoanList();
         Long amount = loanCreateReq.getAmount();
-        if (loanRepository.findByLoanList(loanListService.getSingleLoanList(loanList)).isPresent()) {
-            throw new LoanException(ExceptionMessages.ERROR_LOAN_EXIST);
+
+        if (amount > 5000000) {
+            throw new LoanException(ExceptionMessages.ERROR_LOAN_AMOUNT_EXCESS);
         }
         try {
             loanRepository.save(loanCreateReq.toEntity(

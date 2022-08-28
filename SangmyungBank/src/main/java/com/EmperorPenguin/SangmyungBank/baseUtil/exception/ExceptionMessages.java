@@ -49,6 +49,7 @@ public enum ExceptionMessages {
     ERROR_LOANLIST_NOT_EXIST("해당 아이디를 가진 대출목록이 없습니다"),
 
     ERROR_LOAN_EXIST("해당 대출이 이미 있습니다."),
+    ERROR_LOAN_AMOUNT_EXCESS("대출 한도를 초과했습니다."),
 
     ERROR_OTP_EXIST("OTP를 이미 보유하고 있습니다."),
     ERROR_OTP_NOT_EXIST("OTP가 발급되어있지 않습니다."),
