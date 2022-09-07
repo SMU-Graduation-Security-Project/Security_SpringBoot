@@ -1,6 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.member.service;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.service.JwtService;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.MemberException;
 import com.EmperorPenguin.SangmyungBank.member.dto.*;
@@ -8,6 +9,7 @@ import com.EmperorPenguin.SangmyungBank.member.entity.Role;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,10 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final HttpSession httpSession;
 
+    @Autowired
+    private final JwtService jwtService;
+
+
     @Transactional
     public Member login(MemberLoginReq memberLoginReq)
     {
@@ -35,6 +41,25 @@ public class MemberService {
 
         memberRepository.updateLoginDate(new DateConfig().getDateTime(), memberLoginReq.getLoginId());
         // HttpSession Or JWT 도입예정.
+        jwtService.createAccessToken(System.currentTimeMillis(), member.getLoginId());
+
+        // 임시적으로 세션을 등록
+        httpSession.setAttribute("user", new MemberSessionDto(member));
+
+        return memberRepository
+                .findByLoginId(memberLoginReq.getLoginId())
+                .orElseThrow(() -> new MemberException(ExceptionMessages.ERROR_UNDEFINED));
+    }
+
+    @Transactional
+    public Member oauthLogin(MemberLoginReq memberLoginReq)
+    {
+        Member member = getMember(memberLoginReq.getLoginId());
+
+        memberRepository.updateLoginDate(new DateConfig().getDateTime(), memberLoginReq.getLoginId());
+
+        // HttpSession Or JWT 도입예정.
+        jwtService.createAccessToken(System.currentTimeMillis(), member.getLoginId());
 
         // 임시적으로 세션을 등록
         httpSession.setAttribute("user", new MemberSessionDto(member));

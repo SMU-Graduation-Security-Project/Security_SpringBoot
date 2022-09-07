@@ -31,6 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().mvcMatchers("/image/**"); // /image/** 있는 모든 파일들은 시큐리티 적용을 무시한다.
+        web.ignoring().mvcMatchers("/login/**"); // /login/** 있는 모든 파일들은 시큐리티 적용을 무시한다.
+        web.ignoring().mvcMatchers("/users/oauthLogin/**"); // /oauth/** 있는 모든 파일들은 시큐리티 적용을 무시한다.
         web.ignoring().requestMatchers(); // 정적인 리소스들에 대해서 시큐리티 적용 무시.
     }
 
@@ -63,15 +65,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(customAuthenticationEntryPoint)
                 .accessDeniedHandler(customAccessDeniedHandler)
-                .and()					//추가
+                .and()   //추가
                 .oauth2Login()				// OAuth2기반의 로그인인 경우
-
                 .userInfoEndpoint()			// 로그인 성공 후 사용자정보를 가져온다
                 .userService(oauthService);	//사용자정보를 처리할 때 사용한다
-
-
-
-
     }
 
     public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {

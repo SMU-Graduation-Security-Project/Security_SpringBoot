@@ -1,10 +1,12 @@
 package com.EmperorPenguin.SangmyungBank.member.service;
 
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.service.JwtService;
+import com.EmperorPenguin.SangmyungBank.member.dto.MemberSessionDto;
 import com.EmperorPenguin.SangmyungBank.member.dto.OauthAttributes;
 import com.EmperorPenguin.SangmyungBank.member.dto.SessionUser;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -19,10 +21,15 @@ import javax.transaction.Transactional;
 import java.util.Collections;
 
 @Service
-@RequiredArgsConstructor
 public class OauthService extends DefaultOAuth2UserService {
-    private final MemberRepository memberRepository;
-    private final HttpSession httpSession;
+
+    @Autowired
+    private MemberRepository memberRepository;
+    @Autowired
+    private HttpSession httpSession;
+    @Autowired
+    private JwtService jwtService;
+
 
     @Transactional
     public DefaultOAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -43,6 +50,8 @@ public class OauthService extends DefaultOAuth2UserService {
         // OAuth2UserService
         OauthAttributes attributes = OauthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
         Member member = saveOrUpdate(attributes);
+
+        jwtService.createAccessToken(System.currentTimeMillis(), member.getLoginId());
         httpSession.setAttribute("Oauth2User", new SessionUser(member)); // SessionUser (직렬화된 dto 클래스 사용)
 
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(member.getRoleKey())),

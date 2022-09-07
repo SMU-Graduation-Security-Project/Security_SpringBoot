@@ -12,6 +12,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.Claim;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,7 +29,10 @@ import java.io.IOException;
 // 만약 권한 인증이 필요한 주소가 아니라면 이 필터를 타지 않는다.
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
-//    private final MemberRepository memberRepository;
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
     private final JwtService jwtService;
 
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager, JwtService jwtService) {
