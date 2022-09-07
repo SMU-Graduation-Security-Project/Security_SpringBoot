@@ -25,10 +25,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final HttpSession httpSession;
-
-    @Autowired
     private final JwtService jwtService;
-
 
     @Transactional
     public Member login(MemberLoginReq memberLoginReq)
@@ -40,7 +37,6 @@ public class MemberService {
         }
 
         memberRepository.updateLoginDate(new DateConfig().getDateTime(), memberLoginReq.getLoginId());
-        // HttpSession Or JWT 도입예정.
         jwtService.createAccessToken(System.currentTimeMillis(), member.getLoginId());
 
         // 임시적으로 세션을 등록
@@ -52,13 +48,10 @@ public class MemberService {
     }
 
     @Transactional
-    public Member oauthLogin(MemberLoginReq memberLoginReq)
-    {
+    public Member oauthLogin(MemberLoginReq memberLoginReq) {
         Member member = getMember(memberLoginReq.getLoginId());
 
         memberRepository.updateLoginDate(new DateConfig().getDateTime(), memberLoginReq.getLoginId());
-
-        // HttpSession Or JWT 도입예정.
         jwtService.createAccessToken(System.currentTimeMillis(), member.getLoginId());
 
         // 임시적으로 세션을 등록
@@ -68,8 +61,6 @@ public class MemberService {
                 .findByLoginId(memberLoginReq.getLoginId())
                 .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_UNDEFINED));
     }
-
-    // 로그아웃 부분
 
     @Transactional
     public void register(MemberRegisterReq memberRegisterRequest) {
@@ -164,6 +155,15 @@ public class MemberService {
             throw new BaseException("비밀번호 변경 실패");
         }
     }
+    @Transactional
+    public String findLoginId(MemberFindLoginIdReq memberFindLoginIdReq){
+        Member member = getMemberByPhone(memberFindLoginIdReq.getPhoneNumber());
+
+        if(!memberFindLoginIdReq.getAnsWord().matches(member.getAnsWord())){
+            throw new BaseException(ExceptionMessages.ERROR_MEMBER_ANSWORD_NOT_MATCH);
+        }
+        return member.getLoginId();
+    }
 
     @Transactional
     public void updateNewPassword(MemberPasswordUpdateReq memberPasswordUpdateReq){
@@ -241,6 +241,11 @@ public class MemberService {
 
     public Member getMember(String loginId){
         return memberRepository.findByLoginId(loginId)
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
+    }
+
+    private  Member getMemberByPhone(String PhoneNumber) {
+        return memberRepository.findByPhoneNumber(PhoneNumber)
                 .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
     }
 

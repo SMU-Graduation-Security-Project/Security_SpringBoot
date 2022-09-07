@@ -14,6 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+
 
 @Configuration
 @EnableWebSecurity // 스프링 시큐리티 필터가 스프링 필터 체인에 등록된다.
@@ -28,10 +30,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().mvcMatchers("/image/**"); // /image/** 있는 모든 파일들은 시큐리티 적용을 무시한다.
-        web.ignoring().mvcMatchers("/login/**"); // /login/** 있는 모든 파일들은 시큐리티 적용을 무시한다.
-        web.ignoring().mvcMatchers("/users/oauthLogin/**"); // /oauth/** 있는 모든 파일들은 시큐리티 적용을 무시한다.
-        web.ignoring().requestMatchers(); // 정적인 리소스들에 대해서 시큐리티 적용 무시.
+        web.ignoring().mvcMatchers(
+                // swagger
+                "/v2/api-docs",
+                "/swagger-resources/**",
+                "/swagger-ui.html",
+                "/webjars/**",
+                "/swagger/**",
+
+                "/image/**",
+                // 회원가입
+                "/login/**",
+
+                // /oauth/** 있는 모든 파일들은 시큐리티 적용을 무시한다.
+                "users/oauthLogin/**"
+        );
+        web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations()); // 정적인 리소스들에 대해서 시큐리티 적용 무시.
     }
 
     @Override

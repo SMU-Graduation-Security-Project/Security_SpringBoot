@@ -79,6 +79,7 @@ public class JwtService {
         memberRepository.findByRefreshToken(token)
                 .ifPresent(member -> member.setRefreshToken(null));
     }
+
     @Transactional
     public void logout(HttpServletRequest request) {
         try {
