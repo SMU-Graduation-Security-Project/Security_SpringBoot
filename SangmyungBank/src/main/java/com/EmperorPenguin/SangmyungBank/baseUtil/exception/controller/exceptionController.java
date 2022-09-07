@@ -1,6 +1,5 @@
 package com.EmperorPenguin.SangmyungBank.baseUtil.exception.controller;
 
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.AccessDeniedException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +19,6 @@ public class exceptionController {
 
     @GetMapping("/accessDenied")
     public void accessDeniedException(HttpServletResponse response) {
-        throw new AccessDeniedException(ExceptionMessages.ERROR_JWT_ACCESS_DENIED);
+        throw new BaseException(ExceptionMessages.ERROR_JWT_ACCESS_DENIED);
     }
 }

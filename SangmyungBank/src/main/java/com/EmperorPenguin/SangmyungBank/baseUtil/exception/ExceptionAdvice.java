@@ -27,7 +27,7 @@ public class ExceptionAdvice {
         return responseService.failResult(e.getMessage());
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
+    @ExceptionHandler(BaseException.class)
     @ResponseStatus(value = HttpStatus.FORBIDDEN)
     public BaseResult accessDeniedExceptionHandler(HttpServletRequest request, Exception e) {
         log.error("\n==========================================================================================\n"
