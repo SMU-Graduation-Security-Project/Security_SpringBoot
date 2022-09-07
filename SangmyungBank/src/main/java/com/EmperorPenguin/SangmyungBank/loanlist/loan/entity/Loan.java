@@ -1,8 +1,8 @@
-package com.EmperorPenguin.SangmyungBank.loan.entity;
+package com.EmperorPenguin.SangmyungBank.loanlist.loan.entity;
 
 import com.EmperorPenguin.SangmyungBank.account.entity.Account;
 import com.EmperorPenguin.SangmyungBank.card.dto.CardRequestRes;
-import com.EmperorPenguin.SangmyungBank.loan.dto.LoanRequestRes;
+import com.EmperorPenguin.SangmyungBank.loanlist.loan.dto.LoanRequestRes;
 import com.EmperorPenguin.SangmyungBank.loanlist.entity.LoanList;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import lombok.AllArgsConstructor;

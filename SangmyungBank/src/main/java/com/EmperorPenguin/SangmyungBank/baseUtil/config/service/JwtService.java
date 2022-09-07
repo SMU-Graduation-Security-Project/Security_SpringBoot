@@ -16,6 +16,26 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.jwt.JwtProperties;
+import com.EmperorPenguin.SangmyungBank.baseUtil.dto.JwtErrorCode;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.CustomJwtException;
+import com.EmperorPenguin.SangmyungBank.member.entity.Member;
+import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.nimbusds.oauth2.sdk.JWTBearerGrant;
+import com.nimbusds.oauth2.sdk.auth.JWTAuthentication;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.Map;
+
 @Slf4j
 @Service
 @Getter
@@ -29,16 +49,36 @@ public class JwtService {
         return JWT.create()
                 .withSubject(JwtProperties.ACCESS_TOKEN)
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME)) // 만료시간 10m
+                .withHeader(createHeader())
                 .withClaim(JwtProperties.ID, id)
                 .withClaim(JwtProperties.USERID, username)
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
     }
 
+    public String createOAuthAccessToken(String token){
+        return JWT.create()
+                .withSubject(JwtProperties.ACCESS_TOKEN)
+                .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME)) // 만료시간 10m
+                .withHeader(createHeader())
+                .withClaim(JwtProperties.ID, token)
+                .withClaim(JwtProperties.USERID, token)
+                .sign(Algorithm.HMAC512(JwtProperties.SECRET));
+    }
+
+    private Map<String, Object> createHeader() {
+        return Map.of(JwtProperties.HEADER_PREFIX, "JWT" + JwtProperties.ACCESS_TOKEN);
+    }
+
     public String createRefreshToken() {
         return JWT.create()
                 .withSubject(JwtProperties.REFRESH_TOKEN)
+                .withHeader(createRefreshHeader())
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.REFRESH_EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
+    }
+
+    private Map<String, Object> createRefreshHeader() {
+        return Map.of(JwtProperties.HEADER_PREFIX, "JWT" + JwtProperties.REFRESH_TOKEN);
     }
 
 

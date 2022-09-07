@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.loan.dto;
+package com.EmperorPenguin.SangmyungBank.loanlist.loan.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

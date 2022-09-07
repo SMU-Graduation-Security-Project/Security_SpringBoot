@@ -1,9 +1,9 @@
-package com.EmperorPenguin.SangmyungBank.loan.controller;
+package com.EmperorPenguin.SangmyungBank.loanlist.loan.controller;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.dto.BaseResult;
 import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
-import com.EmperorPenguin.SangmyungBank.loan.dto.LoanCreateReq;
-import com.EmperorPenguin.SangmyungBank.loan.service.LoanService;
+import com.EmperorPenguin.SangmyungBank.loanlist.loan.dto.LoanCreateReq;
+import com.EmperorPenguin.SangmyungBank.loanlist.loan.service.LoanService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

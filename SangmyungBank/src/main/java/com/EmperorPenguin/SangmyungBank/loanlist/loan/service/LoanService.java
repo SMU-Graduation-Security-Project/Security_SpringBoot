@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.loan.service;
+package com.EmperorPenguin.SangmyungBank.loanlist.loan.service;
 
 import com.EmperorPenguin.SangmyungBank.account.service.AccountService;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.CardException;
@@ -9,10 +9,10 @@ import com.EmperorPenguin.SangmyungBank.card.dto.CardCreateReq;
 import com.EmperorPenguin.SangmyungBank.card.dto.CardRequestRes;
 import com.EmperorPenguin.SangmyungBank.card.entity.Card;
 import com.EmperorPenguin.SangmyungBank.card.repository.CardRepository;
-import com.EmperorPenguin.SangmyungBank.loan.dto.LoanCreateReq;
-import com.EmperorPenguin.SangmyungBank.loan.dto.LoanRequestRes;
-import com.EmperorPenguin.SangmyungBank.loan.entity.Loan;
-import com.EmperorPenguin.SangmyungBank.loan.repository.LoanRepository;
+import com.EmperorPenguin.SangmyungBank.loanlist.loan.dto.LoanCreateReq;
+import com.EmperorPenguin.SangmyungBank.loanlist.loan.dto.LoanRequestRes;
+import com.EmperorPenguin.SangmyungBank.loanlist.loan.entity.Loan;
+import com.EmperorPenguin.SangmyungBank.loanlist.loan.repository.LoanRepository;
 import com.EmperorPenguin.SangmyungBank.loanlist.service.LoanListService;
 import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
