@@ -1,9 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.cardlist.service;
 
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.CardException;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.CardListException;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.NewsException;
 import com.EmperorPenguin.SangmyungBank.cardlist.dto.CardListCreateReq;
 import com.EmperorPenguin.SangmyungBank.cardlist.dto.CardListInquiryRes;
 import com.EmperorPenguin.SangmyungBank.cardlist.dto.CardListUpdateReq;
@@ -25,13 +23,13 @@ public class CardListService {
     @Transactional
     public void createCardList(CardListCreateReq cardListCreateReq) {
         if(cardListRepository.findByTitle(cardListCreateReq.getTitle()).isPresent()){
-            throw new NewsException(ExceptionMessages.ERROR_CARDLIST_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_CARDLIST_EXIST);
         }
         try{
             cardListRepository.save(cardListCreateReq.toEntity());
         }catch (Exception e){
             e.printStackTrace();
-            throw new CardListException("카드목록 생성에 실패했습니다.");
+            throw new BaseException("카드목록 생성에 실패했습니다.");
         }
     }
 
@@ -46,36 +44,36 @@ public class CardListService {
     @Transactional
     public CardList getSingleCardList(Long id) {
         if(!cardListRepository.existsById(id)){
-            throw new CardException(ExceptionMessages.ERROR_CARDLIST_NOT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_CARDLIST_NOT_EXIST);
         }
         return cardListRepository
                 .findById(id)
-                .orElseThrow(() -> new CardListException(ExceptionMessages.ERROR_UNDEFINED));
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_UNDEFINED));
     }
 
     @Transactional
     public void updateCardList(CardListUpdateReq cardListUpdateReq) {
         if(!cardListRepository.existsById(cardListUpdateReq.getId())){
-            throw new CardListException(ExceptionMessages.ERROR_CARDLIST_NOT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_CARDLIST_NOT_EXIST);
         }
         try {
             cardListRepository.updateCardList(cardListUpdateReq.getId(),cardListUpdateReq.getTitle(),cardListUpdateReq.getContent());
         }catch (Exception e){
             e.printStackTrace();
-            throw new CardListException("카드목록 업데이트에 실패했습니다.");
+            throw new BaseException("카드목록 업데이트에 실패했습니다.");
         }
     }
 
     @Transactional
     public void deleteCardList(Long id) {
         if(!cardListRepository.existsById(id)){
-            throw new CardListException(ExceptionMessages.ERROR_CARDLIST_NOT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_CARDLIST_NOT_EXIST);
         }
         try{
             cardListRepository.deleteById(id);
         }catch (Exception e){
             e.printStackTrace();
-            throw new CardListException("카드목록 삭제에 실패했습니다.");
+            throw new BaseException("카드목록 삭제에 실패했습니다.");
         }
     }
 }

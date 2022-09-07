@@ -27,13 +27,13 @@ public class LoanListService {
     @Transactional
     public void createLoanList(LoanListCreateReq loanListCreateReq) {
         if(loanListRepository.findByTitle(loanListCreateReq.getTitle()).isPresent()){
-            throw new LoanListException(ExceptionMessages.ERROR_LOANLIST_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_LOANLIST_EXIST);
         }
         try{
             loanListRepository.save(loanListCreateReq.toEntity());
         }catch (Exception e){
             e.printStackTrace();
-            throw new LoanListException("대출목록 생성에 실패했습니다.");
+            throw new BaseException("대출목록 생성에 실패했습니다.");
         }
     }
 
@@ -48,36 +48,36 @@ public class LoanListService {
     @Transactional
     public LoanList getSingleLoanList(Long id) {
         if(!loanListRepository.existsById(id)){
-            throw new LoanListException(ExceptionMessages.ERROR_LOANLIST_NOT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_LOANLIST_NOT_EXIST);
         }
         return loanListRepository
                 .findById(id)
-                .orElseThrow(() -> new LoanListException(ExceptionMessages.ERROR_UNDEFINED));
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_UNDEFINED));
     }
 
     @Transactional
     public void updateLoanList(LoanListUpdateReq loanListUpdateReq) {
         if(!loanListRepository.existsById(loanListUpdateReq.getId())){
-            throw new LoanListException(ExceptionMessages.ERROR_LOANLIST_NOT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_LOANLIST_NOT_EXIST);
         }
         try {
             loanListRepository.updateLoanList(loanListUpdateReq.getId(),loanListUpdateReq.getTitle(),loanListUpdateReq.getInterestRate(),loanListUpdateReq.getInterestType());
         }catch (Exception e){
             e.printStackTrace();
-            throw new LoanListException("대출목록 업데이트에 실패했습니다.");
+            throw new BaseException("대출목록 업데이트에 실패했습니다.");
         }
     }
 
     @Transactional
     public void deleteLoanList(Long id) {
         if(!loanListRepository.existsById(id)){
-            throw new LoanListException(ExceptionMessages.ERROR_LOANLIST_NOT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_LOANLIST_NOT_EXIST);
         }
         try{
             loanListRepository.deleteById(id);
         }catch (Exception e){
             e.printStackTrace();
-            throw new LoanListException("대출목록 삭제에 실패했습니다.");
+            throw new BaseException("대출목록 삭제에 실패했습니다.");
         }
     }
 }

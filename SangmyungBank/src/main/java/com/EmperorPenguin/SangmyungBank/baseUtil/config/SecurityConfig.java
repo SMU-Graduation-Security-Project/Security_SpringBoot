@@ -5,7 +5,6 @@ import com.EmperorPenguin.SangmyungBank.baseUtil.config.jwt.JwtAuthorizationFilt
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.service.JwtService;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.exceptionHandleClass.CustomAccessDeniedHandler;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.exceptionHandleClass.CustomAuthenticationEntryPoint;
-import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
 import com.EmperorPenguin.SangmyungBank.member.service.OauthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +13,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
 @Configuration

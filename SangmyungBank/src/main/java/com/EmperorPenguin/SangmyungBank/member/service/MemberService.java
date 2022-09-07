@@ -2,8 +2,8 @@ package com.EmperorPenguin.SangmyungBank.member.service;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.service.JwtService;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.MemberException;
 import com.EmperorPenguin.SangmyungBank.member.dto.*;
 import com.EmperorPenguin.SangmyungBank.member.entity.Role;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
@@ -36,7 +36,7 @@ public class MemberService {
         Member member = getMember(memberLoginReq.getLoginId());
 
         if (!passwordEncoder.matches(memberLoginReq.getPassword(), member.getPassword())){
-            throw new MemberException(ExceptionMessages.ERROR_MEMBER_PASSWORD);
+            throw new BaseException(ExceptionMessages.ERROR_MEMBER_PASSWORD);
         }
 
         memberRepository.updateLoginDate(new DateConfig().getDateTime(), memberLoginReq.getLoginId());
@@ -48,7 +48,7 @@ public class MemberService {
 
         return memberRepository
                 .findByLoginId(memberLoginReq.getLoginId())
-                .orElseThrow(() -> new MemberException(ExceptionMessages.ERROR_UNDEFINED));
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_UNDEFINED));
     }
 
     @Transactional
@@ -66,7 +66,7 @@ public class MemberService {
 
         return memberRepository
                 .findByLoginId(memberLoginReq.getLoginId())
-                .orElseThrow(() -> new MemberException(ExceptionMessages.ERROR_UNDEFINED));
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_UNDEFINED));
     }
 
     // 로그아웃 부분
@@ -86,11 +86,11 @@ public class MemberService {
         checkMember(loginId);
 
         if(memberRepository.findByEmail(email).isPresent()){
-            throw new MemberException(ExceptionMessages.ERROR_MEMBER_EMAIL_DUPLICATE);
+            throw new BaseException(ExceptionMessages.ERROR_MEMBER_EMAIL_DUPLICATE);
         }
 
         if(memberRepository.findByPhoneNumber(phoneNumber).isPresent()){
-            throw new MemberException(ExceptionMessages.ERROR_MEMBER_PHONENUMBER_DUPLICATE);
+            throw new BaseException(ExceptionMessages.ERROR_MEMBER_PHONENUMBER_DUPLICATE);
         }
 
         else {
@@ -99,7 +99,7 @@ public class MemberService {
             }catch (Exception e){
                 // Exception 이 발생한 이유와 위치는 어디에서 발생했는지 전체적인 단계를 다 출력합니다.
                 e.printStackTrace();
-                throw new MemberException("회원가입에 실패했습니다.");
+                throw new BaseException("회원가입에 실패했습니다.");
             }
         }
     }
@@ -110,11 +110,11 @@ public class MemberService {
 
         // 사용자 질문에 대한 검증
         if (!member.getQuestion().equals(memberFindPasswordReq.getQuestion())){
-            throw new MemberException(ExceptionMessages.ERROR_MEMBER_QUESTION_NOT_MATCH);
+            throw new BaseException(ExceptionMessages.ERROR_MEMBER_QUESTION_NOT_MATCH);
         }
         // 사용자 질문에 대한 답을 검증
         if(!member.getAnsWord().equals(memberFindPasswordReq.getAnsWord())){
-            throw new MemberException(ExceptionMessages.ERROR_MEMBER_ANSWORD_NOT_MATCH);
+            throw new BaseException(ExceptionMessages.ERROR_MEMBER_ANSWORD_NOT_MATCH);
         }
         try {
             String templatePassword = randomNumberGen();
@@ -129,7 +129,7 @@ public class MemberService {
             return templatePassword;
         }catch (Exception e){
             e.printStackTrace();
-            throw new MemberException("임시비밀번호로 변경이 실패했습니다.");
+            throw new BaseException("임시비밀번호로 변경이 실패했습니다.");
         }
     }
 
@@ -137,16 +137,16 @@ public class MemberService {
     public void updateTemplatePassword(MemberPasswordUpdateReq memberPasswordUpdateReq){
         Member member = memberRepository
                 .findByLoginId(memberPasswordUpdateReq.getLoginId())
-                .orElseThrow(() -> new MemberException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
 
         // 사용자가 임시 비밀번호를 사용중인지 확인
         if(!member.isUsingTempPassword()){
-            throw new MemberException("사용자는 임시비밀번호를 사용중이 아닙니다.");
+            throw new BaseException("사용자는 임시비밀번호를 사용중이 아닙니다.");
         }
 
         // 사용자의 임시 비밀번호가 맞는지 확인.
         if(!passwordEncoder.matches(memberPasswordUpdateReq.getOldPassword(), member.getPassword())){
-            throw new MemberException(ExceptionMessages.ERROR_MEMBER_PASSWORD);
+            throw new BaseException(ExceptionMessages.ERROR_MEMBER_PASSWORD);
         }
 
         // 입력한 password가 규칙에 맞는지 확인.
@@ -161,7 +161,7 @@ public class MemberService {
             );
         }catch (Exception e){
             e.printStackTrace();
-            throw new MemberException("비밀번호 변경 실패");
+            throw new BaseException("비밀번호 변경 실패");
         }
     }
 
@@ -171,7 +171,7 @@ public class MemberService {
 
         // 사용자의 현재 비밀번호가 맞는지 확인.
         if(!passwordEncoder.matches(memberPasswordUpdateReq.getOldPassword(), member.getPassword())){
-            throw new MemberException(ExceptionMessages.ERROR_MEMBER_PASSWORD);
+            throw new BaseException(ExceptionMessages.ERROR_MEMBER_PASSWORD);
         }
         // 입력한 password가 규칙에 맞는지 확인.
         checkPassword(memberPasswordUpdateReq.getNewPassword1(), memberPasswordUpdateReq.getNewPassword2());
@@ -185,13 +185,13 @@ public class MemberService {
             );
         }catch (Exception e){
             e.printStackTrace();
-            throw new MemberException("비밀번호 변경 실패");
+            throw new BaseException("비밀번호 변경 실패");
         }
     }
 
     public MemberInquiryRes getMemberData(String loginId){
         if(!memberRepository.existsByLoginId(loginId)){
-            throw new MemberException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND);
+            throw new BaseException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND);
         }
         return memberRepository.findByLoginId(loginId).get().toDto();
     }
@@ -200,7 +200,7 @@ public class MemberService {
         // 시작은 영문으로만,{영문, 숫자} 으로만 이루어진 5 ~ 12자 이하이다.
         Pattern nameExpression = Pattern.compile("^[a-zA-Z]{1}[a-zA-Z0-9]{4,11}$");
         if (!nameExpression.matcher(loginId).matches()) {
-            throw new MemberException(ExceptionMessages.ERROR_MEMBER_ID_FORMAT);
+            throw new BaseException(ExceptionMessages.ERROR_MEMBER_ID_FORMAT);
         }
     }
 
@@ -208,21 +208,21 @@ public class MemberService {
         // Password 규칙은 영문자, 특수문자를 포함 8~20이하이다.
         Pattern passwordExpression = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$");
         if (!passwordExpression.matcher(password1).matches()) {
-            throw new MemberException(ExceptionMessages.ERROR_MEMBER_PASSWORD_FORMAT);
+            throw new BaseException(ExceptionMessages.ERROR_MEMBER_PASSWORD_FORMAT);
         } else if (!password1.equals(password2)) {
-            throw new MemberException("입력한 비밀번호가 서로 다릅니다.");
+            throw new BaseException("입력한 비밀번호가 서로 다릅니다.");
         }
     }
 
     public void checkMember(String loginId){
         if(memberRepository.findByLoginId(loginId).isPresent()){
-            throw new MemberException(ExceptionMessages.ERROR_MEMBER_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_MEMBER_EXIST);
         }
     }
 
     public void checkEmptyMember(String loginId){
         if(memberRepository.findByLoginId(loginId).isEmpty()){
-            throw new MemberException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND);
+            throw new BaseException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND);
         }
     }
 
@@ -241,7 +241,7 @@ public class MemberService {
 
     public Member getMember(String loginId){
         return memberRepository.findByLoginId(loginId)
-                .orElseThrow(() -> new MemberException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
     }
 
 }

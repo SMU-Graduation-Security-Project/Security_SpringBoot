@@ -12,26 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-
-import com.EmperorPenguin.SangmyungBank.baseUtil.config.jwt.JwtProperties;
-import com.EmperorPenguin.SangmyungBank.baseUtil.dto.JwtErrorCode;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.CustomJwtException;
-import com.EmperorPenguin.SangmyungBank.member.entity.Member;
-import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.nimbusds.oauth2.sdk.JWTBearerGrant;
-import com.nimbusds.oauth2.sdk.auth.JWTAuthentication;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.Map;

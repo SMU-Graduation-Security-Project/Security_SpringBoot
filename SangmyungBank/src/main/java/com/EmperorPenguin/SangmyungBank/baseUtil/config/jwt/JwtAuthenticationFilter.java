@@ -4,11 +4,11 @@ import com.EmperorPenguin.SangmyungBank.baseUtil.config.auth.PrincipalDetails;
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.service.JwtService;
 import com.EmperorPenguin.SangmyungBank.member.dto.MemberLoginReq;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nimbusds.oauth2.sdk.token.RefreshToken;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,9 +19,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Date;
 
 // 스프링 시큐리티에서 usernamePasswordAuthenticationFilter가 있음
 // /login 요청해서 username, password를 전송하면 (post)

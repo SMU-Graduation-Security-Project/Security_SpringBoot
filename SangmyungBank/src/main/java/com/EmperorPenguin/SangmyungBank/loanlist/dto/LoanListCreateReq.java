@@ -1,6 +1,5 @@
 package com.EmperorPenguin.SangmyungBank.loanlist.dto;
 
-import com.EmperorPenguin.SangmyungBank.cardlist.entity.CardList;
 import com.EmperorPenguin.SangmyungBank.loanlist.entity.LoanList;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

@@ -1,14 +1,8 @@
 package com.EmperorPenguin.SangmyungBank.loanlist.loan.service;
 
 import com.EmperorPenguin.SangmyungBank.account.service.AccountService;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.CardException;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.EventException;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.LoanException;
-import com.EmperorPenguin.SangmyungBank.card.dto.CardCreateReq;
-import com.EmperorPenguin.SangmyungBank.card.dto.CardRequestRes;
-import com.EmperorPenguin.SangmyungBank.card.entity.Card;
-import com.EmperorPenguin.SangmyungBank.card.repository.CardRepository;
 import com.EmperorPenguin.SangmyungBank.loanlist.loan.dto.LoanCreateReq;
 import com.EmperorPenguin.SangmyungBank.loanlist.loan.dto.LoanRequestRes;
 import com.EmperorPenguin.SangmyungBank.loanlist.loan.entity.Loan;
@@ -40,7 +34,7 @@ public class LoanService {
         Long amount = loanCreateReq.getAmount();
 
         if (amount > 5000000) {
-            throw new LoanException(ExceptionMessages.ERROR_LOAN_AMOUNT_EXCESS);
+            throw new BaseException(ExceptionMessages.ERROR_LOAN_AMOUNT_EXCESS);
         }
         try {
             loanRepository.save(loanCreateReq.toEntity(
@@ -51,7 +45,7 @@ public class LoanService {
             loanRepository.updateBalance(amount, accountNumber);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new CardException("대출에 실패했습니다.");
+            throw new BaseException("대출에 실패했습니다.");
         }
     }
 

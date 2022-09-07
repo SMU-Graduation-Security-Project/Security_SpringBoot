@@ -1,9 +1,8 @@
 package com.EmperorPenguin.SangmyungBank.event.service;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.EventException;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.NewsException;
 import com.EmperorPenguin.SangmyungBank.event.dto.EventCreateReq;
 import com.EmperorPenguin.SangmyungBank.event.dto.EventInquiryRes;
 import com.EmperorPenguin.SangmyungBank.event.dto.EventUpdateReq;
@@ -26,13 +25,13 @@ public class EventService {
     @Transactional
     public void createEvent(EventCreateReq eventCreateReq) {
         if (eventRepository.findByTitle(eventCreateReq.getTitle()).isPresent()) {
-            throw new EventException(ExceptionMessages.ERROR_EVENT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_EVENT_EXIST);
         }
         try {
             eventRepository.save(eventCreateReq.toEntity());
         } catch (Exception e) {
             e.printStackTrace();
-            throw new EventException("이벤트 생성에 실패했습니다.");
+            throw new BaseException("이벤트 생성에 실패했습니다.");
         }
     }
 
@@ -57,36 +56,36 @@ public class EventService {
     @Transactional
     public Event getSingleEvent (Long id) {
         if(!eventRepository.existsById(id)){
-            throw new EventException(ExceptionMessages.ERROR_EVENT_NOT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_EVENT_NOT_EXIST);
         }
         return eventRepository
                 .findById(id)
-                .orElseThrow(() -> new EventException(ExceptionMessages.ERROR_UNDEFINED));
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_UNDEFINED));
     }
 
     @Transactional
     public void updateEvent(EventUpdateReq eventUpdateReq) {
         if(!eventRepository.existsById(eventUpdateReq.getId())){
-            throw new EventException(ExceptionMessages.ERROR_EVENT_NOT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_EVENT_NOT_EXIST);
         }
         try {
             eventRepository.updateEvent(eventUpdateReq.getId(),eventUpdateReq.getTitle(),eventUpdateReq.getContent());
         }catch (Exception e){
             e.printStackTrace();
-            throw new NewsException("이벤트 업데이트에 실패했습니다.");
+            throw new BaseException("이벤트 업데이트에 실패했습니다.");
         }
     }
 
     @Transactional
     public void deleteEvent(Long id) {
         if(!eventRepository.existsById(id)){
-            throw new EventException(ExceptionMessages.ERROR_NEWS_NOT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_NEWS_NOT_EXIST);
         }
         try {
             eventRepository.deleteById(id);
         }catch (Exception e){
             e.printStackTrace();
-            throw new EventException("이벤트 삭제에 실패했습니다.");
+            throw new BaseException("이벤트 삭제에 실패했습니다.");
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.otp.service;
 
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.OtpException;
 import com.EmperorPenguin.SangmyungBank.otp.dto.OtpRequestRes;
 import com.EmperorPenguin.SangmyungBank.otp.dto.OtpValidReq;
 import com.EmperorPenguin.SangmyungBank.otp.entity.Otp;
@@ -28,7 +28,7 @@ public class OtpService {
 
         // OTP를 발급한 적이 있는지 확인한다.
         if(otpRepository.findByMemberId(memberService.getMember(loginId)).isPresent()) {
-            throw new OtpException(ExceptionMessages.ERROR_OTP_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_OTP_EXIST);
         }
 
         try {
@@ -45,7 +45,7 @@ public class OtpService {
             otpRepository.save(MemberOtp);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new OtpException("Otp 생성에 실패했습니다.");
+            throw new BaseException("Otp 생성에 실패했습니다.");
         }
     }
 
@@ -62,7 +62,7 @@ public class OtpService {
         memberService.checkEmptyMember(loginId);
 
         Otp memberOtp = otpRepository.findByMemberId(memberService.getMember(loginId))
-                .orElseThrow(() -> new OtpException(ExceptionMessages.ERROR_OTP_NOT_EXIST));
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_OTP_NOT_EXIST));
 
         checkOTP(memberOtp, otpValidReq);
     }
@@ -72,7 +72,7 @@ public class OtpService {
         int[] otpNumList = new int[6];
 
         if(Pk4 != otpValidReq.getPkOTP4()){
-            throw new OtpException(ExceptionMessages.ERROR_OTP_PK_NOT_MATCH);
+            throw new BaseException(ExceptionMessages.ERROR_OTP_PK_NOT_MATCH);
         }
 
         // OTP값을 검증하기 위해 배열에 저장.
@@ -84,10 +84,10 @@ public class OtpService {
         otpNumList[5] = otp.getNumber6();
 
         if((otpNumList[otpValidReq.getSelectNum1()-1] / 100) != otpValidReq.getAnsNum1()){
-            throw new OtpException(ExceptionMessages.ERROR_OTP_NOT_MATCH);
+            throw new BaseException(ExceptionMessages.ERROR_OTP_NOT_MATCH);
         }
         if ((otpNumList[otpValidReq.getSelectNum2()-1] % 100) != otpValidReq.getAnsNum2()){
-            throw new OtpException(ExceptionMessages.ERROR_OTP_NOT_MATCH);
+            throw new BaseException(ExceptionMessages.ERROR_OTP_NOT_MATCH);
         }
     }
 }

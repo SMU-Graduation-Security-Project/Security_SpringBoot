@@ -1,10 +1,12 @@
 package com.EmperorPenguin.SangmyungBank.baseUtil.config.auth;
 
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.MemberException;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,7 +24,7 @@ public class PrincipalDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("LOGIN");
         Member memberEntity = memberRepository.findByLoginId(username)
-                .orElseThrow(()-> new MemberException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
+                .orElseThrow(()-> new BaseException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
 
         return new PrincipalDetails(memberEntity);
     }

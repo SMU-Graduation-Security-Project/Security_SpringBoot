@@ -2,10 +2,6 @@ package com.EmperorPenguin.SangmyungBank.winner.service;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.*;
 import com.EmperorPenguin.SangmyungBank.event.service.EventService;
-import com.EmperorPenguin.SangmyungBank.news.dto.NewsCreateReq;
-import com.EmperorPenguin.SangmyungBank.news.dto.NewsInquiryRes;
-import com.EmperorPenguin.SangmyungBank.news.dto.NewsUpdateReq;
-import com.EmperorPenguin.SangmyungBank.news.entity.News;
 import com.EmperorPenguin.SangmyungBank.winner.dto.WinnerCreateReq;
 import com.EmperorPenguin.SangmyungBank.winner.dto.WinnerRequestRes;
 import com.EmperorPenguin.SangmyungBank.winner.dto.WinnerUpdateReq;
@@ -32,7 +28,7 @@ public class WinnerService {
         Long eventId = winnerCreateReq.getEventId();
 
         if (winnerRepository.findByEventId(eventService.getSingleEvent(eventId)).isPresent()) {
-            throw new WinnerException(ExceptionMessages.ERROR_WINNER_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_WINNER_EXIST);
         }
         try{
             winnerRepository.save(winnerCreateReq.toEntity(
@@ -40,7 +36,7 @@ public class WinnerService {
             ));
         }catch (Exception e){
             e.printStackTrace();
-            throw new WinnerException("당첨자 리스트 생성에 실패했습니다.");
+            throw new BaseException("당첨자 리스트 생성에 실패했습니다.");
         }
     }
 
@@ -56,23 +52,23 @@ public class WinnerService {
     @Transactional
     public Winner getSingleWinner(Long id) {
         if(!winnerRepository.existsById(id)){
-            throw new WinnerException(ExceptionMessages.ERROR_WINNER_NOT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_WINNER_NOT_EXIST);
         }
         return winnerRepository
                 .findById(id)
-                .orElseThrow(() -> new WinnerException(ExceptionMessages.ERROR_UNDEFINED));
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_UNDEFINED));
     }
 
     @Transactional
     public void updateWinner(WinnerUpdateReq winnerUpdateReq) {
         if(!winnerRepository.existsById(winnerUpdateReq.getId())){
-            throw new WinnerException(ExceptionMessages.ERROR_WINNER_NOT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_WINNER_NOT_EXIST);
         }
         try {
             winnerRepository.updateWinner(winnerUpdateReq.getId(),winnerUpdateReq.getContent());
         }catch (Exception e){
             e.printStackTrace();
-            throw new WinnerException("당첨자 리스트 업데이트에 실패했습니다.");
+            throw new BaseException("당첨자 리스트 업데이트에 실패했습니다.");
         }
 
     }
@@ -80,13 +76,13 @@ public class WinnerService {
     @Transactional
     public void deleteWinner(Long id) {
         if(!winnerRepository.existsById(id)){
-            throw new WinnerException(ExceptionMessages.ERROR_WINNER_NOT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_WINNER_NOT_EXIST);
         }
         try{
             winnerRepository.deleteById(id);
         }catch (Exception e){
             e.printStackTrace();
-            throw new WinnerException("당첨자 리스트 삭제에 실패했습니다.");
+            throw new BaseException("당첨자 리스트 삭제에 실패했습니다.");
         }
     }
 }
