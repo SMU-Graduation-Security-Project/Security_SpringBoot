@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags="08. 대출 목록")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/v1/user/loanlist")
+@RequestMapping("api/v1/guest/loanlist")
 public class LoanListController {
 
     private final LoanListService loanListService;

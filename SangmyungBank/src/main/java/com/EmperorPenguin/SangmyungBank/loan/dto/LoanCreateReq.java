@@ -1,9 +1,8 @@
-package com.EmperorPenguin.SangmyungBank.loanlist.loan.dto;
+package com.EmperorPenguin.SangmyungBank.loan.dto;
 
 import com.EmperorPenguin.SangmyungBank.account.entity.Account;
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
-import com.EmperorPenguin.SangmyungBank.card.entity.Card;
-import com.EmperorPenguin.SangmyungBank.loanlist.loan.entity.Loan;
+import com.EmperorPenguin.SangmyungBank.loan.entity.Loan;
 import com.EmperorPenguin.SangmyungBank.loanlist.entity.LoanList;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import io.swagger.annotations.ApiModelProperty;
