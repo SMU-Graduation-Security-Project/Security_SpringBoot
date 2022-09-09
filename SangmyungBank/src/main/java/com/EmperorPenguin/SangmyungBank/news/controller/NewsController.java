@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags="09. 새소식")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/cont")
+@RequestMapping("api/v1/guest/cont")
 public class NewsController {
 
     private final NewsService newsService;

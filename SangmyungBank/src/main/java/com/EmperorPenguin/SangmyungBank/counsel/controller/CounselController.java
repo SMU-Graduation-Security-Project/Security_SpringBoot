@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags="11. 상담글")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/cont")
+@RequestMapping("api/v1/user/cont")
 public class CounselController {
     private final CounselService counselService;
     private final ResponseService responseService;

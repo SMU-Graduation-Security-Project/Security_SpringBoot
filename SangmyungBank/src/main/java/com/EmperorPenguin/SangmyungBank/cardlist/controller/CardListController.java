@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags="06. 카드 목록")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/users/cardlist")
+@RequestMapping("api/v1/user/cardlist")
 public class CardListController {
 
     private final CardListService cardListService;

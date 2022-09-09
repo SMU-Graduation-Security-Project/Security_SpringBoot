@@ -40,7 +40,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 "/image/**",
                 // 회원가입
-                "/login/**",
+                "api/v1/user/register",
+
+                // Guest 관련
+                "/api/v1/guest/**",
 
                 // /oauth/** 있는 모든 파일들은 시큐리티 적용을 무시한다.
                 "users/oauthLogin/**"
@@ -62,11 +65,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtService))
                 .authorizeRequests()
                 // LOGIN
-                .antMatchers("/users/login/**").permitAll()
-                // USER
-                .antMatchers("/api/v1/guest/**")
-                .access("hasRole('ROLE_GUEST') or hasRole('ROLE_ADMIN')")
+                .antMatchers("/api/v1/user/login").permitAll()
                 // GUEST
+                .antMatchers("/api/v1/guest/**")
+                .access("hasRole('ROLE_GUEST') or hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+                // User
                 .antMatchers("/api/v1/user/**")
                 .access("hasRole('ROLE_/USER') or hasRole('ROLE_ADMIN')")
                 // ADMIN
@@ -87,7 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         JwtAuthenticationFilter jwtAuthenticationFilter =
                 new JwtAuthenticationFilter(authenticationManager(), jwtService);
         jwtAuthenticationFilter
-                .setFilterProcessesUrl("/users/login");
+                .setFilterProcessesUrl("/api/v1/user/login");
         return jwtAuthenticationFilter;
     }
 }
