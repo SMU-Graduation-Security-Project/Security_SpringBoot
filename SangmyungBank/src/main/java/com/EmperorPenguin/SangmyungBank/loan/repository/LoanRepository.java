@@ -1,8 +1,6 @@
-package com.EmperorPenguin.SangmyungBank.loanlist.loan.repository;
+package com.EmperorPenguin.SangmyungBank.loan.repository;
 
-import com.EmperorPenguin.SangmyungBank.card.entity.Card;
-import com.EmperorPenguin.SangmyungBank.event.entity.Event;
-import com.EmperorPenguin.SangmyungBank.loanlist.loan.entity.Loan;
+import com.EmperorPenguin.SangmyungBank.loan.entity.Loan;
 import com.EmperorPenguin.SangmyungBank.loanlist.entity.LoanList;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
