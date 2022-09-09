@@ -3,6 +3,7 @@ package com.EmperorPenguin.SangmyungBank.account.controller;
 import com.EmperorPenguin.SangmyungBank.account.dto.AccountCreateReq;
 import com.EmperorPenguin.SangmyungBank.account.dto.TransferTotalReq;
 import com.EmperorPenguin.SangmyungBank.account.service.AccountService;
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.service.JwtService;
 import com.EmperorPenguin.SangmyungBank.baseUtil.dto.BaseResult;
 import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
 import com.EmperorPenguin.SangmyungBank.otp.service.OtpService;
@@ -15,11 +16,12 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "03. 계좌")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users/accounts")
+@RequestMapping("/api/v1/user/accounts")
 public class AccountController {
 
     private final AccountService accountService;
     private final ResponseService responseService;
+    private final JwtService jwtService;
     private final OtpService otpService;
 
 

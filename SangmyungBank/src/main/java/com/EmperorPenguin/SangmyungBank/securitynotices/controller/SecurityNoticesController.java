@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags="10. 보안공지")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/cont")
+@RequestMapping("api/v1/guest/cont")
 public class SecurityNoticesController {
 
     private final SecurityNoticesService securityNoticesService;

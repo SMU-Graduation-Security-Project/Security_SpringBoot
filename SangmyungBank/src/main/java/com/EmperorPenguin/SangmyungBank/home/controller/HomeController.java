@@ -19,24 +19,24 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "00. 홈")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("api/v1/user")
 public class HomeController {
     private final MemberService memberService;
     private final ResponseService responseService;
 
     @PostMapping(path = "/login")
     @ApiOperation(value="1. 로그인", notes = "사용자의 아이디와 비밀번호를 받아 로그인을 합니다.")
-    public BaseResult authUser(@ApiParam @RequestBody MemberLoginReq memberLoginReq){
+    public void authUser(@ApiParam @RequestBody MemberLoginReq memberLoginReq){
         // 이전 boolean 통해 오류를 검출하는 방식으로 작동
         // refactoring 이후 Exception 통한 예외처리로 로직 변경
         // 없는 아이디, 잘못된 비밀번호에서 오류 발생.
-        try{
-            return responseService.singleResult(memberService.login(memberLoginReq).toLoginDto());
-        }catch (Exception e){
-            return responseService.failResult(
-                    e.getMessage()
-            );
-        }
+//        try{
+//            return responseService.singleResult(memberService.login(memberLoginReq).toLoginDto());
+//        }catch (Exception e){
+//            return responseService.failResult(
+//                    e.getMessage()
+//            );
+//        }
     }
 
     // 로그아웃 기능

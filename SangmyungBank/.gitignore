@@ -37,6 +37,10 @@ out/
 .vscode/
 
 ### application Properties
-application-Jwt.properties
-application-db.properties
 application-oauth.properties
+application-Jwt.properties
+application-SSL.properties
+application-db.properties
+
+### Cert
+.keystore
