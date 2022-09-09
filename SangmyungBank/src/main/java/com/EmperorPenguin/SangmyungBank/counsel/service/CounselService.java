@@ -1,7 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.counsel.service;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.CounselException;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.counsel.dto.CounselCreateReq;
 import com.EmperorPenguin.SangmyungBank.counsel.dto.CounselInquiryRes;
@@ -36,7 +36,7 @@ public class CounselService {
             );
         } catch (Exception e) {
             e.printStackTrace();
-            throw new CounselException("상담글 생성에 실패했습니다.");
+            throw new BaseException("상담글 생성에 실패했습니다.");
         }
     }
 
@@ -54,21 +54,21 @@ public class CounselService {
     @Transactional
     public Counsel getSingleCounsel (Long id) {
         if(!counselRepository.existsById(id)){
-            throw new CounselException(ExceptionMessages.ERROR_COUNSEL_NOT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_COUNSEL_NOT_EXIST);
         }
         return counselRepository
                 .findById(id)
-                .orElseThrow(() -> new CounselException(ExceptionMessages.ERROR_UNDEFINED));
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_UNDEFINED));
     }
 
     @Transactional
     public void updateCounsel(CounselUpdateReq counselUpdateReq) {
         if(!counselRepository.existsById(counselUpdateReq.getId())){
-            throw new CounselException(ExceptionMessages.ERROR_EVENT_NOT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_EVENT_NOT_EXIST);
         }
         Counsel counsel = counselRepository.getById(counselUpdateReq.getId());
         if(!counsel.getMemberId().getLoginId().equals(counselUpdateReq.getLoginId())){
-            throw new CounselException(ExceptionMessages.ERROR_COUNSEL_UNAUTHORIZED_ACCESS);
+            throw new BaseException(ExceptionMessages.ERROR_COUNSEL_UNAUTHORIZED_ACCESS);
         }
         try {
             counselRepository.updateCounsel(counselUpdateReq.getId(),
@@ -77,24 +77,24 @@ public class CounselService {
                     new DateConfig().getDateTime());
         }catch (Exception e){
             e.printStackTrace();
-            throw new CounselException("상담글 업데이트에 실패했습니다.");
+            throw new BaseException("상담글 업데이트에 실패했습니다.");
         }
     }
 
     @Transactional
     public void deleteCounsel(Long id, String loginId) {
         if(!counselRepository.existsById(id)){
-            throw new CounselException(ExceptionMessages.ERROR_COUNSEL_NOT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_COUNSEL_NOT_EXIST);
         }
         Counsel counsel = counselRepository.getById(id);
         if(!counsel.getMemberId().getLoginId().equals(loginId)){
-            throw new CounselException(ExceptionMessages.ERROR_COUNSEL_UNAUTHORIZED_ACCESS);
+            throw new BaseException(ExceptionMessages.ERROR_COUNSEL_UNAUTHORIZED_ACCESS);
         }
         try{
             counselRepository.deleteById(id);
         }catch (Exception e){
             e.printStackTrace();
-            throw new CounselException("상담글 삭제에 실패했습니다.");
+            throw new BaseException("상담글 삭제에 실패했습니다.");
         }
     }
 }

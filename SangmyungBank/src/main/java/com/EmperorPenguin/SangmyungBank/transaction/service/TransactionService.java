@@ -1,8 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.transaction.service;
 
-import com.EmperorPenguin.SangmyungBank.account.service.AccountService;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.TransactionException;
 import com.EmperorPenguin.SangmyungBank.transaction.dto.TransactionInquiryReq;
 import com.EmperorPenguin.SangmyungBank.transaction.dto.TransactionInquiryRes;
 import com.EmperorPenguin.SangmyungBank.transaction.entity.Transaction;
@@ -39,7 +38,7 @@ public class TransactionService {
         try{
             transactionRepository.save(transaction);
         }catch (Exception e) {
-            throw new TransactionException(ExceptionMessages.ERROR_UNDEFINED);
+            throw new BaseException(ExceptionMessages.ERROR_UNDEFINED);
         }
     }
 }

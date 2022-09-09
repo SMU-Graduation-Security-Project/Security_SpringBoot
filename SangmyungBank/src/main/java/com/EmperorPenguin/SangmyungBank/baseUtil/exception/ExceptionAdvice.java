@@ -18,7 +18,7 @@ public class ExceptionAdvice {
 
     private final ResponseService responseService;
 
-    @ExceptionHandler(BusinessException.class)
+    @ExceptionHandler(BaseException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public BaseResult businessExceptionHandler(HttpServletRequest request, Exception e) {
         log.error("\n==========================================================================================\n"

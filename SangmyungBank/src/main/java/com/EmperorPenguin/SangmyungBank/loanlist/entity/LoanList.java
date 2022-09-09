@@ -1,6 +1,5 @@
 package com.EmperorPenguin.SangmyungBank.loanlist.entity;
 
-import com.EmperorPenguin.SangmyungBank.cardlist.dto.CardListInquiryRes;
 import com.EmperorPenguin.SangmyungBank.loanlist.dto.LoanListInquiryRes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

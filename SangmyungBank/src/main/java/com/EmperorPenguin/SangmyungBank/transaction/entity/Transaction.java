@@ -1,6 +1,5 @@
 package com.EmperorPenguin.SangmyungBank.transaction.entity;
 
-import com.EmperorPenguin.SangmyungBank.account.entity.Account;
 import com.EmperorPenguin.SangmyungBank.transaction.dto.TransactionInquiryRes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

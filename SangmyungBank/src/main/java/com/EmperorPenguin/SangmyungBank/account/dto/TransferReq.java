@@ -1,7 +1,5 @@
 package com.EmperorPenguin.SangmyungBank.account.dto;
 
-import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
-import com.EmperorPenguin.SangmyungBank.transaction.entity.Transaction;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

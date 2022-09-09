@@ -1,8 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.card.service;
 
-
 import com.EmperorPenguin.SangmyungBank.account.service.AccountService;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.CardException;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.card.dto.CardCreateReq;
 import com.EmperorPenguin.SangmyungBank.card.dto.CardRequestRes;
 import com.EmperorPenguin.SangmyungBank.card.entity.Card;
@@ -10,7 +9,6 @@ import com.EmperorPenguin.SangmyungBank.card.repository.CardRepository;
 import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,7 +37,7 @@ public class CardService {
             );
         } catch (Exception e) {
             e.printStackTrace();
-            throw new CardException("카드 생성에 실패했습니다.");
+            throw new BaseException("카드 생성에 실패했습니다.");
         }
     }
 

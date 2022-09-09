@@ -2,13 +2,14 @@ package com.EmperorPenguin.SangmyungBank.baseUtil.config.jwt;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.auth.PrincipalDetails;
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.service.JwtService;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.member.dto.MemberLoginReq;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nimbusds.oauth2.sdk.token.RefreshToken;
+
 import lombok.RequiredArgsConstructor;
+import net.minidev.json.JSONObject;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,9 +20,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Date;
 
 // 스프링 시큐리티에서 usernamePasswordAuthenticationFilter가 있음
 // /login 요청해서 username, password를 전송하면 (post)
@@ -31,7 +30,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
-
 
     // /login 요청을 하면 로그인 시도를 위해서 실행되는 함수
     @Override
@@ -49,15 +47,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
             //PrincipalDetailsService의 loadUserByUsername()함수가 실행됨
             Authentication authentication= authenticationManager.authenticate(authenticationToken);
-
             PrincipalDetails principalDetails =(PrincipalDetails)authentication.getPrincipal();
-            System.out.println(principalDetails.getMember().getLoginId());
-            System.out.println("1===========================");
             // 권한 관리를 Security가 해주므로 넘겨준다.
             return authentication;
 
         }catch (IOException e){e.printStackTrace();}
-        System.out.println("2====================================");
 
         return null;
     }
@@ -79,9 +73,39 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         response.addHeader(JwtProperties.HEADER_PREFIX,JwtProperties.TOKEN_PREFIX+ accessJwt);
         response.addHeader(JwtProperties.REFRESH_HEADER_PREFIX,JwtProperties.TOKEN_PREFIX+ refreshJwt);
+        setSuccessResponse(response, "로그인 성공");
+    }
 
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        String failReason =
+                failed.getMessage().equals(ExceptionMessages.ERROR_MEMBER_NOT_FOUND_ENG.getMessage())
+                        ? ExceptionMessages.ERROR_MEMBER_NOT_FOUND.getMessage()
+                        : ExceptionMessages.ERROR_MEMBER_PASSWORD.getMessage();
 
-        System.out.println("인증완료");
+        setFailResponse(response, failReason);
+    }
+
+    private void setSuccessResponse(HttpServletResponse response, String message) throws IOException {
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType("application/json;charset=UTF-8");
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("checker", true);
+        jsonObject.put("message", message);
+
+        response.getWriter().print(jsonObject);
+    }
+
+    private void setFailResponse(HttpServletResponse response, String message) throws IOException {
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        response.setContentType("application/json;charset=UTF-8");
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("checker", false);
+        jsonObject.put("message", message);
+
+        response.getWriter().print(jsonObject);
     }
 
 }

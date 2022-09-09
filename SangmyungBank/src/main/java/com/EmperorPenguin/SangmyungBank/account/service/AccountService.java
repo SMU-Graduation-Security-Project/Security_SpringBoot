@@ -6,18 +6,21 @@ import com.EmperorPenguin.SangmyungBank.account.dto.TransferReq;
 import com.EmperorPenguin.SangmyungBank.account.entity.Account;
 import com.EmperorPenguin.SangmyungBank.account.repository.AccountRepository;
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.AccountException;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
 import com.EmperorPenguin.SangmyungBank.otp.service.OtpService;
 import com.EmperorPenguin.SangmyungBank.transaction.entity.Transaction;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import com.EmperorPenguin.SangmyungBank.transaction.service.TransactionService;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
+
 import javax.transaction.Transactional;
+
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -52,7 +55,7 @@ public class AccountService {
         }catch (Exception e)
         {
             e.printStackTrace();
-            throw new AccountException("계좌생성에 실패했습니다.");
+            throw new BaseException("계좌생성에 실패했습니다.");
         }
     }
 
@@ -63,27 +66,27 @@ public class AccountService {
         String password = transferReq.getAccountPassword();
 
         if(transferReq.getMyAccountNumber() == transferReq.getSendAccountNumber()){
-            throw new AccountException(ExceptionMessages.ERROR_ACCOUNT_CURRING);
+            throw new BaseException(ExceptionMessages.ERROR_ACCOUNT_CURRING);
         }
 
         Account myAccount = accountRepository
                 .findAccountByAccountNumber(transferReq.getMyAccountNumber())
-                .orElseThrow(() -> new AccountException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND));
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND));
 
         // 사용자의 아이디로부터 자신의 계좌가 맞는지 확인.
         checkAccount(myAccount, memberService.getMember(loginId));
 
         // 보내는 계좌 번호가 존재하는지 확인.
         if(!accountRepository.existsAccountByAccountNumber(sendAccount)){
-            throw new AccountException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND);
+            throw new BaseException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND);
         }
         // 사용자의 계좌 비밀번호가 맞는지 확인.
         if(!passwordEncoder.matches(password, myAccount.getAccountPassword())) {
-            throw new AccountException(ExceptionMessages.ERROR_ACCOUNT_PASSWORD_NOT_MATCH);
+            throw new BaseException(ExceptionMessages.ERROR_ACCOUNT_PASSWORD_NOT_MATCH);
         }
         // 사용자의 계좌에 충분한 잔액이 있는지 확인.
         if(myAccount.getBalance() < transferReq.getBalance()) {
-            throw new AccountException(ExceptionMessages.ERROR_ACCOUNT_BALANCE);
+            throw new BaseException(ExceptionMessages.ERROR_ACCOUNT_BALANCE);
         }
     }
 
@@ -115,7 +118,7 @@ public class AccountService {
                     .build());
         }catch (Exception e){
             e.printStackTrace();
-            throw new AccountException("계좌이체에 실패했습니다.");
+            throw new BaseException("계좌이체에 실패했습니다.");
         }
     }
 
@@ -135,18 +138,18 @@ public class AccountService {
         // 계좌 비밀번호는 숫자로 6자로 구성되어있다.
         Pattern passwordExpression = Pattern.compile("[0-9]{6}");
         if(!passwordExpression.matcher(password).matches()){
-            throw new AccountException(ExceptionMessages.ERROR_ACCOUNT_PASSWORD_FORMAT);
+            throw new BaseException(ExceptionMessages.ERROR_ACCOUNT_PASSWORD_FORMAT);
         }
     }
 
     private void checkAccount(Account account, Member member){
         if(!accountRepository.findAllByMemberId(member).contains(account)){
-            throw new AccountException("전달받은 계좌는 사용자의 계좌가 아닙니다.");
+            throw new BaseException("전달받은 계좌는 사용자의 계좌가 아닙니다.");
         }
     }
 
     public Account getAccount(Long accountNumber){
         return accountRepository.findAccountByAccountNumber(accountNumber)
-                .orElseThrow(() -> new AccountException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND));
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND));
     }
 }

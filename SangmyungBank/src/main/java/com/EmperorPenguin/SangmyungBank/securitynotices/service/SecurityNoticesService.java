@@ -1,7 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.securitynotices.service;
 
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.SecurityNoticeException;
 import com.EmperorPenguin.SangmyungBank.securitynotices.dto.SecurityNoticeCreateReq;
 import com.EmperorPenguin.SangmyungBank.securitynotices.dto.SecurityNoticeInquiryRes;
 import com.EmperorPenguin.SangmyungBank.securitynotices.dto.SecurityNoticeUpdateReq;
@@ -24,13 +24,13 @@ public class SecurityNoticesService {
     @Transactional
     public void createSecurityNotice(SecurityNoticeCreateReq securityNoticeCreateReq) {
         if(securityNoticesRepository.findByTitle(securityNoticeCreateReq.getTitle()).isPresent()){
-            throw new SecurityNoticeException(ExceptionMessages.ERROR_SECURITYNOTICE_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_SECURITYNOTICE_EXIST);
         }
         try{
             securityNoticesRepository.save(securityNoticeCreateReq.toEntity());
         }catch (Exception e){
             e.printStackTrace();
-            throw new SecurityNoticeException("보안공지 생성에 실패했습니다.");
+            throw new BaseException("보안공지 생성에 실패했습니다.");
         }
     }
 
@@ -46,17 +46,17 @@ public class SecurityNoticesService {
     @Transactional
     public SecurityNotices getSingleSecurityNotice(Long id) {
         if(!securityNoticesRepository.existsById(id)){
-            throw new SecurityNoticeException(ExceptionMessages.ERROR_SECURITYNOTICE_NOT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_SECURITYNOTICE_NOT_EXIST);
         }
         return securityNoticesRepository
                 .findById(id)
-                .orElseThrow(() -> new SecurityNoticeException(ExceptionMessages.ERROR_UNDEFINED));
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_UNDEFINED));
     }
 
     @Transactional
     public void updateSecurityNotice(SecurityNoticeUpdateReq securityNoticeUpdateReq) {
         if(!securityNoticesRepository.existsById(securityNoticeUpdateReq.getId())){
-            throw new SecurityNoticeException(ExceptionMessages.ERROR_SECURITYNOTICE_NOT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_SECURITYNOTICE_NOT_EXIST);
         }
         try {
             securityNoticesRepository.updateSecurityNotice(
@@ -66,7 +66,7 @@ public class SecurityNoticesService {
             );
         }catch (Exception e){
             e.printStackTrace();
-            throw new SecurityNoticeException("새소식 업데이트에 실패했습니다.");
+            throw new BaseException("새소식 업데이트에 실패했습니다.");
         }
 
     }
@@ -74,13 +74,13 @@ public class SecurityNoticesService {
     @Transactional
     public void deleteSecurityNotice(Long id) {
         if(!securityNoticesRepository.existsById(id)){
-            throw new SecurityNoticeException(ExceptionMessages.ERROR_SECURITYNOTICE_NOT_EXIST);
+            throw new BaseException(ExceptionMessages.ERROR_SECURITYNOTICE_NOT_EXIST);
         }
         try{
             securityNoticesRepository.deleteById(id);
         }catch (Exception e){
             e.printStackTrace();
-            throw new SecurityNoticeException("새소식 삭제에 실패했습니다.");
+            throw new BaseException("새소식 삭제에 실패했습니다.");
         }
     }
 

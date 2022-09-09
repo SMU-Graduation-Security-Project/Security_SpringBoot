@@ -1,7 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.member.service;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.service.JwtService;
-import com.EmperorPenguin.SangmyungBank.member.dto.MemberSessionDto;
 import com.EmperorPenguin.SangmyungBank.member.dto.OauthAttributes;
 import com.EmperorPenguin.SangmyungBank.member.dto.SessionUser;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;

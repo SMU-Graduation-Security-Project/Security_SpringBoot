@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags="13. 당첨자발표")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/cont/events")
+@RequestMapping("api/v1/guest/cont/events")
 public class WinnerController {
 
     private final WinnerService winnerService;

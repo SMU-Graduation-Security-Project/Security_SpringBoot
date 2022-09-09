@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags="12. 이벤트")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/cont")
+@RequestMapping("/api/v1/guest")
 public class EventController {
 
     private final EventService eventService;

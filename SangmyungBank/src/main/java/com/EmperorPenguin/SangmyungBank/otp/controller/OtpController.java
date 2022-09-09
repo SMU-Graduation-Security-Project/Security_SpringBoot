@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags="02.OTP")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/users/otp")
+@RequestMapping("api/v1/user/otp")
 public class OtpController {
     private final OtpService otpService;
     private final ResponseService responseService;

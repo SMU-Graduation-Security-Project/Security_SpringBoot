@@ -1,7 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.baseUtil.exception.controller;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.AccessDeniedException;
-import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BusinessException;
+import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +15,7 @@ public class exceptionController {
 
     @GetMapping("/entrypoint")
     public void entrypointException() {
-        throw new BusinessException(ExceptionMessages.ERROR_JWT_FORMAT);
+        throw new BaseException(ExceptionMessages.ERROR_JWT_FORMAT);
     }
 
     @GetMapping("/accessDenied")
