@@ -37,7 +37,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     // 인증이나 권한이 필요한 주소요청이 있을 때 해당 필터를 거친다.
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        System.out.println("인증이나 권한이 필요한 주소 요청이 됨");
+//        System.out.println("인증이나 권한이 필요한 주소 요청이 됨");
 
         try {
             jwtService.checkHeaderValid(request);
@@ -49,14 +49,14 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                     .replace(JwtProperties.TOKEN_PREFIX, "");
             jwtService.checkTokenValid(refreshJwtToken);
 
-            System.out.println("리프레쉬 토큰 회원 조회");
+//            System.out.println("리프레쉬 토큰 회원 조회");
             Member memberByRefreshToken = jwtService.getMemberByRefreshToken(refreshJwtToken);
             String loginId = memberByRefreshToken.getLoginId();
             Long id = memberByRefreshToken.getMemberId();
 
 
             try {
-                System.out.println("액세스 토큰 검증");
+//                System.out.println("액세스 토큰 검증");
                 jwtService.checkTokenValid(accessJwtToken);
             } catch (TokenExpiredException expired) {
                 System.out.println("ACCESS TOKEN REISSUE : " + JwtErrorCode.JWT_ACCESS_EXPIRED);

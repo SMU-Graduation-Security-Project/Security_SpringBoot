@@ -39,8 +39,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger/**",
 
                 "/image/**",
-                // 회원가입
+                // 회원가입 및 비밀번호 찾기 추가
                 "api/v1/user/register",
+                "api/v1/user/find_password",
+                "api/v1/user/update_template_password",
+                "api/v1/user/find_login_id",
 
                 // Guest 관련
                 "/api/v1/guest/**",

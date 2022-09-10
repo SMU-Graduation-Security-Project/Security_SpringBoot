@@ -51,3 +51,6 @@ INSERT INTO loan_list(title, interest_rate, interest_type) values ('상명학자
 INSERT INTO loan_list(title, interest_rate, interest_type) values ('상명대출', '3.0', '단리');
 INSERT INTO loan_list(title, interest_rate, interest_type) values ('상명장기대출', '3.0', '단리');
 INSERT INTO loan_list(title, interest_rate, interest_type) values ('상명단기대출', '3.0', '복리');
+
+-- INSERT INTO member(login_id, email, name, password, age, sex, phone_number, register_date, modify_date, question, ans_word, using_temp_password, role) values('test1234','test1234@gmail.com','테스트','test1234!',25,'F','010-0000-0000','2022-08-08-00:00:00','2022-08-10-00:00:00','이름은?','테스트', false, 'ROLE_ADMIN');
+-- INSERT INTO member(login_id, email, name, password, age, sex, phone_number, register_date, modify_date, question, ans_word, using_temp_password, role) values('arad4228', 'arad4228@gmail.com', '정경재', 'arad4228!', 24, 'M', '010-0000-0012', '2022-08-10-22:40:04', '2022-08-10-22:40:04', '이름은?', '정경재',false, 'ROLE_ADMIN');

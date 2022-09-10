@@ -1,5 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.baseUtil.config.jwt;
 
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.auth.PrincipalDetails;
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.service.JwtService;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
@@ -8,8 +9,9 @@ import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.nimbusds.jose.shaded.json.JSONArray;
+import com.nimbusds.jose.shaded.json.JSONObject;
 import lombok.RequiredArgsConstructor;
-import net.minidev.json.JSONObject;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -35,7 +37,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
-        System.out.println("로그인시도중");
+//        System.out.println("로그인시도중");
 
         try{
             ObjectMapper om = new ObjectMapper();
@@ -61,19 +63,22 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult)
             throws IOException, ServletException {
-        System.out.println("successfulAuthentication 실행됨:인증완료");
+//        System.out.println("successfulAuthentication 실행됨:인증완료");
         PrincipalDetails principalDetails =(PrincipalDetails)authResult.getPrincipal();
         //RSA가 아닌 Hash암호방식
+        String time = new DateConfig().getDateTime();
         Member member = principalDetails.getMember();
         String accessJwt = jwtService.createAccessToken(member.getMemberId(), member.getLoginId());
         String refreshJwt = jwtService.createRefreshToken();
 
         // login 성공 -> Refresh 토큰 재발급
         jwtService.setRefreshToken(member.getLoginId(), refreshJwt);
+        jwtService.updateMemberData(time,member.getLoginId());
 
         response.addHeader(JwtProperties.HEADER_PREFIX,JwtProperties.TOKEN_PREFIX+ accessJwt);
         response.addHeader(JwtProperties.REFRESH_HEADER_PREFIX,JwtProperties.TOKEN_PREFIX+ refreshJwt);
-        setSuccessResponse(response, "로그인 성공");
+
+        setSuccessResponse(response, "로그인 성공", member, time);
     }
 
     @Override
@@ -86,7 +91,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         setFailResponse(response, failReason);
     }
 
-    private void setSuccessResponse(HttpServletResponse response, String message) throws IOException {
+    private void setSuccessResponse(HttpServletResponse response, String message, Member res, String time) throws IOException {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json;charset=UTF-8");
 
@@ -94,6 +99,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         jsonObject.put("checker", true);
         jsonObject.put("message", message);
 
+        JSONObject data = new JSONObject();
+        data.put("loginId", res.getLoginId());
+        data.put("name", res.getName());
+        data.put("loginDate", time);
+        data.put("useTemplatePassword", res.isUsingTempPassword());
+
+        JSONArray req_array = new JSONArray();
+        req_array.add(data);
+
+        jsonObject.appendField("data", req_array);
         response.getWriter().print(jsonObject);
     }
 

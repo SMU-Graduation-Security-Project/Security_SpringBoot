@@ -1,5 +1,6 @@
 package com.EmperorPenguin.SangmyungBank.baseUtil.config.service;
 
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.jwt.JwtProperties;
 import com.EmperorPenguin.SangmyungBank.baseUtil.dto.JwtErrorCode;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
@@ -125,5 +126,11 @@ public class JwtService {
         JWT.require(Algorithm.HMAC512(SECRET_KEY))
                 .build()
                 .verify(token);
+    }
+
+
+    @Transactional
+    public void updateMemberData(String loginId, String time){
+        memberRepository.updateLoginDate(time, loginId);
     }
 }
