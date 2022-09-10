@@ -1,10 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.home.controller;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.dto.BaseResult;
-import com.EmperorPenguin.SangmyungBank.member.dto.MemberFindPasswordReq;
-import com.EmperorPenguin.SangmyungBank.member.dto.MemberLoginReq;
-import com.EmperorPenguin.SangmyungBank.member.dto.MemberPasswordUpdateReq;
-import com.EmperorPenguin.SangmyungBank.member.dto.MemberRegisterReq;
+import com.EmperorPenguin.SangmyungBank.member.dto.*;
 import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
 import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
 import io.swagger.annotations.Api;
@@ -57,7 +54,7 @@ public class HomeController {
         }
     }
 
-    @PostMapping(path = "/find_Password")
+    @PostMapping(path = "/find_password")
     @ApiOperation(value = "4. 비밀번호 찾기", notes = "사용자의 질문과 정답을 검증해 임시비밀번호를 제공합니다.")
     public BaseResult findPassword(@ApiParam @RequestBody MemberFindPasswordReq memberFindPasswordReq){
         try {
@@ -70,7 +67,7 @@ public class HomeController {
         }
     }
 
-    @PostMapping(path = "/updateTempPassword")
+    @PostMapping(path = "/update_temp_password")
     @ApiOperation(value = "5. 임시 비밀번호를 가진 사용자의 비밀번호 변경",notes = "임시 비밀번호를 제공받은 유저의 새로운 비밀번호로 비밀번호를 변경합니다.")
     public BaseResult updateTemplateUserPassword(@ApiParam @RequestBody MemberPasswordUpdateReq memberPasswordUpdateReq){
         try {
@@ -83,7 +80,19 @@ public class HomeController {
         }
     }
 
-
+    @PostMapping(path = "/find_login_id")
+    @ApiOperation(value = "6. 아이디 찾기 ",notes = "아이디를 찾습니다.")
+    public BaseResult findLoginId(@ApiParam @RequestBody MemberFindLoginIdReq memberFindLoginIdReq){
+        try {
+            return responseService.singleResult(
+                    memberService.findLoginId(memberFindLoginIdReq)
+            );
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
+        }
+    }
 }
 
 
