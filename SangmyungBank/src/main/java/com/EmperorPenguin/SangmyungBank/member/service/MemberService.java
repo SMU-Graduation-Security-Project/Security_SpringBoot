@@ -157,10 +157,10 @@ public class MemberService {
     }
     @Transactional
     public String findLoginId(MemberFindLoginIdReq memberFindLoginIdReq){
-        Member member = getMemberByPhone(memberFindLoginIdReq.getPhoneNumber());
+        Member member = getMemberByEmail(memberFindLoginIdReq.getEmail());
 
-        if(!memberFindLoginIdReq.getAnsWord().matches(member.getAnsWord())){
-            throw new BaseException(ExceptionMessages.ERROR_MEMBER_ANSWORD_NOT_MATCH);
+        if(!memberFindLoginIdReq.getName().matches(member.getName())){
+            throw new BaseException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND);
         }
         return member.getLoginId();
     }

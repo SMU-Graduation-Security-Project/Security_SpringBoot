@@ -36,7 +36,15 @@ public class HomeController {
 //        }
     }
 
-    // 로그아웃 기능
+    @GetMapping(path = "/logout")
+    @ApiOperation(value="1. 로그아웃", notes = "사용자의 리프레쉬 토큰을 만료 시킵니다.")
+    public BaseResult logoutUser(@ApiParam @RequestBody HttpServletRequest request){
+        try {JwtService.logout(HttpServletRequest request);
+            return responseService.successResult();}
+        catch(Exception e){
+            return  responseService.failResult(e.getMessage);
+        }
+    }
 
     @PostMapping(path = "/register")
     @ApiOperation(value="3. 회원가입", notes = "사용자 정보를 받아 사용자를 저장합니다.")
