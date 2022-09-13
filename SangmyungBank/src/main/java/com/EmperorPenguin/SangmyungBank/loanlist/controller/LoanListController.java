@@ -7,6 +7,7 @@ import com.EmperorPenguin.SangmyungBank.loanlist.dto.LoanListUpdateReq;
 import com.EmperorPenguin.SangmyungBank.loanlist.service.LoanListService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,10 @@ public class LoanListController {
 
     @PostMapping("")
     @ApiOperation(value="1. 대출목록 생성")
-    public BaseResult createLoanList(@RequestBody LoanListCreateReq loanListCreateReq) {
+    public BaseResult createLoanList(
+            @ApiParam(value = "대출 객체", required = true)
+            @RequestBody LoanListCreateReq loanListCreateReq
+    ) {
         try {
             loanListService.createLoanList(loanListCreateReq);
             return responseService.successResult();
@@ -46,7 +50,10 @@ public class LoanListController {
 
     @GetMapping("/{id}")
     @ApiOperation(value="3. 특정 대출목록 가져오기")
-    public BaseResult getLoanListDetail(@PathVariable Long id) {
+    public BaseResult getLoanListDetail(
+            @ApiParam(value = "대출 객체 ID", required = true)
+            @PathVariable Long id
+    ) {
         try {
             return responseService.singleResult(loanListService.getSingleLoanList(id).toDto());
         }catch (Exception e){
@@ -58,7 +65,10 @@ public class LoanListController {
 
     @PutMapping("/{id}")
     @ApiOperation(value="4. 대출목록 업데이트")
-    public BaseResult updateLoanList(@RequestBody LoanListUpdateReq loanListUpdateReq) {
+    public BaseResult updateLoanList(
+            @ApiParam(value = "변경된 대출목록 객체", required = true)
+            @RequestBody LoanListUpdateReq loanListUpdateReq
+    ) {
         try {
             loanListService.updateLoanList(loanListUpdateReq);
             return responseService.successResult();
@@ -71,7 +81,10 @@ public class LoanListController {
 
     @DeleteMapping("/{id}")
     @ApiOperation(value="5. 대출목록 삭제")
-    public BaseResult deleteLoanList(@PathVariable Long id) {
+    public BaseResult deleteLoanList(
+            @ApiParam(value = "대출 객체", required = true)
+            @PathVariable Long id
+    ) {
         try {
             loanListService.deleteLoanList(id);
             return responseService.successResult();

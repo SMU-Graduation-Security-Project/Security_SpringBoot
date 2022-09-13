@@ -13,9 +13,9 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class CardListCreateReq {
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, value = "카드이름",example = "상명카드",position = 0)
     private String title;
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, value = "카드내용",example = "이자율은 몇 퍼센트이고 금리는 몇 퍼센트입니다.",position = 1)
     private String content;
 
     public CardList toEntity() {

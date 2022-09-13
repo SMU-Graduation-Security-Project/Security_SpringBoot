@@ -15,11 +15,11 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class CounselCreateReq {
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, value = "로그인ID",example = "test1234",position = 0)
     private String loginId;
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, value = "상담게시물 제목",example = "도와주세요.",position = 1)
     private String title;
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, value = "상담게시물 내용",example = "계좌이체가 안되요.",position = 2)
     private String content;
 
     public Counsel toEntity(Member member) {

@@ -20,7 +20,10 @@ public class LoanController {
 
     @PostMapping("")
     @ApiOperation(value="1. 대출 신청", notes = "사용자의 아이디와 계좌번호, 대출종류, 대출금액을 받아 대출")
-    public BaseResult createLoan(@RequestBody LoanCreateReq loanCreateReq) {
+    public BaseResult createLoan(
+            @ApiParam(value = "대출 신청 객체", required = true)
+            @RequestBody LoanCreateReq loanCreateReq
+    ) {
         try {
             loanService.createLoan(loanCreateReq);
             return responseService.successResult();
@@ -33,7 +36,10 @@ public class LoanController {
 
     @GetMapping(path = "/loanlist")
     @ApiOperation(value = "2. 대출 조회", notes = "아이디에 해당 하는 모든 대출을 받아옵니다.")
-    public BaseResult loanList(@ApiParam @RequestParam String loginId) {
+    public BaseResult loanList(
+            @ApiParam(value = "사용자 ID", required = true)
+            @RequestParam String loginId
+    ) {
         try {
             return responseService.listResult(loanService.loanList(loginId));
         }catch (Exception e){
