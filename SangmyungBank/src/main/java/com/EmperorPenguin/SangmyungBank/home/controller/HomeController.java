@@ -27,7 +27,10 @@ public class HomeController {
 
     @PostMapping(path = "/login")
     @ApiOperation(value="1. 로그인", notes = "아이디,패스워드를 사용하여 로그인")
-    public void authUser(@ApiParam(value = "로그인 객체",required = true) @RequestBody MemberLoginReq memberLoginReq){
+    public void authUser(
+            @ApiParam(value ="로그인 객체", required = true)
+            @ModelAttribute MemberLoginReq memberLoginReq
+    ){
         // 이전 boolean 통해 오류를 검출하는 방식으로 작동
         // refactoring 이후 Exception 통한 예외처리로 로직 변경
         // 없는 아이디, 잘못된 비밀번호에서 오류 발생.
@@ -41,7 +44,7 @@ public class HomeController {
     }
 
     @PostMapping(path = "/logout")
-    @ApiOperation(value="2. 로그아웃", notes = "사용자의 리프레쉬 토큰을 DB에서 제거")
+    @ApiOperation(value = "로그아웃", notes = "AccessToken & RefreshToken 헤더에 담아서 로그아웃 요청")
     public BaseResult logoutUser(HttpServletRequest request){
         try {
             jwtService.logout(request);
@@ -53,7 +56,9 @@ public class HomeController {
 
     @PostMapping(path = "/register")
     @ApiOperation(value="3. 회원가입", notes = "사용자 정보를 입력받아 사용자를 저장")
-    public BaseResult addUser(@ApiParam(required = true) @RequestBody MemberRegisterReq memberRegisterReq) {
+    public BaseResult saveUser(
+            @ApiParam(value = "회원 객체", required = true)
+            @ModelAttribute MemberRegisterReq memberRegisterReq) {
         // 이전 boolean 통해 오류를 검출하는 방식으로 작동
         // refactoring 이후 Exception 통한 예외처리로 로직 변경
         // 아이디 중복, 이메일 중복, 전화번호 중복, 비밀번호 규칙 검증, 올바르게 비밀번호를 2번 입력했는지 확인
@@ -68,8 +73,10 @@ public class HomeController {
     }
 
     @PostMapping(path = "/find_password")
-    @ApiOperation(value = "4. 비밀번호 찾기", notes = "회원가입시 등록한 질문과 정답을 검증해 임시비밀번호를 제공합니다.")
-    public BaseResult findPassword(@ApiParam @RequestBody MemberFindPasswordReq memberFindPasswordReq){
+    @ApiOperation(value = "4. 비밀번호 찾기", notes = "회원가입시 등록한 질문과 정답을 사용해 임시비밀번호를 제공")
+    public BaseResult findPassword(
+            @ApiParam(value = "비밀번호를 찾기 객체", required = true)
+            @ModelAttribute MemberFindPasswordReq memberFindPasswordReq){
         try {
             return responseService.singleResult(
                     memberService.setTemplatePassword(memberFindPasswordReq));
@@ -81,8 +88,10 @@ public class HomeController {
     }
 
     @PostMapping(path = "/update_temp_password")
-    @ApiOperation(value = "5. 임시 비밀번호를 가진 사용자의 비밀번호 변경",notes = "임시 비밀번호를 제공받은 유저의 새로운 비밀번호로 비밀번호를 변경합니다.")
-    public BaseResult updateTemplateUserPassword(@ApiParam @RequestBody MemberPasswordUpdateReq memberPasswordUpdateReq){
+    @ApiOperation(value = "5. 임시 비밀번호 변경",notes = "임시 비밀번호를 제공받은 유저의 새로운 비밀번호로 비밀번호를 변경합니다.")
+    public BaseResult updateTemplateUserPassword(
+            @ApiParam(value = "비밀번호 변경 객체", required = true)
+            @ModelAttribute MemberPasswordUpdateReq memberPasswordUpdateReq){
         try {
             memberService.updateTemplatePassword(memberPasswordUpdateReq);
             return responseService.successResult();
@@ -95,7 +104,9 @@ public class HomeController {
 
     @PostMapping(path = "/find_login_id")
     @ApiOperation(value = "6. 아이디 찾기 ",notes = "아이디를 찾습니다.")
-    public BaseResult findLoginId(@ApiParam @RequestBody MemberFindLoginIdReq memberFindLoginIdReq){
+    public BaseResult findLoginId(
+            @ApiParam(value = "아이디를 찾기 객체", required = true)
+            @ModelAttribute MemberFindLoginIdReq memberFindLoginIdReq){
         try {
             return responseService.singleResult(
                     memberService.findLoginId(memberFindLoginIdReq)

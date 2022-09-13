@@ -12,8 +12,8 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class MemberLoginReq {
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, value = "로그인ID",example = "test1234",position = 0)
     private String loginId;
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, value = "비밀번호",example = "Test1234!",position = 1)
     private String password;
 }
