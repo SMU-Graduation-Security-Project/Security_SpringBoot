@@ -7,6 +7,7 @@ import com.EmperorPenguin.SangmyungBank.counsel.dto.CounselUpdateReq;
 import com.EmperorPenguin.SangmyungBank.counsel.service.CounselService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,10 @@ public class CounselController {
 
     @PostMapping("/counsels")
     @ApiOperation(value="1. 상담글 생성", notes = "사용자의 아이디와 상담글 이름, 내용을 받아 상담글을 생성")
-    public BaseResult createCounsel(@RequestBody CounselCreateReq counselCreateReq) {
+    public BaseResult createCounsel(
+            @ApiParam(value = "상담글 객체", required = true)
+            @RequestBody CounselCreateReq counselCreateReq
+    ) {
         try {
             counselService.createCounsel(counselCreateReq);
             return responseService.successResult();
@@ -33,7 +37,10 @@ public class CounselController {
 
     @GetMapping("/counsels")
     @ApiOperation(value="2. 개인의 상담글 모두 가져오기", notes = "상담글을 모두 가져옵니다.")
-    public BaseResult listAllCounsel(@RequestParam String loginId) {
+    public BaseResult listAllCounsel(
+            @ApiParam(value = "사용자 ID", required = true)
+            @RequestParam String loginId
+    ) {
         try {
             return responseService
                     .listResult(counselService.listAllCounsel(loginId));
@@ -46,7 +53,10 @@ public class CounselController {
 
     @GetMapping("/counsels/{id}")
     @ApiOperation(value="3. 특정 상담글 가져오기", notes = "PK에 해당하는 상담글 하나를 가져옵니다.")
-    public BaseResult getCounselDetail(@PathVariable Long id) {
+    public BaseResult getCounselDetail(
+            @ApiParam(value = "상담글 객체 ID", required = true)
+            @PathVariable Long id
+    ) {
         try {
             return responseService.singleResult(
                     counselService.getSingleCounsel(id).toDto()
@@ -60,7 +70,10 @@ public class CounselController {
 
     @PutMapping("/counsels/{id}")
     @ApiOperation(value="4. 상담글 업데이트", notes = "상담글을 작성한 이가 상담들을 업데이트 할 내용을 적어 업데이트 합니다.")
-    public BaseResult updateCounsel(@RequestBody CounselUpdateReq counselUpdateReq) {
+    public BaseResult updateCounsel(
+            @ApiParam(value = "변경된 상담글 객체", required = true)
+            @RequestBody CounselUpdateReq counselUpdateReq
+    ) {
         try {
             counselService.updateCounsel(counselUpdateReq);
             return responseService.successResult();
@@ -73,7 +86,11 @@ public class CounselController {
 
     @DeleteMapping("/counsels/{id}")
     @ApiOperation(value="5. 상담글 삭제", notes = "특정 상담글을 쓴 이의 글을 삭제합니다.")
-    public BaseResult deleteCounsel(@PathVariable Long id, @RequestParam String loginId) {
+    public BaseResult deleteCounsel(
+            @ApiParam(value = "상담글 객체 ID", required = true)
+            @PathVariable Long id,
+            @RequestParam String loginId
+    ) {
         try {
             counselService.deleteCounsel(id, loginId);
             return responseService.successResult();

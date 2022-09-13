@@ -15,10 +15,10 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class WinnerCreateReq {
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, value = "이벤트게시물ID",example = "1",position = 0)
     private Long eventId;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, value = "당첨자 내용",example = "",position = 1)
     private String content;
 
     public Winner toEntity(Event event) {

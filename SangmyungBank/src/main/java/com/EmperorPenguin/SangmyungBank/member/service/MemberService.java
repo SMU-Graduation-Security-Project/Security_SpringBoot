@@ -9,7 +9,6 @@ import com.EmperorPenguin.SangmyungBank.member.entity.Role;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -157,10 +156,10 @@ public class MemberService {
     }
     @Transactional
     public String findLoginId(MemberFindLoginIdReq memberFindLoginIdReq){
-        Member member = getMemberByPhone(memberFindLoginIdReq.getPhoneNumber());
+        Member member = getMemberByEmail(memberFindLoginIdReq.getEmail());
 
-        if(!memberFindLoginIdReq.getAnsWord().matches(member.getAnsWord())){
-            throw new BaseException(ExceptionMessages.ERROR_MEMBER_ANSWORD_NOT_MATCH);
+        if(!memberFindLoginIdReq.getName().matches(member.getName())){
+            throw new BaseException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND);
         }
         return member.getLoginId();
     }
@@ -226,6 +225,16 @@ public class MemberService {
         }
     }
 
+    public Member getMember(String loginId){
+        return memberRepository.findByLoginId(loginId)
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
+    }
+
+    private Member getMemberByEmail(String email){
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
+    }
+
     private String randomNumberGen(){
         int lefLimit = 48;              // '0'
         int rightLimit = 122;           // 'z'
@@ -238,15 +247,4 @@ public class MemberService {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
     }
-
-    public Member getMember(String loginId){
-        return memberRepository.findByLoginId(loginId)
-                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
-    }
-
-    private  Member getMemberByPhone(String PhoneNumber) {
-        return memberRepository.findByPhoneNumber(PhoneNumber)
-                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
-    }
-
 }

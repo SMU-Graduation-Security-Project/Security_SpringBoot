@@ -19,7 +19,10 @@ public class OtpController {
 
     @PostMapping("")
     @ApiOperation(value="1. OTP 발급", notes = "사용자의 아이디로 OTP 생성")
-    public BaseResult createCard(@RequestBody String loginId) {
+    public BaseResult createCard(
+            @ApiParam(value = "사용자 ID", required = true)
+            @RequestBody String loginId
+    ) {
         try {
             otpService.createOtp(loginId);
             return responseService.successResult();
@@ -32,7 +35,10 @@ public class OtpController {
 
     @GetMapping(path = "/view")
     @ApiOperation(value = "2. OTP 조회", notes = "아이디에 해당 하는 OTP를 조회합니다.")
-    public BaseResult cardList(@ApiParam @RequestParam String loginId) {
+    public BaseResult cardList(
+            @ApiParam(value = "사용자 ID", required = true)
+            @RequestParam String loginId
+    ) {
         try {
             return responseService.singleResult(otpService.getOtpData(loginId));
         }catch (Exception e){

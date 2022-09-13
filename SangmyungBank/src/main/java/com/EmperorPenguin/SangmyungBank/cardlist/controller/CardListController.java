@@ -7,6 +7,7 @@ import com.EmperorPenguin.SangmyungBank.cardlist.dto.CardListUpdateReq;
 import com.EmperorPenguin.SangmyungBank.cardlist.service.CardListService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,10 @@ public class CardListController {
 
     @PostMapping("")
     @ApiOperation(value="1. 카드목록 생성")
-    public BaseResult createCardList(@RequestBody CardListCreateReq cardListCreateReq) {
+    public BaseResult createCardList(
+            @ApiParam(value = "카드 객체", required = true)
+            @RequestBody CardListCreateReq cardListCreateReq
+    ) {
         try {
             cardListService.createCardList(cardListCreateReq);
             return responseService.successResult();
@@ -46,7 +50,10 @@ public class CardListController {
 
     @GetMapping("/{id}")
     @ApiOperation(value="3. 특정 카드목록 가져오기")
-    public BaseResult getCardListDetail(@PathVariable Long id) {
+    public BaseResult getCardListDetail(
+            @ApiParam(value = "카드 객체", required = true)
+            @PathVariable Long id
+    ) {
         try {
             return responseService.singleResult(cardListService.getSingleCardList(id).toDto());
         }catch (Exception e){
@@ -58,7 +65,10 @@ public class CardListController {
 
     @PutMapping("/{id}")
     @ApiOperation(value="4. 카드목록 업데이트")
-    public BaseResult updateCardList(@RequestBody CardListUpdateReq cardListUpdateReq) {
+    public BaseResult updateCardList(
+            @ApiParam(value = "변경된 카드 객체", required = true)
+            @RequestBody CardListUpdateReq cardListUpdateReq
+    ) {
         try {
             cardListService.updateCardList(cardListUpdateReq);
             return responseService.successResult();
@@ -71,7 +81,9 @@ public class CardListController {
 
     @DeleteMapping("/{id}")
     @ApiOperation(value="5. 카드목록 삭제")
-    public BaseResult deleteCardList(@PathVariable Long id) {
+    public BaseResult deleteCardList(
+            @ApiParam(value = "카드 객체", required = true)
+            @PathVariable Long id) {
         try {
             cardListService.deleteCardList(id);
             return responseService.successResult();

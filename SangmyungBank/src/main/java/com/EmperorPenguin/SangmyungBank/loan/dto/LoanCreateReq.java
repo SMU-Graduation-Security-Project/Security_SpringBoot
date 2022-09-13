@@ -17,16 +17,16 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class LoanCreateReq {
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, value = "로그인ID",example = "test1234",position = 0)
     private String loginId;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, value = "계좌번호",example = "1111",position = 1)
     private Long accountNumber;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, value = "대출종류",example = "학자금대출",position = 2)
     private Long loanList;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, value = "대출금액",example = "10000",position = 3)
     private Long amount;
 
     public Loan toEntity(Member member, Account account, LoanList loanList) {

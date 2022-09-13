@@ -1,6 +1,5 @@
 package com.EmperorPenguin.SangmyungBank.baseUtil.config.service;
 
-import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.jwt.JwtProperties;
 import com.EmperorPenguin.SangmyungBank.baseUtil.dto.JwtErrorCode;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
@@ -18,7 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
 import java.util.Date;
 import java.util.Map;
 

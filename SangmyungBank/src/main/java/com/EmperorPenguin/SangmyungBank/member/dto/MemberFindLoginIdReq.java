@@ -12,13 +12,9 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class MemberFindLoginIdReq {
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, value = "이름",example = "홍길동",position = 0)
     private String name;
-    @ApiModelProperty(required = true)
-    private String phoneNumber;
-    @ApiModelProperty(required = true)
-    private String question;
-    @ApiModelProperty(required = true)
-    private String ansWord;
+    @ApiModelProperty(required = true, value = "이메일",example = "test1234@gmail.com",position = 1)
+    private String email;
 
 }
