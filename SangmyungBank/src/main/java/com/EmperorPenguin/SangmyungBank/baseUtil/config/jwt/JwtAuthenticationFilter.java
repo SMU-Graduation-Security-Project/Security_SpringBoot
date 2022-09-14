@@ -84,7 +84,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         String failReason =
-                failed.getMessage().equals(ExceptionMessages.ERROR_MEMBER_NOT_FOUND_ENG.getMessage())
+                failed.getMessage().equals(ExceptionMessages.ERROR_MEMBER_NOT_FOUND.getMessage())
                         ? ExceptionMessages.ERROR_MEMBER_NOT_FOUND.getMessage()
                         : ExceptionMessages.ERROR_MEMBER_PASSWORD.getMessage();
 
