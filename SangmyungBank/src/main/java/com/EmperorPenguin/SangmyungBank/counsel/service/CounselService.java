@@ -29,7 +29,7 @@ public class CounselService {
     public void createCounsel(CounselCreateReq counselCreateReq) {
         String loginId = counselCreateReq.getLoginId();
         // 먼저 해당 사용자가 있는 지 검증
-        memberService.checkMember(loginId);
+        memberService.checkEmptyMember(loginId);
         try {
             counselRepository.save(counselCreateReq.toEntity(
                     memberService.getMember(loginId))

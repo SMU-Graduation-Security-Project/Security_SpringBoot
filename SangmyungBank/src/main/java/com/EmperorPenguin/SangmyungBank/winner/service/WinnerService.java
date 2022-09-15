@@ -50,13 +50,14 @@ public class WinnerService {
     }
 
     @Transactional
-    public Winner getSingleWinner(Long id) {
+    public WinnerRequestRes getSingleWinner(Long id) {
         if(!winnerRepository.existsById(id)){
             throw new BaseException(ExceptionMessages.ERROR_WINNER_NOT_EXIST);
         }
         return winnerRepository
                 .findById(id)
-                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_UNDEFINED));
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_UNDEFINED)
+                ).toDto();
     }
 
     @Transactional
