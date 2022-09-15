@@ -25,7 +25,7 @@ public class MemberRegisterReq {
     private String name;
     @ApiModelProperty(required = true, value = "이메일",example = "test1234@gmail.com",position = 4)
     private String email;
-    @ApiModelProperty(required = true, value = "나이",example = "test1234",position = 5)
+    @ApiModelProperty(required = true, value = "나이",example = "14",position = 5)
     private int age;
     @ApiModelProperty(required = true, value = "성별",example = "F",position = 6)
     private String sex;

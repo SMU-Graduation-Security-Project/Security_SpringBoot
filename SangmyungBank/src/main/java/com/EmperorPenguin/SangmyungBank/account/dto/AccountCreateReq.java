@@ -15,13 +15,13 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class AccountCreateReq {
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, value = "로그인ID",example = "test1234",position = 0)
     private String loginId;
 
-    @ApiModelProperty(required = true)
+
     private String accountPassword;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, value = "계좌타입",example = "",position = 2)
     private String accountType;
 
     public Account toEntity(Member Member, Long accountNumber, String encodedPassword, Long balance){
