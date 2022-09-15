@@ -188,11 +188,12 @@ public class MemberService {
         }
     }
 
+    @Transactional
     public MemberInquiryRes getMemberData(String loginId){
-        if(!memberRepository.existsByLoginId(loginId)){
-            throw new BaseException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND);
-        }
-        return memberRepository.findByLoginId(loginId).get().toDto();
+        return memberRepository
+                .findByLoginId(loginId)
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND))
+                .toDto();
     }
 
     private void checkLoginId(String loginId) {

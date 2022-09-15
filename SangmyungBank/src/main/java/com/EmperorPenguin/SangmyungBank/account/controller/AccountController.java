@@ -63,10 +63,10 @@ public class AccountController {
     @ApiOperation(value = "3. 전계좌 조회", notes = "아이디에 해당 하는 모든 계좌를 받아옵니다.")
     public BaseResult inquiry(
             @ApiParam (value = "사용자 ID", required = true)
-            @RequestParam String userId
+            @RequestParam("loginId") String loginId
     ) {
         try {
-            return responseService.listResult(accountService.inquiry(userId));
+            return responseService.listResult(accountService.inquiry(loginId));
         }catch (Exception e){
             return responseService.failResult(
                     e.getMessage()

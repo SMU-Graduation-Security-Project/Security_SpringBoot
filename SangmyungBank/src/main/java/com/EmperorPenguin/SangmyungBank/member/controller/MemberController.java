@@ -22,10 +22,11 @@ public class MemberController {
     @ApiOperation(value = "1. 사용자 정보 가져오기", notes = "loginId에 해당하는 사용자의 정보를 가져옵니다.")
     public BaseResult getUserData(
             @ApiParam(value = "아이디로 사용자 조회", required = true)
-            @RequestBody String loginId
+            @RequestParam("loginId") String loginId
     ){
         try{
-            return responseService.singleResult(memberService.getMemberData(loginId));
+            return responseService.singleResult(
+                    memberService.getMemberData(loginId));
         }catch (Exception e){
             return responseService.failResult(
                     e.getMessage()

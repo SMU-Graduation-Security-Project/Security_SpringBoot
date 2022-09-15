@@ -23,7 +23,7 @@ public class LoanCreateReq {
     @ApiModelProperty(required = true, value = "계좌번호",example = "1111",position = 1)
     private Long accountNumber;
 
-    @ApiModelProperty(required = true, value = "대출종류",example = "학자금대출",position = 2)
+    @ApiModelProperty(required = true, value = "대출종류",example = "1" ,position = 2)
     private Long loanList;
 
     @ApiModelProperty(required = true, value = "대출금액",example = "10000",position = 3)
