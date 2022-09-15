@@ -187,6 +187,14 @@ public class MemberService {
             throw new BaseException("비밀번호 변경 실패");
         }
     }
+    @Transactional
+    public void getMemberDatabase(MemberInquiryReq memberInquiryReq){
+        Member member = memberRepository
+                .findByLoginId(memberInquiryReq.getLoginId())
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_MEMBER_NOT_FOUND));
+
+        if(memberRepository.findByLoginId(memberInquiryReq.getLoginId()).isPresent()){getMemberData(memberInquiryReq.getLoginId());}
+    }
 
     public MemberInquiryRes getMemberData(String loginId){
         if(!memberRepository.existsByLoginId(loginId)){

@@ -2,6 +2,7 @@ package com.EmperorPenguin.SangmyungBank.member.controller;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.dto.BaseResult;
 import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
+import com.EmperorPenguin.SangmyungBank.member.dto.MemberInquiryReq;
 import com.EmperorPenguin.SangmyungBank.member.dto.MemberPasswordUpdateReq;
 import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
 import io.swagger.annotations.Api;
@@ -22,10 +23,11 @@ public class MemberController {
     @ApiOperation(value = "1. 사용자 정보 가져오기", notes = "loginId에 해당하는 사용자의 정보를 가져옵니다.")
     public BaseResult getUserData(
             @ApiParam(value = "아이디로 사용자 조회", required = true)
-            @RequestBody String loginId
+            @RequestBody MemberInquiryReq memberInquiryReq
     ){
         try{
-            return responseService.singleResult(memberService.getMemberData(loginId));
+            memberService.getMemberDatabase(memberInquiryReq);
+            return responseService.singleResult(memberService.getMemberData(memberInquiryReq.getLoginId()));
         }catch (Exception e){
             return responseService.failResult(
                     e.getMessage()
