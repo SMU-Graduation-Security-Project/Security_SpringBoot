@@ -55,7 +55,8 @@ public class WinnerController {
             @PathVariable Long id
     ) {
         try {
-            return responseService.singleResult(winnerService.getSingleWinner(id).toDto());
+            return responseService.singleResult(
+                    winnerService.getSingleWinner(id));
         }catch (Exception e){
             return responseService.failResult(
                     e.getMessage()
