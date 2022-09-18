@@ -74,4 +74,19 @@ public class AccountController {
         }
     }
 
+    @GetMapping(path = "/name")
+    @ApiOperation(value = "4. 사용자 조회", notes = "계좌에 해당 하는 사용자를 받아옵니다.")
+    public BaseResult findName(
+            @ApiParam (value = "계좌번호", required = true)
+            @RequestParam("accountNumber") Long accountNumber
+    ) {
+        try {
+            return responseService.singleResult(accountService.getName(accountNumber));
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
+        }
+    }
+
 }

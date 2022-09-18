@@ -15,4 +15,5 @@ public class AccountInquiryRes {
     private Long accountNumber;
     private String accountType;
     private Long balance;
+    private String name;
 }

@@ -40,6 +40,8 @@ public class Account {
                 .accountNumber(accountNumber)
                 .accountType(accountType)
                 .balance(balance)
+                .name(memberId.getName())
                 .build();
     }
+
 }
