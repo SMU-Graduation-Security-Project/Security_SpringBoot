@@ -52,13 +52,11 @@ public class CounselService {
     }
 
     @Transactional
-    public Counsel getSingleCounsel (Long id) {
-        if(!counselRepository.existsById(id)){
-            throw new BaseException(ExceptionMessages.ERROR_COUNSEL_NOT_EXIST);
-        }
+    public CounselInquiryRes getSingleCounsel (Long id) {
         return counselRepository
                 .findById(id)
-                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_UNDEFINED));
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_UNDEFINED))
+                .toDto();
     }
 
     @Transactional

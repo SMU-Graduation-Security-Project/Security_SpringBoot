@@ -40,11 +40,15 @@ public class Loan {
 
     private String dueDate;
 
+
+
     public LoanRequestRes toDto(){
         return LoanRequestRes.builder()
                 .id(id)
                 .accountNumber(accountNumber.getAccountNumber())
                 .loanList(loanList.getTitle())
+                .interestRate(loanList.getInterestRate())
+                .interestType(loanList.getInterestType())
                 .amount(amount)
                 .balance(accountNumber.getBalance())
                 .createDate(createDate)

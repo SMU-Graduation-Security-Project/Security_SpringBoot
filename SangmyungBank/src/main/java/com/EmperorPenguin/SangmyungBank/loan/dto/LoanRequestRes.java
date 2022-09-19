@@ -13,6 +13,8 @@ public class LoanRequestRes {
     private Long id;
     private Long accountNumber;
     private String loanList;
+    private String interestRate;
+    private String interestType;
     private Long amount;
     private Long balance;
     private String createDate;

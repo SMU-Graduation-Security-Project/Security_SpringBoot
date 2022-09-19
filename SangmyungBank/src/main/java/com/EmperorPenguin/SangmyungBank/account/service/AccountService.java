@@ -134,6 +134,16 @@ public class AccountService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
+    public List<AccountInquiryRes> getName(Long accountNumber) {
+
+        return accountRepository
+                .findNameByAccountNumber(accountNumber)
+                .stream()
+                .map(Account::toDto)
+                .collect(Collectors.toList());
+    }
+
     private void checkPassword(String password) {
         // 계좌 비밀번호는 숫자로 6자로 구성되어있다.
         Pattern passwordExpression = Pattern.compile("[0-9]{6}");

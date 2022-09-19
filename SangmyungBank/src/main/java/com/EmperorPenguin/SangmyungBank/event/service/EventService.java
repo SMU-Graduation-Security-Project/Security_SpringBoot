@@ -48,7 +48,7 @@ public class EventService {
     public List<EventInquiryRes> listAllDoneEvents() {
         return eventRepository.findDone(new DateConfig().getDateTime())
                 .stream()
-                .sorted(Comparator.comparing(Event::getId).reversed())
+                .sorted(Comparator.comparing(Event::getStartDate).reversed())
                 .map(Event::toDto)
                 .collect(Collectors.toList());
     }

@@ -44,7 +44,7 @@ public class WinnerService {
     public List<WinnerRequestRes> getAllWinnerLists() {
         return winnerRepository.findAll()
                 .stream()
-                .sorted(Comparator.comparing(Winner::getId).reversed())
+                .sorted(Comparator.comparing(Winner::getCreateDate).reversed())
                 .map(Winner::toDto)
                 .collect(Collectors.toList());
     }
