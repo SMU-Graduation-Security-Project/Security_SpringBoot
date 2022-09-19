@@ -26,7 +26,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 	// h2 DataBase 설정
-	//	implementation 'com.h2database:h2'
+	//implementation 'com.h2database:h2'
 	// Mysql Database 설정
 	implementation 'mysql:mysql-connector-java'
 

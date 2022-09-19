@@ -49,7 +49,7 @@ public class AccountController {
     }
 
     @PostMapping(path = "/transaction/validateaccount")
-    @ApiOperation(value="2. 계좌 이체(계좌 검증)", notes = "사용자 아이디와 이체할 계좌, 금액과 해당 계좌의 비밀번호를 받아 이체합니다.")
+    @ApiOperation(value="2. 계좌 이체(계좌 검증)", notes = "")
     public BaseResult validAccount(
             @ApiParam (value = "계좌 이체 객체", required = true)
             @RequestBody TransferReq transferReq
@@ -66,7 +66,7 @@ public class AccountController {
     }
 
     @GetMapping (path = "/transaction/getotpdata")
-    @ApiOperation(value="2. 계좌 이체(OTP 검증 값 전달)", notes = "사용자 아이디와 이체할 계좌, 금액과 해당 계좌의 비밀번호를 받아 이체합니다.")
+    @ApiOperation(value="2. 계좌 이체(OTP 검증 값 전달)", notes = "랜덤넘버 두개를 고릅니다.")
     public BaseResult sendOtpData(
             @ApiParam (value = "사용자 id", required = true)
             @RequestParam String loginId
@@ -83,7 +83,7 @@ public class AccountController {
     }
 
     @PostMapping (path = "/transaction/checkotp")
-    @ApiOperation(value="2. 계좌 이체(OTP 검증)", notes = "사용자 아이디와 이체할 계좌, 금액과 해당 계좌의 비밀번호를 받아 이체합니다.")
+    @ApiOperation(value="2. 계좌 이체(OTP 검증)", notes = "해시 데이터를 비교합니다.")
     public BaseResult transaction(
             @ApiParam (value = "Otp 검증 객체", required = true)
             @RequestBody OtpValidReq otpValidReq
@@ -100,13 +100,14 @@ public class AccountController {
     }
 
     @PostMapping (path = "/transaction/transfer")
-    @ApiOperation(value="2. 계좌 이체(OTP 검증)", notes = "사용자 아이디와 이체할 계좌, 금액과 해당 계좌의 비밀번호를 받아 이체합니다.")
+    @ApiOperation(value="2. 계좌 이체", notes = "사용자 아이디와 이체할 계좌, 금액과 해당 계좌의 비밀번호를 받아 이체합니다.")
     public BaseResult transaction(
-            @ApiParam (value = "사용자 id", required = true)
-            @RequestParam String loginId
+            @ApiParam (value = "계좌 이체 객체", required = true)
+            @RequestBody TransferReq transferReq
     ){
         try {
-            accountService.transaction(transferMap.get(loginId));
+            accountService.transaction(transferReq);
+            transferMap.put(transferReq.getLoginId(),transferReq);
             return responseService.successResult();
         }catch (Exception e){
             return responseService.failResult(

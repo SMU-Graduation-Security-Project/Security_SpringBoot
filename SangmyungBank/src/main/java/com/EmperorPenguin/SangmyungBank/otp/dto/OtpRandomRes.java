@@ -15,9 +15,9 @@ public class OtpRandomRes {
     
     public boolean checkNumber() {
         if (select1 != select2)
-            return false;
-        else
             return true;
+        else
+            return false;
     }
 }
 

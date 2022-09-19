@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import java.security.MessageDigest;
 
@@ -18,9 +20,14 @@ import java.security.MessageDigest;
 @RequiredArgsConstructor
 public class OtpService {
 
+    long currentTme = System.currentTimeMillis();
+    SimpleDateFormat timeFormat=new SimpleDateFormat("yyyyMMdd");
+    String ToHour=timeFormat.format(new Date(currentTme));
+
     private final OtpRepository otpRepository;
-    private final long Seed = System.currentTimeMillis();
+    private final  long Seed = Long.parseLong(ToHour);
     private final Random random = new Random(Seed);
+
 
     // 고정된 OTP 번호를 삽입.
     @Transactional
