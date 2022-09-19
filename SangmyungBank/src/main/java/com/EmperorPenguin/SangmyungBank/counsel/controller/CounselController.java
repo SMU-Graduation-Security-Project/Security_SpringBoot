@@ -59,7 +59,7 @@ public class CounselController {
     ) {
         try {
             return responseService.singleResult(
-                    counselService.getSingleCounsel(id).toDto()
+                    counselService.getSingleCounsel(id)
             );
         }catch (Exception e){
             return responseService.failResult(
