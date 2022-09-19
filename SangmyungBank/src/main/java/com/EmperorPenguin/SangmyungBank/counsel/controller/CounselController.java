@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags="11. 상담글")
+@Api(tags="10. 상담글")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/user/cont")

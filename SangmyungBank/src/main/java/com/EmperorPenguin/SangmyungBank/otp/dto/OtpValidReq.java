@@ -12,9 +12,5 @@ import lombok.RequiredArgsConstructor;
 public class OtpValidReq {
 
     private String loginId;
-    private int pkOTP4;
-    private int selectNum1;
-    private int selectNum2;
-    private int ansNum1;
-    private int ansNum2;
+    private String hashedData;
 }

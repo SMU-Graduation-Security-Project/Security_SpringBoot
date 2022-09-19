@@ -1,11 +1,13 @@
 package com.EmperorPenguin.SangmyungBank.account.controller;
 
 import com.EmperorPenguin.SangmyungBank.account.dto.AccountCreateReq;
-import com.EmperorPenguin.SangmyungBank.account.dto.TransferTotalReq;
+import com.EmperorPenguin.SangmyungBank.account.dto.TransferReq;
 import com.EmperorPenguin.SangmyungBank.account.service.AccountService;
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.service.JwtService;
 import com.EmperorPenguin.SangmyungBank.baseUtil.dto.BaseResult;
 import com.EmperorPenguin.SangmyungBank.baseUtil.service.ResponseService;
+import com.EmperorPenguin.SangmyungBank.otp.dto.OtpRandomRes;
+import com.EmperorPenguin.SangmyungBank.otp.dto.OtpValidReq;
 import com.EmperorPenguin.SangmyungBank.otp.service.OtpService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,7 +15,10 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags = "03. 계좌")
+import java.util.HashMap;
+import java.util.Map;
+
+@Api(tags = "02. 계좌")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/user/accounts")
@@ -24,6 +29,8 @@ public class AccountController {
     private final JwtService jwtService;
     private final OtpService otpService;
 
+    Map<String, OtpRandomRes> validationOtp = new HashMap<String, OtpRandomRes>();
+    Map<String, TransferReq> transferMap = new HashMap<String, TransferReq>();
 
     @PostMapping(path = "/add")
     @ApiOperation(value = "1. 계좌생성", notes = "사용자의 아이디와 비밀번호를 받아 사용자의 계좌를 생성합니다.")
@@ -41,16 +48,65 @@ public class AccountController {
         }
     }
 
-    @PostMapping(path = "/transaction")
-    @ApiOperation(value="2. 계좌 이체", notes = "사용자 아이디와 이체할 계좌, 금액과 해당 계좌의 비밀번호를 받아 이체합니다.")
-    public BaseResult transaction(
+    @PostMapping(path = "/transaction/validateaccount")
+    @ApiOperation(value="2. 계좌 이체(계좌 검증)", notes = "사용자 아이디와 이체할 계좌, 금액과 해당 계좌의 비밀번호를 받아 이체합니다.")
+    public BaseResult validAccount(
             @ApiParam (value = "계좌 이체 객체", required = true)
-            @RequestBody TransferTotalReq transferTotalReq
+            @RequestBody TransferReq transferReq
     ){
         try {
-            accountService.validationAccount(transferTotalReq.toTransfer());
-            otpService.validationOtp(transferTotalReq.toOtp());
-            accountService.transaction(transferTotalReq.toTransfer());
+            accountService.validationAccount(transferReq);
+            transferMap.put(transferReq.getLoginId(),transferReq);
+            return responseService.successResult();
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
+        }
+    }
+
+    @GetMapping (path = "/transaction/getotpdata")
+    @ApiOperation(value="2. 계좌 이체(OTP 검증 값 전달)", notes = "사용자 아이디와 이체할 계좌, 금액과 해당 계좌의 비밀번호를 받아 이체합니다.")
+    public BaseResult sendOtpData(
+            @ApiParam (value = "사용자 id", required = true)
+            @RequestParam String loginId
+    ){
+        try {
+            OtpRandomRes otpRandomRes = otpService.selectNumber();
+            validationOtp.put(loginId,otpRandomRes);
+            return responseService.singleResult(otpRandomRes);
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
+        }
+    }
+
+    @PostMapping (path = "/transaction/checkotp")
+    @ApiOperation(value="2. 계좌 이체(OTP 검증)", notes = "사용자 아이디와 이체할 계좌, 금액과 해당 계좌의 비밀번호를 받아 이체합니다.")
+    public BaseResult transaction(
+            @ApiParam (value = "Otp 검증 객체", required = true)
+            @RequestBody OtpValidReq otpValidReq
+            ){
+        try {
+            accountService.validOtp(validationOtp.get(otpValidReq.getLoginId()), otpValidReq);
+            validationOtp.remove(otpValidReq.getLoginId());
+            return responseService.successResult();
+        }catch (Exception e){
+            return responseService.failResult(
+                    e.getMessage()
+            );
+        }
+    }
+
+    @PostMapping (path = "/transaction/transfer")
+    @ApiOperation(value="2. 계좌 이체(OTP 검증)", notes = "사용자 아이디와 이체할 계좌, 금액과 해당 계좌의 비밀번호를 받아 이체합니다.")
+    public BaseResult transaction(
+            @ApiParam (value = "사용자 id", required = true)
+            @RequestParam String loginId
+    ){
+        try {
+            accountService.transaction(transferMap.get(loginId));
             return responseService.successResult();
         }catch (Exception e){
             return responseService.failResult(

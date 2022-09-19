@@ -9,15 +9,15 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class OtpRequestRes {
-
-    private int otpPrivateNumber;
-    private int number1;
-    private int number2;
-    private int number3;
-    private int number4;
-    private int number5;
-    private int number6;
-
+public class OtpRandomRes {
+    private int select1;
+    private int select2;
+    
+    public boolean checkNumber() {
+        if (select1 != select2)
+            return false;
+        else
+            return true;
+    }
 }
 
