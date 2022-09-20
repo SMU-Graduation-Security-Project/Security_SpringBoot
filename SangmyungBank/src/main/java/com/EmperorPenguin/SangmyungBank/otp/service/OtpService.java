@@ -1,18 +1,16 @@
 package com.EmperorPenguin.SangmyungBank.otp.service;
 
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import com.EmperorPenguin.SangmyungBank.otp.dto.OtpRandomRes;
-import com.EmperorPenguin.SangmyungBank.otp.dto.OtpValidReq;
 import com.EmperorPenguin.SangmyungBank.otp.entity.Otp;
 import com.EmperorPenguin.SangmyungBank.otp.repository.OtpRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.security.NoSuchAlgorithmException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Random;
 import java.security.MessageDigest;
 
@@ -20,14 +18,9 @@ import java.security.MessageDigest;
 @RequiredArgsConstructor
 public class OtpService {
 
-    long currentTme = System.currentTimeMillis();
-    SimpleDateFormat timeFormat=new SimpleDateFormat("yyyyMMdd");
-    String ToHour=timeFormat.format(new Date(currentTme));
-
     private final OtpRepository otpRepository;
-    private final  long Seed = Long.parseLong(ToHour);
+    private final  long Seed = Long.parseLong(new DateConfig().getSeed());
     private final Random random = new Random(Seed);
-
 
     // 고정된 OTP 번호를 삽입.
     @Transactional

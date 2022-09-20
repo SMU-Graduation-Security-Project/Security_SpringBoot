@@ -103,11 +103,11 @@ public class AccountController {
     @ApiOperation(value="2. 계좌 이체", notes = "사용자 아이디와 이체할 계좌, 금액과 해당 계좌의 비밀번호를 받아 이체합니다.")
     public BaseResult transaction(
             @ApiParam (value = "계좌 이체 객체", required = true)
-            @RequestBody TransferReq transferReq
+            @RequestParam String loginId
     ){
         try {
-            accountService.transaction(transferReq);
-            transferMap.put(transferReq.getLoginId(),transferReq);
+            accountService.transaction(transferMap.get(loginId));
+            transferMap.remove(loginId);
             return responseService.successResult();
         }catch (Exception e){
             return responseService.failResult(
