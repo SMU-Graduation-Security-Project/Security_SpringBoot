@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags="06. 카드 목록")
+@Api(tags="04. 카드 목록")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/user/cardlist")

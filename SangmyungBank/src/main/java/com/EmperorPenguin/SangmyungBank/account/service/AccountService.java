@@ -9,6 +9,8 @@ import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
+import com.EmperorPenguin.SangmyungBank.otp.dto.OtpRandomRes;
+import com.EmperorPenguin.SangmyungBank.otp.dto.OtpValidReq;
 import com.EmperorPenguin.SangmyungBank.otp.service.OtpService;
 import com.EmperorPenguin.SangmyungBank.transaction.entity.Transaction;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
@@ -21,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.transaction.Transactional;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -91,6 +94,12 @@ public class AccountService {
     }
 
     @Transactional
+    public void validOtp(OtpRandomRes otpRandomRes, OtpValidReq otpValidReq) throws NoSuchAlgorithmException {
+        Member member = memberService.getMember(otpValidReq.getLoginId());
+        otpService.validationOtp(member, otpRandomRes, otpValidReq.getHashedData());
+    }
+
+    @Transactional
     public void transaction(TransferReq transferReq)
     {
        try {
@@ -144,6 +153,11 @@ public class AccountService {
                 .collect(Collectors.toList());
     }
 
+    public Account getAccount(Long accountNumber){
+        return accountRepository.findAccountByAccountNumber(accountNumber)
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND));
+    }
+
     private void checkPassword(String password) {
         // 계좌 비밀번호는 숫자로 6자로 구성되어있다.
         Pattern passwordExpression = Pattern.compile("[0-9]{6}");
@@ -156,10 +170,5 @@ public class AccountService {
         if(!accountRepository.findAllByMemberId(member).contains(account)){
             throw new BaseException("전달받은 계좌는 사용자의 계좌가 아닙니다.");
         }
-    }
-
-    public Account getAccount(Long accountNumber){
-        return accountRepository.findAccountByAccountNumber(accountNumber)
-                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND));
     }
 }

@@ -1,46 +1,46 @@
 package com.EmperorPenguin.SangmyungBank.otp.service;
 
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
-import com.EmperorPenguin.SangmyungBank.otp.dto.OtpRequestRes;
-import com.EmperorPenguin.SangmyungBank.otp.dto.OtpValidReq;
+import com.EmperorPenguin.SangmyungBank.member.entity.Member;
+import com.EmperorPenguin.SangmyungBank.otp.dto.OtpRandomRes;
 import com.EmperorPenguin.SangmyungBank.otp.entity.Otp;
 import com.EmperorPenguin.SangmyungBank.otp.repository.OtpRepository;
-import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
+import java.security.MessageDigest;
 
 @Service
 @RequiredArgsConstructor
 public class OtpService {
 
     private final OtpRepository otpRepository;
-    private final MemberService memberService;
-    private final long Seed = System.currentTimeMillis();
+    private final  long Seed = Long.parseLong(new DateConfig().getSeed());
     private final Random random = new Random(Seed);
 
+    // 고정된 OTP 번호를 삽입.
     @Transactional
-    public void createOtp(String loginId) {
-        // 사용자가 있는지 검증한다.
-        memberService.checkEmptyMember(loginId);
-
-        // OTP를 발급한 적이 있는지 확인한다.
-        if(otpRepository.findByMemberId(memberService.getMember(loginId)).isPresent()) {
-            throw new BaseException(ExceptionMessages.ERROR_OTP_EXIST);
-        }
-
+    public void createOtp(Member member) {
         try {
             Otp MemberOtp = Otp.builder()
-                    .otpPrivateNumber(random.nextInt(99999999))
-                    .memberId(memberService.getMember(loginId))
-                    .number1(random.nextInt(9999))
-                    .number2(random.nextInt(9999))
-                    .number3(random.nextInt(9999))
-                    .number4(random.nextInt(9999))
-                    .number5(random.nextInt(9999))
-                    .number6(random.nextInt(9999))
+                    .otpPrivateNumber(19741201)
+                    .memberId(member)
+                    .number1(4228)
+                    .number2(6973)
+                    .number3(1011)
+                    .number4(9253)
+                    .number5(1820)
+                    .number6(3563)
+                    .number7(2498)
+                    .number8(1662)
+                    .number9(2890)
+                    .number10(2339)
+                    .number11(1077)
+                    .number12(3840)
                     .build();
             otpRepository.save(MemberOtp);
         } catch (Exception e) {
@@ -50,45 +50,51 @@ public class OtpService {
     }
 
     @Transactional
-    public OtpRequestRes getOtpData(String loginId) {
-        memberService.checkEmptyMember(loginId);
-
-        return otpRepository.findByMemberId(memberService.getMember(loginId)).get().toDto();
-    }
-
-    @Transactional
-    public void validationOtp(OtpValidReq otpValidReq){
-        String loginId = otpValidReq.getLoginId();
-        memberService.checkEmptyMember(loginId);
-
-        Otp memberOtp = otpRepository.findByMemberId(memberService.getMember(loginId))
+    public void validationOtp(Member member, OtpRandomRes otpRandomRes, String hashedData) throws NoSuchAlgorithmException {
+        Otp otp = otpRepository.findByMemberId(member)
                 .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_OTP_NOT_EXIST));
 
-        checkOTP(memberOtp, otpValidReq);
+        // 앞의 2자리
+        int num1 = otp.getOtpNumber(otpRandomRes.getSelect1()) / 100;
+        // 뒤의 2자리
+        int num2 = otp.getOtpNumber(otpRandomRes.getSelect2()) % 100;
+        // 뒤의 4자리
+        int pk4 = otp.getOtpPrivateNumber() % 1000;
+
+        String data = String.format("%d%d%d",pk4,num1,num2);
+        String hashData = hashingData(data);
+        if(!hashData.equals(hashedData))
+            throw new BaseException(ExceptionMessages.ERROR_OTP_NOT_MATCH);
     }
 
-    private void checkOTP(Otp otp, OtpValidReq otpValidReq) {
-        int Pk4 = (otp.getOtpPrivateNumber() % 10000);
-        int[] otpNumList = new int[6];
+//    @Transactional
+//    public OtpRequestRes getOtpData(String loginId) {
+//        return otpRepository.findByMemberId(memberService.getMember(loginId)).get().toDto();
+//    }
 
-        if(Pk4 != otpValidReq.getPkOTP4()){
-            throw new BaseException(ExceptionMessages.ERROR_OTP_PK_NOT_MATCH);
+    public OtpRandomRes selectNumber(){
+        OtpRandomRes otpRandomRes = new OtpRandomRes();
+        while(true) {
+            otpRandomRes.setSelect1(random.nextInt(12));
+            otpRandomRes.setSelect2(random.nextInt(12));
+            if(otpRandomRes.checkNumber())
+                break;;
         }
+        return otpRandomRes;
+    }
 
-        // OTP값을 검증하기 위해 배열에 저장.
-        otpNumList[0] = otp.getNumber1();
-        otpNumList[1] = otp.getNumber2();
-        otpNumList[2] = otp.getNumber3();
-        otpNumList[3] = otp.getNumber4();
-        otpNumList[4] = otp.getNumber5();
-        otpNumList[5] = otp.getNumber6();
+    private String hashingData(String data) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(data.getBytes());
+        return bytesToHex(md.digest());
+    }
 
-        if((otpNumList[otpValidReq.getSelectNum1()-1] / 100) != otpValidReq.getAnsNum1()){
-            throw new BaseException(ExceptionMessages.ERROR_OTP_NOT_MATCH);
+    private String bytesToHex(byte[] bytes){
+        StringBuilder builder = new StringBuilder();
+        for (byte b : bytes){
+            builder.append(String.format("%02x",b));
         }
-        if ((otpNumList[otpValidReq.getSelectNum2()-1] % 100) != otpValidReq.getAnsNum2()){
-            throw new BaseException(ExceptionMessages.ERROR_OTP_NOT_MATCH);
-        }
+        return builder.toString();
     }
 }
 

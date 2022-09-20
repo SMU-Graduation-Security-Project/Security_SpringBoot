@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 
-@Api(tags = "04. 거래 내역")
+@Api(tags = "03. 거래 내역")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/user/transactions")

@@ -19,6 +19,10 @@ public class DateConfig {
         return LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
+    public  String getSeed(){
+        return LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    }
+
 
     public static String getExpireDate() {
         DateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");

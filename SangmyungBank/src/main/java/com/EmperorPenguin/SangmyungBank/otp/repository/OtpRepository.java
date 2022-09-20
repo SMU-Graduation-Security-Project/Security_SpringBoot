@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface OtpRepository extends JpaRepository<Otp, Long> {
         Optional<Otp> findByMemberId(Member loginUser);
-        }
+}
 
 
