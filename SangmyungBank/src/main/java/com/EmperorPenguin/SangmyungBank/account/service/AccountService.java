@@ -146,6 +146,9 @@ public class AccountService {
     @Transactional
     public List<AccountInquiryRes> getName(Long accountNumber) {
 
+        if(!accountRepository.existsAccountByAccountNumber(accountNumber)){
+            throw new BaseException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND);
+        }
         return accountRepository
                 .findNameByAccountNumber(accountNumber)
                 .stream()
