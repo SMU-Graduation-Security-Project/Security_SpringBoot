@@ -1,9 +1,11 @@
 package com.EmperorPenguin.SangmyungBank.otp.service;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.service.JwtService;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
+import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
 import com.EmperorPenguin.SangmyungBank.otp.dto.OtpRandomRes;
 import com.EmperorPenguin.SangmyungBank.otp.entity.Otp;
 import com.EmperorPenguin.SangmyungBank.otp.repository.OtpRepository;
@@ -21,6 +23,8 @@ public class OtpService {
     private final OtpRepository otpRepository;
     private final  long Seed = Long.parseLong(new DateConfig().getSeed());
     private final Random random = new Random(Seed);
+
+
 
     // 고정된 OTP 번호를 삽입.
     @Transactional
@@ -61,8 +65,10 @@ public class OtpService {
         // 뒤의 4자리
         int pk4 = otp.getOtpPrivateNumber() % 1000;
 
-        String data = String.format("%d%d%d",pk4,num1,num2);
-        String hashData = hashingData(data);
+
+        String Data = member.getRefreshToken();
+        String salt = String.format("%d%d%d",pk4,num1,num2);
+        String hashData = hashingData(Data+salt);
         if(!hashData.equals(hashedData))
             throw new BaseException(ExceptionMessages.ERROR_OTP_NOT_MATCH);
     }

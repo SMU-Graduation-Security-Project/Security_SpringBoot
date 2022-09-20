@@ -20,7 +20,7 @@ public class DateConfig {
     }
 
     public  String getSeed(){
-        return LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        return LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSSS"));
     }
 
 
