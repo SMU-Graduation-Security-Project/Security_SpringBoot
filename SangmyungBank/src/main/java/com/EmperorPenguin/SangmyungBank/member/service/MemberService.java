@@ -8,7 +8,7 @@ import com.EmperorPenguin.SangmyungBank.member.dto.*;
 import com.EmperorPenguin.SangmyungBank.member.entity.Role;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
-import com.EmperorPenguin.SangmyungBank.otp.service.OtpService;
+import com.EmperorPenguin.SangmyungBank.securityCard.service.SecurityCardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final JwtService jwtService;
-    private final OtpService otpService;
+    private final SecurityCardService securityCardService;
     private final PasswordEncoder passwordEncoder;
     private final HttpSession httpSession;
 
@@ -89,7 +89,7 @@ public class MemberService {
             try{
                 Member member = memberRegisterRequest.toEntity(passwordEncoder.encode(password1), Role.USER);
                 memberRepository.save(member);
-                otpService.createOtp(member);
+                securityCardService.createSecurityCard(member);
             }catch (Exception e){
                 // Exception 이 발생한 이유와 위치는 어디에서 발생했는지 전체적인 단계를 다 출력합니다.
                 e.printStackTrace();

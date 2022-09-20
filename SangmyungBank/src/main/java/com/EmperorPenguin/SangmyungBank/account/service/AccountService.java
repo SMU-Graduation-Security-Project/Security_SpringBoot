@@ -9,9 +9,9 @@ import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
-import com.EmperorPenguin.SangmyungBank.otp.dto.OtpRandomRes;
-import com.EmperorPenguin.SangmyungBank.otp.dto.OtpValidReq;
-import com.EmperorPenguin.SangmyungBank.otp.service.OtpService;
+import com.EmperorPenguin.SangmyungBank.securityCard.dto.SecurityCardRandomRes;
+import com.EmperorPenguin.SangmyungBank.securityCard.dto.SecurityCardValidReq;
+import com.EmperorPenguin.SangmyungBank.securityCard.service.SecurityCardService;
 import com.EmperorPenguin.SangmyungBank.transaction.entity.Transaction;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import com.EmperorPenguin.SangmyungBank.transaction.service.TransactionService;
@@ -36,7 +36,7 @@ public class AccountService {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
     private final TransactionService transactionService;
-    private final OtpService otpService;
+    private final SecurityCardService securityCardService;
     // 계좌 예시102-82-01669
     private Long StartAccountNumber = 1028201669L;
 
@@ -94,9 +94,9 @@ public class AccountService {
     }
 
     @Transactional
-    public void validOtp(OtpRandomRes otpRandomRes, OtpValidReq otpValidReq) throws NoSuchAlgorithmException {
-        Member member = memberService.getMember(otpValidReq.getLoginId());
-        otpService.validationOtp(member, otpRandomRes, otpValidReq.getHashedData());
+    public void validSecurityCard(SecurityCardRandomRes securityCardRandomRes, SecurityCardValidReq securityCardValidReq) throws NoSuchAlgorithmException {
+        Member member = memberService.getMember(securityCardValidReq.getLoginId());
+        securityCardService.validationSecurityCard(member, securityCardRandomRes, securityCardValidReq.getHashedData());
     }
 
     @Transactional

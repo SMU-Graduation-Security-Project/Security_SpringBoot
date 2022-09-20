@@ -1,14 +1,12 @@
-package com.EmperorPenguin.SangmyungBank.otp.service;
+package com.EmperorPenguin.SangmyungBank.securityCard.service;
 
 import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
-import com.EmperorPenguin.SangmyungBank.baseUtil.config.service.JwtService;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
-import com.EmperorPenguin.SangmyungBank.member.repository.MemberRepository;
-import com.EmperorPenguin.SangmyungBank.otp.dto.OtpRandomRes;
-import com.EmperorPenguin.SangmyungBank.otp.entity.Otp;
-import com.EmperorPenguin.SangmyungBank.otp.repository.OtpRepository;
+import com.EmperorPenguin.SangmyungBank.securityCard.dto.SecurityCardRandomRes;
+import com.EmperorPenguin.SangmyungBank.securityCard.entity.SecurityCard;
+import com.EmperorPenguin.SangmyungBank.securityCard.repository.SecurityCardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -18,9 +16,9 @@ import java.security.MessageDigest;
 
 @Service
 @RequiredArgsConstructor
-public class OtpService {
+public class SecurityCardService {
 
-    private final OtpRepository otpRepository;
+    private final SecurityCardRepository securityCardRepository;
     private final  long Seed = Long.parseLong(new DateConfig().getSeed());
     private final Random random = new Random(Seed);
 
@@ -28,10 +26,10 @@ public class OtpService {
 
     // 고정된 OTP 번호를 삽입.
     @Transactional
-    public void createOtp(Member member) {
+    public void createSecurityCard(Member member) {
         try {
-            Otp MemberOtp = Otp.builder()
-                    .otpPrivateNumber(19741201)
+            SecurityCard MemberSecurityCard = SecurityCard.builder()
+                    .securityCardPrivateNumber(19741201)
                     .memberId(member)
                     .number1(4228)
                     .number2(6973)
@@ -46,31 +44,31 @@ public class OtpService {
                     .number11(1077)
                     .number12(3840)
                     .build();
-            otpRepository.save(MemberOtp);
+            securityCardRepository.save(MemberSecurityCard);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new BaseException("Otp 생성에 실패했습니다.");
+            throw new BaseException("보안카드 생성에 실패했습니다.");
         }
     }
 
     @Transactional
-    public void validationOtp(Member member, OtpRandomRes otpRandomRes, String hashedData) throws NoSuchAlgorithmException {
-        Otp otp = otpRepository.findByMemberId(member)
-                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_OTP_NOT_EXIST));
+    public void validationSecurityCard(Member member, SecurityCardRandomRes securityCardRandomRes, String hashedData) throws NoSuchAlgorithmException {
+        SecurityCard securityCard = securityCardRepository.findByMemberId(member)
+                .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_SECURITYCARD_NOT_EXIST));
 
         // 앞의 2자리
-        int num1 = otp.getOtpNumber(otpRandomRes.getSelect1()) / 100;
+        int num1 = securityCard.getSecurityCardNumber(securityCardRandomRes.getSelect1()) / 100;
         // 뒤의 2자리
-        int num2 = otp.getOtpNumber(otpRandomRes.getSelect2()) % 100;
+        int num2 = securityCard.getSecurityCardNumber(securityCardRandomRes.getSelect2()) % 100;
         // 뒤의 4자리
-        int pk4 = otp.getOtpPrivateNumber() % 1000;
+        int pk4 = securityCard.getSecurityCardPrivateNumber() % 1000;
 
 
         String Data = member.getRefreshToken();
         String salt = String.format("%d%d%d",pk4,num1,num2);
         String hashData = hashingData(Data+salt);
         if(!hashData.equals(hashedData))
-            throw new BaseException(ExceptionMessages.ERROR_OTP_NOT_MATCH);
+            throw new BaseException(ExceptionMessages.ERROR_SECURITYCARD_NOT_MATCH);
     }
 
 //    @Transactional
@@ -78,15 +76,15 @@ public class OtpService {
 //        return otpRepository.findByMemberId(memberService.getMember(loginId)).get().toDto();
 //    }
 
-    public OtpRandomRes selectNumber(){
-        OtpRandomRes otpRandomRes = new OtpRandomRes();
+    public SecurityCardRandomRes selectNumber(){
+        SecurityCardRandomRes securityCardRandomRes = new SecurityCardRandomRes();
         while(true) {
-            otpRandomRes.setSelect1(random.nextInt(12));
-            otpRandomRes.setSelect2(random.nextInt(12));
-            if(otpRandomRes.checkNumber())
+            securityCardRandomRes.setSelect1(random.nextInt(12));
+            securityCardRandomRes.setSelect2(random.nextInt(12));
+            if(securityCardRandomRes.checkNumber())
                 break;;
         }
-        return otpRandomRes;
+        return securityCardRandomRes;
     }
 
     private String hashingData(String data) throws NoSuchAlgorithmException {

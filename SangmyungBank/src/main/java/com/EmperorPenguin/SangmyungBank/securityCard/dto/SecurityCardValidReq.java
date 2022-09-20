@@ -1,4 +1,4 @@
-package com.EmperorPenguin.SangmyungBank.otp.dto;
+package com.EmperorPenguin.SangmyungBank.securityCard.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class OtpValidReq {
+public class SecurityCardValidReq {
 
     private String loginId;
     private String hashedData;

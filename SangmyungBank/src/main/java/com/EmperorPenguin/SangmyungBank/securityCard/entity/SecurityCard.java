@@ -1,6 +1,5 @@
-package com.EmperorPenguin.SangmyungBank.otp.entity;
+package com.EmperorPenguin.SangmyungBank.securityCard.entity;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
-import com.EmperorPenguin.SangmyungBank.otp.dto.OtpRandomRes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,10 +12,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Otp {
+public class SecurityCard {
 
     @Id
-    private int otpPrivateNumber;
+    private int securityCardPrivateNumber;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="memberId")
@@ -36,7 +35,7 @@ public class Otp {
     private int number11;
     private int number12;
 
-    public int getOtpNumber(int num) {
+    public int getSecurityCardNumber(int num) {
         switch (num){
             case 1:
                 return this.number1;
