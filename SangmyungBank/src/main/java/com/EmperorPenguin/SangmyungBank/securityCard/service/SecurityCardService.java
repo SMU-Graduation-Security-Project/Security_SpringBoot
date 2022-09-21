@@ -60,14 +60,14 @@ public class SecurityCardService {
         int num1 = securityCard.getSecurityCardNumber(securityCardRandomRes.getSelect1()) / 100;
         // 뒤의 2자리
         int num2 = securityCard.getSecurityCardNumber(securityCardRandomRes.getSelect2()) % 100;
-        // 뒤의 4자리
-        int pk4 = securityCard.getSecurityCardPrivateNumber() % 1000;
+//        // 뒤의 4자리
+//        int pk4 = securityCard.getSecurityCardPrivateNumber() % 1000;
 
 
         String Data = member.getRefreshToken();
-        String salt = String.format("%d%d%d",pk4,num1,num2);
+        String salt = String.format("%d%d",num1,num2);
         String hashData = hashingData(Data+salt);
-        if(!hashData.equals(hashedData))
+        if(!hashData.substring(0,32).equals(hashedData))
             throw new BaseException(ExceptionMessages.ERROR_SECURITYCARD_NOT_MATCH);
     }
 
