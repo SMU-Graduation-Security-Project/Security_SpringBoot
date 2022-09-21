@@ -9,9 +9,9 @@ import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
-import com.EmperorPenguin.SangmyungBank.otp.dto.OtpRandomRes;
-import com.EmperorPenguin.SangmyungBank.otp.dto.OtpValidReq;
-import com.EmperorPenguin.SangmyungBank.otp.service.OtpService;
+import com.EmperorPenguin.SangmyungBank.securityCard.dto.SecurityCardRandomRes;
+import com.EmperorPenguin.SangmyungBank.securityCard.dto.SecurityCardValidReq;
+import com.EmperorPenguin.SangmyungBank.securityCard.service.SecurityCardService;
 import com.EmperorPenguin.SangmyungBank.transaction.entity.Transaction;
 import com.EmperorPenguin.SangmyungBank.member.entity.Member;
 import com.EmperorPenguin.SangmyungBank.transaction.service.TransactionService;
@@ -36,7 +36,7 @@ public class AccountService {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
     private final TransactionService transactionService;
-    private final OtpService otpService;
+    private final SecurityCardService securityCardService;
     // 계좌 예시102-82-01669
     private Long StartAccountNumber = 1028201669L;
 
@@ -50,11 +50,13 @@ public class AccountService {
         memberService.checkEmptyMember(loginId);
 
         try{
-            accountRepository.save(accountCreateReq.toEntity(
+            Account account = accountCreateReq.toEntity(
                     memberService.getMember(loginId),
                     StartAccountNumber++,
                     passwordEncoder.encode(password),
-                    0L));
+                    0L);
+            accountRepository.save(account);
+            initAccount(account, "상명은행 회원가입 이벤트");
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -94,9 +96,9 @@ public class AccountService {
     }
 
     @Transactional
-    public void validOtp(OtpRandomRes otpRandomRes, OtpValidReq otpValidReq) throws NoSuchAlgorithmException {
-        Member member = memberService.getMember(otpValidReq.getLoginId());
-        otpService.validationOtp(member, otpRandomRes, otpValidReq.getHashedData());
+    public void validSecurityCard(SecurityCardRandomRes securityCardRandomRes, SecurityCardValidReq securityCardValidReq) throws NoSuchAlgorithmException {
+        Member member = memberService.getMember(securityCardValidReq.getLoginId());
+        securityCardService.validationSecurityCard(member, securityCardRandomRes, securityCardValidReq.getHashedData());
     }
 
     @Transactional
@@ -146,6 +148,9 @@ public class AccountService {
     @Transactional
     public List<AccountInquiryRes> getName(Long accountNumber) {
 
+        if(!accountRepository.existsAccountByAccountNumber(accountNumber)){
+            throw new BaseException(ExceptionMessages.ERROR_ACCOUNT_NOT_FOUND);
+        }
         return accountRepository
                 .findNameByAccountNumber(accountNumber)
                 .stream()
@@ -170,5 +175,18 @@ public class AccountService {
         if(!accountRepository.findAllByMemberId(member).contains(account)){
             throw new BaseException("전달받은 계좌는 사용자의 계좌가 아닙니다.");
         }
+    }
+
+    private void initAccount(Account account, String sendMessage) {
+        accountRepository.updateBalance( 100000L,
+                account.getAccountNumber());
+        transactionService.saveData(Transaction.builder()
+                .sendAccount(null)
+                .toSenderMessage(null)
+                .receiveAccount(account.getAccountNumber())
+                .toReceiverMessage(sendMessage)
+                .balance(100000L)
+                .transactionDate(new DateConfig().getDateTime())
+                .build());
     }
 }
