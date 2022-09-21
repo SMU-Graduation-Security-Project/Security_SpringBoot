@@ -53,8 +53,7 @@ public enum ExceptionMessages {
 
     ERROR_SECURITYCARD_EXIST("보안카드를 이미 보유하고 있습니다."),
     ERROR_SECURITYCARD_NOT_EXIST("보안카드가 발급되어있지 않습니다."),
-    ERROR_SECURITYCARD_PK_NOT_MATCH("보안카드 PK값이 일치하지 않습니다."),
-    ERROR_SECURITYCARD_NOT_MATCH("입력한 보안카드번호가 옳지 않습니다."),
+    ERROR_SECURITYCARD_NOT_MATCH("입력한 보안카드번호값이 옳지 않습니다."),
 
     ERROR_SECURITYNOTICE_EXIST("해당 제목을 가진 보안공지가 이미 있습니다."),
     ERROR_SECURITYNOTICE_NOT_EXIST("해당 아이디를 가진 보안공지가 없습니다"),

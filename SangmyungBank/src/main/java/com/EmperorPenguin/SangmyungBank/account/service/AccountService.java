@@ -50,11 +50,13 @@ public class AccountService {
         memberService.checkEmptyMember(loginId);
 
         try{
-            accountRepository.save(accountCreateReq.toEntity(
+            Account account = accountCreateReq.toEntity(
                     memberService.getMember(loginId),
                     StartAccountNumber++,
                     passwordEncoder.encode(password),
-                    0L));
+                    0L);
+            accountRepository.save(account);
+            initAccount(account, "상명은행 회원가입 이벤트");
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -173,5 +175,18 @@ public class AccountService {
         if(!accountRepository.findAllByMemberId(member).contains(account)){
             throw new BaseException("전달받은 계좌는 사용자의 계좌가 아닙니다.");
         }
+    }
+
+    private void initAccount(Account account, String sendMessage) {
+        accountRepository.updateBalance( 100000L,
+                account.getAccountNumber());
+        transactionService.saveData(Transaction.builder()
+                .sendAccount(null)
+                .toSenderMessage(null)
+                .receiveAccount(account.getAccountNumber())
+                .toReceiverMessage(sendMessage)
+                .balance(100000L)
+                .transactionDate(new DateConfig().getDateTime())
+                .build());
     }
 }

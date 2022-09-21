@@ -19,10 +19,8 @@ import java.security.MessageDigest;
 public class SecurityCardService {
 
     private final SecurityCardRepository securityCardRepository;
-    private final  long Seed = Long.parseLong(new DateConfig().getSeed());
+    private final long Seed = Long.parseLong(new DateConfig().getSeed());
     private final Random random = new Random(Seed);
-
-
 
     // 고정된 OTP 번호를 삽입.
     @Transactional
@@ -52,7 +50,7 @@ public class SecurityCardService {
     }
 
     @Transactional
-    public void validationSecurityCard(Member member, SecurityCardRandomRes securityCardRandomRes, String hashedData) throws NoSuchAlgorithmException {
+    public void validationSecurityCard(Member member, SecurityCardRandomRes securityCardRandomRes, String receivedData) throws NoSuchAlgorithmException {
         SecurityCard securityCard = securityCardRepository.findByMemberId(member)
                 .orElseThrow(() -> new BaseException(ExceptionMessages.ERROR_SECURITYCARD_NOT_EXIST));
 
@@ -60,14 +58,13 @@ public class SecurityCardService {
         int num1 = securityCard.getSecurityCardNumber(securityCardRandomRes.getSelect1()) / 100;
         // 뒤의 2자리
         int num2 = securityCard.getSecurityCardNumber(securityCardRandomRes.getSelect2()) % 100;
-//        // 뒤의 4자리
+//      뒤의 4자리
 //        int pk4 = securityCard.getSecurityCardPrivateNumber() % 1000;
-
 
         String Data = member.getRefreshToken();
         String salt = String.format("%d%d",num1,num2);
-        String hashData = hashingData(Data+salt);
-        if(!hashData.substring(0,32).equals(hashedData))
+        String hashData = hashingData(Data, salt);
+        if(!hashData.substring(0,32).equals(receivedData))
             throw new BaseException(ExceptionMessages.ERROR_SECURITYCARD_NOT_MATCH);
     }
 
@@ -87,9 +84,10 @@ public class SecurityCardService {
         return securityCardRandomRes;
     }
 
-    private String hashingData(String data) throws NoSuchAlgorithmException {
+    private String hashingData(String data, String salt) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(data.getBytes());
+        md.update(salt.getBytes());
         return bytesToHex(md.digest());
     }
 

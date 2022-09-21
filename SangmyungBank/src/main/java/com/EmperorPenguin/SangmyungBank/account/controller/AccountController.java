@@ -47,31 +47,19 @@ public class AccountController {
     }
 
     @PostMapping(path = "/transaction/validateaccount")
-    @ApiOperation(value="2. 계좌 이체(계좌 검증)", notes = "")
+    @ApiOperation(value="2. 계좌 이체(계좌 검증)", notes = "검증이 마무리되면 프론트로 번호를 전달합니다.")
     public BaseResult validAccount(
             @ApiParam (value = "계좌 이체 객체", required = true)
             @RequestBody TransferReq transferReq
     ){
         try {
+            // 사용자 계좌 검증
             accountService.validationAccount(transferReq);
             transferMap.put(transferReq.getLoginId(),transferReq);
-            return responseService.successResult();
-        }catch (Exception e){
-            return responseService.failResult(
-                    e.getMessage()
-            );
-        }
-    }
 
-    @GetMapping (path = "/transaction/getsecuritycarddata")
-    @ApiOperation(value="2. 계좌 이체(보안카드 검증 값 전달)", notes = "랜덤넘버 두개를 고릅니다.")
-    public BaseResult sendSecurityCardData(
-            @ApiParam (value = "사용자 id", required = true)
-            @RequestParam String loginId
-    ){
-        try {
+            // 사용자에게 검증을 할 번호를 전달
             SecurityCardRandomRes securityCardRandomRes = securityCardService.selectNumber();
-            validationSecurityCard.put(loginId,securityCardRandomRes);
+            validationSecurityCard.put(transferReq.getLoginId(),securityCardRandomRes);
             return responseService.singleResult(securityCardRandomRes);
         }catch (Exception e){
             return responseService.failResult(
@@ -85,9 +73,10 @@ public class AccountController {
     public BaseResult transaction(
             @ApiParam (value = "보안카드 검증 객체", required = true)
             @RequestBody SecurityCardValidReq securityCardValidReq
-            ){
+    ){
         try {
-            accountService.validSecurityCard(validationSecurityCard.get(securityCardValidReq.getLoginId()), securityCardValidReq);
+            accountService.validSecurityCard(
+                    validationSecurityCard.get(securityCardValidReq.getLoginId()), securityCardValidReq);
             validationSecurityCard.remove(securityCardValidReq.getLoginId());
             return responseService.successResult();
         }catch (Exception e){
