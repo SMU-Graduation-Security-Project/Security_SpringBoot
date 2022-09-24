@@ -21,13 +21,14 @@ public class SecurityCardService {
     private final SecurityCardRepository securityCardRepository;
     private final long Seed = Long.parseLong(new DateConfig().getSeed());
     private final Random random = new Random(Seed);
+    private Long startNumber = 19741201L;
 
     // 고정된 OTP 번호를 삽입.
     @Transactional
     public void createSecurityCard(Member member) {
         try {
             SecurityCard MemberSecurityCard = SecurityCard.builder()
-                    .securityCardPrivateNumber(19741201)
+                    .securityCardPrivateNumber(startNumber++)
                     .memberId(member)
                     .number1(4228)
                     .number2(6973)
