@@ -14,10 +14,9 @@ public class SecurityCardRandomRes {
     private int select2;
     
     public boolean checkNumber() {
-        if (select1 != select2)
-            return true;
-        else
-            return false;
+        this.select1 += 1;
+        this.select2 += 1;
+        return select1 != select2;
     }
 }
 

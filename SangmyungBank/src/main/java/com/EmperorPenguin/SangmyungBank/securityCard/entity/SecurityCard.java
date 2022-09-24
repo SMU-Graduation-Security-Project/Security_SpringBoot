@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class SecurityCard {
 
     @Id
-    private int securityCardPrivateNumber;
+    private Long securityCardPrivateNumber;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="memberId")
