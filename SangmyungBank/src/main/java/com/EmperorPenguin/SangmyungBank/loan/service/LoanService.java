@@ -1,6 +1,7 @@
 package com.EmperorPenguin.SangmyungBank.loan.service;
 
 import com.EmperorPenguin.SangmyungBank.account.service.AccountService;
+import com.EmperorPenguin.SangmyungBank.baseUtil.config.DateConfig;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.BaseException;
 import com.EmperorPenguin.SangmyungBank.baseUtil.exception.ExceptionMessages;
 import com.EmperorPenguin.SangmyungBank.loan.dto.LoanCreateReq;
@@ -9,6 +10,8 @@ import com.EmperorPenguin.SangmyungBank.loan.entity.Loan;
 import com.EmperorPenguin.SangmyungBank.loan.repository.LoanRepository;
 import com.EmperorPenguin.SangmyungBank.loanlist.service.LoanListService;
 import com.EmperorPenguin.SangmyungBank.member.service.MemberService;
+import com.EmperorPenguin.SangmyungBank.transaction.entity.Transaction;
+import com.EmperorPenguin.SangmyungBank.transaction.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,7 @@ public class LoanService {
     private final MemberService memberService;
     private final AccountService accountService;
     private final LoanListService loanListService;
+    private final TransactionService transactionService;
 
     @Transactional
     public void createLoan(LoanCreateReq loanCreateReq) {
@@ -43,6 +47,14 @@ public class LoanService {
                     loanListService.getSingleLoanList(loanList))
             );
             loanRepository.updateBalance(amount, accountNumber);
+            transactionService.saveData(Transaction.builder()
+                    .sendAccount(null)
+                    .toSenderMessage(null)
+                    .receiveAccount(accountNumber)
+                    .toReceiverMessage("대출을 통해"+amount+"원을 빌리셨습니다.")
+                    .balance(amount)
+                    .transactionDate(new DateConfig().getDateTime())
+                    .build());
         } catch (Exception e) {
             e.printStackTrace();
             throw new BaseException("대출에 실패했습니다.");
