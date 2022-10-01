@@ -181,7 +181,7 @@ public class AccountService {
         accountRepository.updateBalance( 100000L,
                 account.getAccountNumber());
         transactionService.saveData(Transaction.builder()
-                .sendAccount(null)
+                .sendAccount(account.getAccountNumber())
                 .toSenderMessage(null)
                 .receiveAccount(account.getAccountNumber())
                 .toReceiverMessage(sendMessage)
