@@ -182,9 +182,9 @@ public class AccountService {
                 account.getAccountNumber());
         transactionService.saveData(Transaction.builder()
                 .sendAccount(account.getAccountNumber())
-                .toSenderMessage(null)
+                .toSenderMessage(sendMessage)
                 .receiveAccount(account.getAccountNumber())
-                .toReceiverMessage(sendMessage)
+                .toReceiverMessage(null)
                 .balance(100000L)
                 .transactionDate(new DateConfig().getDateTime())
                 .build());
