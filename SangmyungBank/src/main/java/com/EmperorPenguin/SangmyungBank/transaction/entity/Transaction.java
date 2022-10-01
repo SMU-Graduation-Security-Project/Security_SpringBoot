@@ -38,24 +38,13 @@ public class Transaction {
     private String transactionDate;
 
     public TransactionInquiryRes toDto() {
-        if (balance > 0) {
-            return TransactionInquiryRes.builder()
-                    .senderAccount(receiveAccount)
-                    .toSenderMessage(toSenderMessage)
-                    .receiverAccount(sendAccount)
-                    .toReceiverMessage(toReceiverMessage)
-                    .sendMoney(balance)
-                    .transactionDate(transactionDate)
-                    .build();
-        } else {
-            return TransactionInquiryRes.builder()
-                    .senderAccount(sendAccount)
-                    .toSenderMessage(toSenderMessage)
-                    .receiverAccount(receiveAccount)
-                    .toReceiverMessage(toReceiverMessage)
-                    .sendMoney(balance)
-                    .transactionDate(transactionDate)
-                    .build();
-        }
+        return TransactionInquiryRes.builder()
+                .senderAccount(sendAccount)
+                .toSenderMessage(toSenderMessage)
+                .receiverAccount(receiveAccount)
+                .toReceiverMessage(toReceiverMessage)
+                .sendMoney(balance)
+                .transactionDate(transactionDate)
+                .build();
     }
 }
