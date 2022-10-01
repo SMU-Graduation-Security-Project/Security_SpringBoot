@@ -38,13 +38,25 @@ public class Transaction {
     private String transactionDate;
 
     public TransactionInquiryRes toDto() {
-        return TransactionInquiryRes.builder()
-                .senderAccount(sendAccount)
-                .toSenderMessage(toSenderMessage)
-                .receiverAccount(receiveAccount)
-                .toReceiverMessage(toReceiverMessage)
-                .sendMoney(balance)
-                .transactionDate(transactionDate)
-                .build();
+        // -일때는 Sender에서 Receiver에게 돈을 준 것임.
+        if (this.balance < 0)
+            return TransactionInquiryRes.builder()
+                    .senderAccount(sendAccount)
+                    .toSenderMessage(toSenderMessage)
+                    .receiverAccount(receiveAccount)
+                    .toReceiverMessage(toReceiverMessage)
+                    .sendMoney(balance)
+                    .transactionDate(transactionDate)
+                    .build();
+            // 양수일때  Sender는 Receiver에게 돈을 받음
+        else
+            return TransactionInquiryRes.builder()
+                    .senderAccount(receiveAccount)
+                    .toSenderMessage(toReceiverMessage)
+                    .receiverAccount(sendAccount)
+                    .toReceiverMessage(toSenderMessage)
+                    .sendMoney(balance)
+                    .transactionDate(transactionDate)
+                    .build();
     }
 }
