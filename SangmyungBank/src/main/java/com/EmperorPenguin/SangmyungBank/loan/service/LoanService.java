@@ -49,9 +49,9 @@ public class LoanService {
             loanRepository.updateBalance(amount, accountNumber);
             transactionService.saveData(Transaction.builder()
                     .sendAccount(accountNumber)
-                    .toSenderMessage("대출을 통해 "+amount+"원을 빌리셨습니다.")
+                    .toSenderMessage(null)
                     .receiveAccount(accountNumber)
-                    .toReceiverMessage(null)
+                    .toReceiverMessage("대출을 통해 "+amount+"원을 빌리셨습니다.")
                     .balance(amount)
                     .transactionDate(new DateConfig().getDateTime())
                     .build());
