@@ -52,9 +52,9 @@ public class Transaction {
         else
             return TransactionInquiryRes.builder()
                     .senderAccount(receiveAccount)
-                    .toSenderMessage(toReceiverMessage)
+                    .toSenderMessage(toSenderMessage)
                     .receiverAccount(sendAccount)
-                    .toReceiverMessage(toSenderMessage)
+                    .toReceiverMessage(toReceiverMessage)
                     .sendMoney(balance)
                     .transactionDate(transactionDate)
                     .build();
